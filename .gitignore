@@ -13,6 +13,7 @@
 
 # Generated files
 **/bin/
+!gradle-2.0/bin/
 **/gen/
 
 # Gradle files
