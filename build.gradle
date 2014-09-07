@@ -3,6 +3,10 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'jetty'
 
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
 eclipse.classpath.file {
     beforeMerged { classpath ->
         classpath.entries.removeAll { entry -> entry.kind == 'lib' || entry.kind == 'var' }
@@ -16,6 +20,3 @@ eclipse.project.file.beforeMerged { project ->
     project.natures.clear()
 }
 
-dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-}
