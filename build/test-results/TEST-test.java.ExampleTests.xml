@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.java.ExampleTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2014-09-07T01:49:37" hostname="Tommy-Schnabels-MacBook.local" time="0.0010">
-  <properties/>
-  <testcase name="failsJustBecause" classname="test.java.ExampleTests" time="0.0010"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
