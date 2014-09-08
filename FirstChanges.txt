@@ -1,3 +1,7 @@
 Tommy made the first changes cause he's pretty cool.
+<<<<<<< HEAD
 
 Kenny got this set up!
+=======
+Roger is hopeful he made the second changes...
+>>>>>>> I'm trying out Git for the first time. -RO
