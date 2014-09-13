@@ -4,6 +4,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="libs/mockito-all-1.9.5.jar"/>
-	<classpathentry kind="lib" path="libs/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="libs/sqlite-jdbc4-3.8.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="libs/guava-18.0.jar"/>
+	<classpathentry kind="lib" path="libs/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="libs/guice-3.0/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="libs/Jackson/jackson-core-2.4.2.jar"/>
+	<classpathentry kind="lib" path="libs/jaxrs-ri/api/javax.ws.rs-api-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
