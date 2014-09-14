@@ -5,15 +5,18 @@
         <servlet-name>SoftwareSystemsEngineeringProject</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer
         </servlet-class>
+        <welcome-file-list>
+        <welcome-file>index.html</welcome-file> 
+    	</welcome-file-list>
         <init-param>
-             <param-name>jersey.config.server.provider.packages</param-name>
-             <param-value>SoftwareSystemsEngineeringProject</param-value>
+             <param-name>Reservations</param-name>
+             <param-value>main.java.reservations</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SoftwareSystemsEngineeringProject</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <servlet-name>Reservations</servlet-name>
+        <url-pattern>SoftwareSystemsEngineeringProject/reservations/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
