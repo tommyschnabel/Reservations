@@ -5,6 +5,11 @@ apply plugin: 'jetty'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile fileTree(dir: 'libs/Jackson', include: ['*.jar']);
+  compile fileTree(dir: 'libs/guice-3.0', include: ['*.jar'])
+  compile fileTree(dir: 'libs/jaxrs-ri/lib', include: ['*.jar'])
+  compile fileTree(dir: 'libs/jaxrs-ri/api', include: ['*.jar'])
+  compile fileTree(dir: 'libs/jaxrs-ri/ext', include: ['*.jar'])
 }
 
 eclipse.classpath.file {
