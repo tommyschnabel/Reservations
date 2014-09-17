@@ -1,13 +1,13 @@
-package test.java;
+package edu.spsu.swe3613.tests;
+
 
 import static org.junit.Assert.fail;
-import main.java.examples.ExampleObject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.google.inject.Inject;
+import edu.spsu.swe3613.examples.ExampleObject;
 
 public class ExampleTests {
 	

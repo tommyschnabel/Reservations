@@ -33,3 +33,7 @@ eclipse.project.file.beforeMerged { project ->
     project.natures.clear()
 }
 
+task copyToLib(type: Copy) {
+    into "$buildDir/output/lib"
+    from configurations.runtime
+}

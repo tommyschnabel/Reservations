@@ -1,4 +1,4 @@
-package main.java.examples;
+package edu.spsu.swe3613.examples;
 
 public interface ExampleObject {
 	//Interfaces are good when doing dependency injection because they allow you to expect certain methods out of 
