@@ -1,4 +1,4 @@
-package main.java.examples;
+package edu.spsu.swe3613.examples;
 
 import com.google.inject.Inject;
 

@@ -1,4 +1,4 @@
-package main.java.reservations;
+package edu.spsu.swe3613.reservations;
 
 import com.google.inject.AbstractModule;
 
