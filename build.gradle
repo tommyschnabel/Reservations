@@ -3,13 +3,21 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'jetty'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile fileTree(dir: 'libs/Jackson', include: ['*.jar']);
-  compile fileTree(dir: 'libs/guice-3.0', include: ['*.jar'])
-  compile fileTree(dir: 'libs/jaxrs-ri/lib', include: ['*.jar'])
-  compile fileTree(dir: 'libs/jaxrs-ri/api', include: ['*.jar'])
-  compile fileTree(dir: 'libs/jaxrs-ri/ext', include: ['*.jar'])
+  compile 'org.xerial:sqlite-jdbc:3.7.2'
+  compile 'org.mockito:mockito-all:1.9.5'
+  compile 'junit:junit:4.10'
+  compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-providers:2.4.2'
+  compile 'com.google.inject:guice:3.0'
+  compile 'com.sun.jersey:jersey-core:1.17.1'
+  compile 'com.sun.jersey:jersey-server:1.17.1'            
+  compile 'com.sun.jersey:jersey-servlet:1.17.1'
+  compile 'com.sun.jersey:jersey-client:1.17.1'
+  testCompile 'junit:junit:4.11'
 }
 
 eclipse.classpath.file {

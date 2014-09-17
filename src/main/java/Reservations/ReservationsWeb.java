@@ -9,6 +9,11 @@ public class ReservationsWeb {
 	@GET
 	@Path("test/")
 	public String test() {
+		return "the test, it works!";
+	}
+	
+	@GET
+	public String test2() {
 		return "it works!";
 	}
 	
