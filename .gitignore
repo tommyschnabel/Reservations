@@ -32,3 +32,8 @@ proguard/
 *.log
 
 /bin/
+
+# Project Files
+.settings/
+.classpath
+.project
