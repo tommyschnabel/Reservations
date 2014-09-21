@@ -1,1 +1,1 @@
-gradle-2.0/bin/gradle Test --stacktrace --debug
+gradle-2.0/bin/gradle clean Test --stacktrace --debug
