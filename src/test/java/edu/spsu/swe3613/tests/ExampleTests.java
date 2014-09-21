@@ -1,7 +1,6 @@
 package edu.spsu.swe3613.tests;
 
-
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,6 @@ import edu.spsu.swe3613.examples.ExampleObject;
 
 public class ExampleTests {
 	
-	private ExampleObject exampleObject;
 	private ExampleObject otherExample;
 	
 	public ExampleTests() {

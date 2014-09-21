@@ -1,1 +1,1 @@
-gradle-2.0/bin/gradle jettyRun
+gradle-2.0/bin/gradle clean jettyRun

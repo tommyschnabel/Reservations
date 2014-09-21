@@ -4,6 +4,7 @@
 
 <web-app>
   <display-name>SWE 3613 Project</display-name>
+  <welcome-file>index.html</welcome-file>
   <servlet>
     <servlet-name>Reservations</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -15,6 +16,20 @@
    </servlet>
   <servlet-mapping>
     <servlet-name>Reservations</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/api/Reservations</url-pattern>
   </servlet-mapping>
+  
+  <!-- <servlet>
+    <servlet-name>Client</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <init-param>
+        <param-name>com.sun.jersey.config.property.packages</param-name>
+        <param-value>edu.spsu.swe3613.client</param-value>
+    </init-param>
+	<load-on-startup>2</load-on-startup>
+   </servlet>
+  <servlet-mapping>
+    <servlet-name>Client</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping> -->
 </web-app>
