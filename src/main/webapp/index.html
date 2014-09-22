@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Home</title>
+<meta name="description" content="This page is home page that user can serch flight information!">
+<meta http-equiv="content-language" content="en"/>
+<meta http-equiv="Page-Enter" content="revealTrans(duration=5.0,transition=12)">
+<meta http-equiv="window-target" content="_top">
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+
+<body id="page1">
+
+<header>
+ <a href="index.html" id="logo"><img src="image/logo.png" width="180" height="45" alt="1" /></a>
+
+
+<div class="top_nav">
+<ul>
+							<li><a href="Register.html">Register</a></li>
+                          
+	  <li><a href="Login.html">Login</a></li>
+							
+	  </ul>
+    </div>
+<p>&nbsp;</p>
+</header>           
+                
+                       
+<div class="nav">
+                       <ul>
+							<li><a href="index.html">HOME</a></li>
+                            <li>|</li>
+							<li><a href="flight.html"> FLIGHT</a></li>
+                            <li>|</li>
+							<li><a href="index-3.html">CONTACTS</a></li>
+	  </ul>
+  </div>
+
+<div id="mainContent"></div>
+<div id="content"><img src="image/backgroudtop.png" width="90%" height="60%" />
+</div>
+ 
+</div>
+
+<div class="title">
+<h2> <img src="image/small flight.png" width="36" height="30" />Your Flight Planner</h2>
+</div>
+
+<div id="flightsearch"  >
+<form id="form1" action="#" method="post">
+
+<div class="radio"><input type="radio" name="name1" checked>
+  <span style="font-family: 'Lucida Console', Monaco, monospace">Round trip</span></div>
+<div class="radio"><input type="radio" name="name1">
+  <span style="font-family: 'Comic Sans MS', cursive">One way</span></div>
+<div class="radio"><input type="radio" name="name1">
+  <span style="font-family: 'Comic Sans MS', cursive">Multiple destinations</span></div>
+
+
+          		<div class="field">
+					<label for="flight-from">Flying from:</label>
+                    <input type="text" id="flight-from"  class="input-text" placeholder="City name" autocomplete="off" />
+                </div>
+				<div class="field">
+					<label for="flight-to">Flying to:</label>
+                    <input type="text" id="flight-to" class="input-text" placeholder="City name" autocomplete="off">
+                </div>
+				<div class="field half">
+					<label for="flight-depart">Depart:</label>
+                    <input type="date" id="flight-depart" name="csserdate"class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+                </div>
+				<div class="field half even">
+					<label for"flight-return">Return:</label>
+                    <input type="date" id="flight-return" name="csserdate"class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+                </div>
+
+<!--<div class="field">
+<div class="radio"><input type="radio" name="name2" checked>Economy cabin</div>
+<div class="radio end"><input type="radio" name="name2">Business</div>
+</div>-->
+
+				<div class="field half">
+					<label for="flight-passengers">Passengers:</label>
+					<select id="flight-passengers">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+					</select>
+				</div>
+
+<button type="submit" class="submit">Search</button>		
+<br class="clear" />					
+
+</form>
+</div>
+</div>
+
+</div>
+
+
+<div id="footer"><span style="font-family:'Comic Sans MS', cursive; color:#666; position:absolute; margin-left:40%; width: 315px; height: 24px;">Copyright &copy;2014 www.webreservation.com</span></div>
+</div>
+</div>
+</div>
+</body>
+</html>
