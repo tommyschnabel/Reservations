@@ -9,7 +9,7 @@ Assumptions:	Run from command prompt using SQLite3
 -- Turn on headers, column mode, and adjust column width for better view
 .header on
 .mode column
-.width 13
+.width 25
 
 -- Select database file
 .open WebReserve.db
