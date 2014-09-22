@@ -94,10 +94,10 @@ create table Flight(
 	AirlineName	text not null,
 	StartLocation	text not null,
 	Destination	text not null,
-	Mileage		real not null,
+	Mileage		numeric not null,
 	RemainingFirstClass integer default 30,
 	RemainingEconomy integer default 70,
-	Price		real default 0,
+	Price		numeric default 0,
 	foreign key (Time) references Price(Time)
 		on delete cascade on update cascade,
 	foreign key (AirlineName) references Airline(Name)
@@ -131,9 +131,10 @@ create table Service(
 	Type		text,
 	Name		text,
 	Description	text,
+	URL		text,
 	
 	foreign key (AdminID) references MarketingAdmin(ID)
 		on delete cascade on update cascade
 	);
 insert into Service values
-	(NULL,'Chicago','admin','Hotel','Holiday Inn','A nice yet affordable place to stay');
+	(NULL,'Chicago','admin','Hotel','Holiday Inn','A nice yet affordable place to stay','www.holidayinn.com');
