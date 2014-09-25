@@ -1,5 +1,6 @@
 package edu.spsu.swe3613.reservations;
 
-public interface ReservationsDao {
+import java.util.List;
 
+public interface ReservationsDao {
 }
