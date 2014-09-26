@@ -1,5 +1,9 @@
 package edu.spsu.swe3613.examples;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import com.google.inject.AbstractModule;
 
 public class ExampleModule extends AbstractModule {
@@ -16,6 +20,12 @@ public class ExampleModule extends AbstractModule {
 		//Any time we look for ExampleObject, it will give us ExampleB
 		//Usually we'll only have one of these
 		bind(ExampleObject.class).to(ExampleB.class);
+		
+		try {
+			bind(Connection.class).toInstance(DriverManager.getConnection("jdbc:sqlite:ExampleWebReserve.db"));
+		} catch (SQLException e) {
+			System.out.print(e.getMessage());
+		}
 		
 		//This allows us to easily change whole files (we will use it for initial setup)
 		//Once we have a real implementation we can then change what is injected
