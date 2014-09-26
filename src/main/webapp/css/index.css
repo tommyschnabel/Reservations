@@ -1,0 +1,224 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family:"Comic Sans MS", cursive;
+	font-size:14px;
+	margin:0;
+	color: #CCC;
+	}
+
+header{
+	width:100%;
+	overflow:hidden;
+    height:100px;
+	background:#3c445e; 
+	}
+
+header img{
+	position:absolute;
+	top:13px;
+	left:26px;
+	z-index:10px;
+}
+
+header .top_nav {
+	position:absolute;
+	left:994px;
+	top:11px;
+	margin:5px;
+	padding:5px;
+	overflow:hidden;
+	width: 246px;
+	}
+	
+header .top_nav li {
+	float:left;
+	padding-right:30px;
+	list-style-type:none;
+	text-decoration:none;
+	margin-right:20px; 
+	padding-top:2px;
+	padding-bottom:3px;
+	font-family: 'Open Sans', sans-serif;
+	}
+	
+header .top_nav ul li{
+	text-decoration:none;
+    }
+
+
+header .top_nav ul li a{
+	text-decoration:none;
+	color:white;
+	font-family:"Comic Sans MS", cursive;
+	}	
+	
+header .top_nav ul li a:hover{
+	color:white;
+	background-color:#b18475;
+	}
+
+
+	
+/*#menu {
+	backgroud:#FFF;
+	width:100%;
+	height:10px;}*/	
+
+.nav{
+	margin:0 auto;
+	position:absolute;
+	top:74px;
+	width:100%;
+	background-color:white;
+	left: -1px;
+	height: 41px;
+	}
+.nav ul{
+	list-style-type:none;
+	margin-left:40%;
+	padding:0px;
+	text-decoration:none;
+	}
+.nav ul li{
+	float:left;
+	border:none;
+	background-color:white;
+	padding-left:10px;
+	padding-right:10px;
+	text-decoration:none;
+	color: #666;	
+	}
+.nav ul li a{
+	text-decoration:none;
+	color:#A39481;
+	font-family:"Comic Sans MS", cursive;
+	}
+
+.nav ul li a:hover {
+	color:#736a5f;
+	background-color:#febd84;
+	}
+
+#content{
+	position:absolute;
+	z-index:10px;
+	left:130px;
+	top:140px;
+	width: 1220px;
+	height: 600px;
+	}
+
+/*#menu li {
+	float:left;
+	padding-right:30px;
+	list-style:none;
+	margin-right:20px; 
+	padding-top:2px;
+	padding-bottom:3px}	*/
+
+#mainContent { 
+	height:500px; 
+	background:url(../image/backgroud.png) no-repeat;
+	margin-bottom:50px;
+	background-position: 100% 100%;
+	z-index:8px;
+	}
+
+.title{
+	position:absolute;
+	top:160px;
+	left:362px;
+	color:#FFF;
+	z-index:20px;
+	font-family:"Comic Sans MS", cursive;
+	height: 68px;
+	}	
+	
+#flightsearch{
+	position:absolute;
+	top:240px;
+	left:370px;
+	width:700px;
+	height:auto;
+	
+	}
+
+#flightsearch .radio{
+	width:220px;
+	float:left}
+	
+#flightsearch .input-cal{ 
+	background:#fff url(../image/date1.png) no-repeat 97% 1px; }
+
+label{
+	display:block; 
+	font-family:"Comic Sans MS", cursive;
+	color:#ccc;
+	font-size:14px; 
+	margin:0 0 5px; 
+	}
+	
+#flightsearch  form .submit{ 
+	position:absolute; 
+	top:100px; 
+	right:98px; 
+	margin:0; 
+	background:#F59738; 
+	color:#fff; 
+	font-weight:700; 
+	border:0 none; 
+	padding:10px 20px; 
+	cursor:pointer; 
+	border-radius:0; }
+	
+#flightsearch  form .submit:hover{ 
+	background:#FAAC5F; }
+	
+#flightsearch .field{ 
+	width:280px; 
+	margin:0 60px 20px 0; 
+	float:left; }
+
+#flightsearch .field.half{ 
+	width:120px; 
+	margin-right:20px; } 
+
+#flightsearch .field.even{ 
+	margin-right:80px; } 
+	
+#flightsearch .field .input-text{ 
+	width:260px; }
+
+#flightsearch .field.half .input-text{ 
+	width:120px; }
+	
+#searchflight {
+	position:absolute;
+	top:120px;
+	left:100px;
+	border-top-color:#CCC;
+	margin:20px 60px 20px 0;}
+	
+#searchflight .input-text{
+	height:30px;
+	width:210px;
+	}
+	
+#searchresult{
+	position:absolute;
+	width:100%;
+	heitht:auto;
+	top:300px;
+	background:#CCC;
+	z-index:20px;}
+ 	
+.Login{
+	position:absolute;
+	top:130px;
+	}	
+#footer { 
+	height:30px; 
+	background:#ffffff;
+	}
