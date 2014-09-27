@@ -1,49 +1,50 @@
 package edu.spsu.swe3613.reservations;
 
 import java.util.List;
+import java.sql.SQLException;
 
 public interface ReservationsDao {
 	
 	//Methods for common CRUD operations for each table in the database
 	
 	//Methods for Customer
-	public List<Customer> getAllCustomers();
-	public Customer getCustomerById(String customerId);
-	public void addCustomer(Customer customer);
-	public void updateCustomer(Customer customer);
-	public void deleteCustomer(Customer customer);
+	public List<Customer> getAllCustomers() throws SQLException;
+	public Customer getCustomerById(String customerId) throws SQLException;
+	public void addCustomer(Customer customer) throws SQLException;
+	public void updateCustomer(Customer customer) throws SQLException;
+	public void deleteCustomer(Customer customer) throws SQLException;
 	
 	//Methods for Reservation
-	public List<Reservation> getAllReservations();
-	public Reservation getReservationById(int reservationId);
-	public void addReservation(Reservation reservation);
-	public void updateReservation(Reservation reservation);
-	public void deleteReservation(Reservation reservation);
+	public List<Reservation> getAllReservations() throws SQLException;
+	public Reservation getReservationById(int reservationId) throws SQLException;
+	public void addReservation(Reservation reservation) throws SQLException;
+	public void updateReservation(Reservation reservation) throws SQLException;
+	public void deleteReservation(Reservation reservation) throws SQLException;
 	
 	//Methods for Flight
-	public List<Flight> getAllFlights();
-	public Flight getFlightById(int flightId);
-	public void addFlight(Flight flight);
-	public void updateFlight(Flight flight);
-	public void deleteFlight(Flight flight);
+	public List<Flight> getAllFlights() throws SQLException;
+	public Flight getFlightById(int flightId) throws SQLException;
+	public void addFlight(Flight flight) throws SQLException;
+	public void updateFlight(Flight flight) throws SQLException;
+	public void deleteFlight(Flight flight) throws SQLException;
 	//need methods to calculate and set Price and Distance, not really sure here
-	public void setFlightPrice(Flight flight, float price);		
-	public void setFlightDistance(Flight flight, float distance); 
+	public void setFlightPrice(Flight flight, float price) throws SQLException;		
+	public void setFlightDistance(Flight flight, float distance) throws SQLException; 
 	
 	
 	
 	//Methods for AirlineAdmin
-	public List<AirlineAdmin> getAllAirlineAdmin();
-	public AirlineAdmin getAirlineAdminById(String userId);
-	public void addAirlineAdmin(AirlineAdmin admin);
-	public void updateAirlineAdmin(AirlineAdmin admin);
-	public void deleteAirlineAdmin(AirlineAdmin admin);
+	public List<AirlineAdmin> getAllAirlineAdmin() throws SQLException;
+	public AirlineAdmin getAirlineAdminById(String userId) throws SQLException;
+	public void addAirlineAdmin(AirlineAdmin admin) throws SQLException;
+	public void updateAirlineAdmin(AirlineAdmin admin) throws SQLException;
+	public void deleteAirlineAdmin(AirlineAdmin admin) throws SQLException;
 		
 	// The data stored in the Airline, Price, and Mileage isn't going to change for
 	// release 1, so probably don't need CRUD but just gets that return objects...I think
-	public Airline getAirline(String airlineName);
-	public Float getPrice(String time);
-	public Integer getDistance(String start, String destination);
+	public Airline getAirline(String airlineName) throws SQLException;
+	public Float getPrice(String time) throws SQLException;
+	public Integer getDistance(String start, String destination)throws SQLException;
 	
 	// TODO finish classes for Customer, Flight, Reservation, AirlineAdmin, Airline, Price, Mileage
 }

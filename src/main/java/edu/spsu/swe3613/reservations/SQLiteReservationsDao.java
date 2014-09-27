@@ -1,8 +1,26 @@
 package edu.spsu.swe3613.reservations;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.List;
 
+import com.google.inject.Inject;
+
+import edu.spsu.swe3613.examples.User;
+
 public class SQLiteReservationsDao implements ReservationsDao {
+	
+private Connection connection;
+	
+	//We inject the connection so we can switch it up if we need to
+	//And if we do that then we don't have to switch it in multiple places
+	//Just in the module
+	@Inject
+	public SQLiteReservationsDao(Connection connection) {
+		this.connection = connection;
+	}
 
 	@Override
 	public List<Customer> getAllCustomers() {
@@ -11,15 +29,37 @@ public class SQLiteReservationsDao implements ReservationsDao {
 	}
 
 	@Override
-	public Customer getCustomerById(String customerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer getCustomerById(String customerId) throws SQLException {
+		String query =  "SELECT" //Here we make our query
+				+		"	Customer.Username		id"
+				+ 		"	Customer.FirstName		fname"
+				+		"	Customer.LastName		lname"
+				+		"	Customer.Email			email"
+				+		"	Customer.Password		password"
+				
+				+		"  FROM schema.Customer Customer"
+				+	    " WHERE Customer.Username = %s";
+		String.format(query, customerId); //Here we replace '%s with the userId that was passed in
+		
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(query); //Here we execute the query and get back the results
+		
+		//Now we make our User and then return it
+		Customer resultCustomer = new Customer(rs.getString("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("email"), rs.getString("password"));
+		return resultCustomer;
 	}
 
 	@Override
-	public void addCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+	public void addCustomer(Customer customer) throws SQLException {
+		String query = 	"INSERT into Customer Values"
+				+	"("	+	customer.getId()	+	","
+				+			customer.getFName()	+	"," 
+				+			customer.getLName()	+	","
+				+			customer.getEmail()	+	","
+				+			customer.getPassword()+	")";
 		
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(query);
 	}
 
 	@Override
