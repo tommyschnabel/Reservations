@@ -42,8 +42,8 @@ public interface ReservationsDao {
 	// The data stored in the Airline, Price, and Mileage isn't going to change for
 	// release 1, so probably don't need CRUD but just gets that return objects...I think
 	public Airline getAirline(String airlineName);
-	public Price getPrice(String time);
-	public Distance getDistance(String start, String destination);
+	public Float getPrice(String time);
+	public Integer getDistance(String start, String destination);
 	
 	// TODO finish classes for Customer, Flight, Reservation, AirlineAdmin, Airline, Price, Mileage
 }
