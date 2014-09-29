@@ -1,0 +1,74 @@
+<div id="mainContent"></div>
+<div id="content"><img src="../image/backgroundtop.png" width="90%" height="60%" />
+ 
+	<div class="title">
+	<h2> <img src="../image/small%20flight.png" width="36" height="30" />Your Flight Planner</h2>
+	</div>
+
+	<div id="flightsearch"  >
+		<form id="form1" action="#" method="post">
+		
+		<div class="radio">
+			<input type="radio" name="name1" checked/>
+		    <span style="font-family: 'Lucida Console', Monaco, monospace">
+		  		Round trip
+		  	</span>
+		</div>
+		
+		<div class="radio">
+			<input type="radio" name="name1"/>
+			<span style="font-family: 'Comic Sans MS', cursive">
+				One way
+			</span>
+		</div>
+		<div class="radio"><input type="radio" name="name1">
+		    <span style="font-family: 'Comic Sans MS', cursive">
+		        Multiple destinations
+		    </span>
+		</div>
+		
+		
+		<div class="field">
+			<label for="flight-from">Flying from:</label>
+		    <input type="text" id="flight-from"  class="input-text" placeholder="City name" autocomplete="off" />
+		</div>
+		<div class="field">
+			<label for="flight-to">Flying to:</label>
+		    <input type="text" id="flight-to" class="input-text" placeholder="City name" autocomplete="off">
+		</div>
+		<div class="field half">
+			<label for="flight-depart">Depart:</label>
+		    <input type="date" id="flight-depart" name="csserdate"class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+		</div>
+		<div class="field half even">
+			<label for="flight-return">Return:</label>
+		    <input type="date" id="flight-return" name="csserdate"class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+		</div>
+		
+		<!-- Looks like this is for release 2 -->
+		<!--<div class="field">
+		<div class="radio"><input type="radio" name="name2" checked>Economy cabin</div>
+		<div class="radio end"><input type="radio" name="name2">Business</div>
+		</div>-->
+		
+		<div class="field half">
+			<label for="flight-passengers">Passengers:</label>
+			<select id="flight-passengers">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+				<option>6</option>
+				<option>7</option>
+				<option>8</option>
+				<option>9</option>
+			</select>
+		</div>
+		
+		<button type="submit" class="submit">Search</button>		
+		<br class="clear" />					
+		
+		</form>
+	</div>
+</div>
