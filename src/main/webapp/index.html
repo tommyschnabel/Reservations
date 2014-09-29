@@ -3,39 +3,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="reservationsApp">
 	<head>
 		<title>Reservations</title>
-        <script src="angular/angularjs_1.2.25.js"></script>
-        <script src="angular/angular-routes-1.2.25.js"></script>
+		<script src="angular/angularjs_1.2.25.js"></script>
+		<script src="angular/angular-routes-1.2.25.js"></script>
 		<script src="app.js"></script>
-		<link href="css/index.css"></link>
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'></link>
+        <script src="controllers.js"></script>
+        <link href="css/index.css" rel="stylesheet" type="text/css" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
-        
-        <!-- HEADER -->
-        <div ng-controller="headerController">
-            <header>
-              <a href="index.html" id="logo"><img src="image/logo.png" width="180" height="45" alt="1" />
-              <div class="top_nav">
-                <ul>
-                    <li><a href="javascript:changePage('/register');">Register</a></li>
-                    <li><a href="javascript:changePage('/login');">Login</a></li>
-                </ul>
-              </div>
-              <p>&nbsp;</p>
-            </header>           
+	
+	<!-- HEADER -->
+	<!-- Static, doesn't change per page -->
+    <div ng-controller="headerController">
+      <header>
+	    <a href="/home" id="logo"><img src="image/logo.png" width="180" height="45" alt="1" /></a>
+        <div class="top_nav">
+          <ul>
+		    <li><a href="#/register">Register</a></li>
+	        <li><a href="#/login">Login</a></li>
+		  </ul>
+	    </div>
+	    <p>&nbsp;</p>
+	   </header>           
 
-            <div class="nav">
-                <ul>
-                    <li><a href="javascript:changePage('/home');">HOME</a></li>
-                    <li>|</li>
-                    <li><a href="javascript:changePage('/flight');"> FLIGHT</a></li>
-                    <li>|</li>
-                    <li><a href="javascript:changePage('/contacts')">CONTACTS</a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- END HEADER -->
-        
+	   <div class="nav">
+         <ul>
+			<li>
+				<a href="#/home">HOME</a>
+			</li>
+            <li>|</li>
+			<li>
+				<a href="#/flight"> FLIGHT</a>
+			</li>
+            <li>|</li>
+			<li>
+				<a href="#/contacts">CONTACTS</a>
+			</li>
+	     </ul>
+       </div>
+     </div>
+       <!-- END HEADER -->
+       
        <!-- The actual page gets put here by Angular, which looks for the `ng-view` attribute -->
 	   <div ng-view></div>
 	   
@@ -47,6 +55,5 @@
 			</span>
 		</div>
 		<!-- END FOOTER -->
-        
 	</body>
 </html>
