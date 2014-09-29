@@ -1,7 +1,33 @@
 package edu.spsu.swe3613.reservations;
 
 public class Reservation {
-	//TODO actually make this not empty
-	//TODO move this and the methods in the dao to a new module
-	//	   if it is in fact for the car/hotel/etc. reservations
+	private final int id;
+	private String userId;
+	private int flightId;
+	
+	public Reservation(int id, String userId, int flightId){
+		this.id = id;
+		this.userId = userId;
+		this.flightId = flightId;
+	}
+
+	public int getId(){
+		return id;
+	}
+	
+	public String getUserId(){
+		return userId;
+	}
+	
+	public void setUserId(String userId){
+		this.userId = userId;
+	}
+	
+	public int getFlightId(){
+		return flightId;
+	}
+	
+	public void setFlightId(int flightId){
+		this.flightId = flightId;
+	}
 }
