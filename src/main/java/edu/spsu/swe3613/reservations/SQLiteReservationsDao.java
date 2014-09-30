@@ -73,8 +73,8 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy'hh:mm a");
 	@Override
 	public void addCustomer(Customer customer) throws SQLException {
 		String query = 	"INSERT"
-				+ 		" 	INTO Customer VALUES("
-				+			"NULL"					+	","
+				+ 		" INTO Customer Values("
+				+ 			customer.getId()		+	","
 				+			customer.getFName()		+	"," 
 				+			customer.getLName()		+	","
 				+			customer.getEmail()		+	","
