@@ -7,10 +7,10 @@ exampleApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/firstPage', {
-        templateUrl: 'example/firstPage.html',
+        templateUrl: 'firstPage.html',
         controller: 'myExampleController'
       }).when('/secondPage', {
-        templateUrl: 'example/secondPage.html',
+        templateUrl: 'secondPage.html',
         controller: 'mySecondExampleController'
       }).otherwise({
         redirectTo: '/firstPage'
