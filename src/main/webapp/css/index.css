@@ -127,8 +127,8 @@ header .top_nav ul li a:hover{
 
 .title{
 	position:absolute;
-	top:160px;
-	left:362px;
+	top:50px;
+	left:255px;
 	color:#FFF;
 	z-index:20px;
 	font-family:"Comic Sans MS", cursive;
@@ -137,8 +137,8 @@ header .top_nav ul li a:hover{
 	
 #flightsearch{
 	position:absolute;
-	top:240px;
-	left:370px;
+	top:125px;
+	left:255px;
 	width:700px;
 	height:auto;
 	
@@ -390,8 +390,8 @@ label{
 	
 	}
 	
-#footer { 
+/* #footer { 
 	height:30px; 
 	background:#ffffff;
-    
-}
+	
+} */
