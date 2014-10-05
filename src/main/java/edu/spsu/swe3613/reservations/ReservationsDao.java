@@ -1,5 +1,6 @@
 package edu.spsu.swe3613.reservations;
 
+import java.text.ParseException;
 import java.util.List;
 import java.sql.SQLException;
 
@@ -22,16 +23,12 @@ public interface ReservationsDao {
 	public void deleteReservation(Reservation reservation) throws SQLException;
 	
 	//Methods for Flight
-	public List<Flight> getAllFlights() throws SQLException;
-	public Flight getFlightById(int flightId) throws SQLException;
+	public List<Flight> getAllFlights() throws SQLException, ParseException;
+	public Flight getFlightById(int flightId) throws SQLException, ParseException;
 	public void addFlight(Flight flight) throws SQLException;
 	public void updateFlight(Flight flight) throws SQLException;
 	public void deleteFlight(Flight flight) throws SQLException;
-	//need methods to calculate and set Price and Distance, not really sure here
-	public void setFlightPrice(Flight flight, float price) throws SQLException;		
-	public void setFlightDistance(Flight flight, float distance) throws SQLException; 
-	
-	
+		
 	
 	//Methods for AirlineAdmin
 	public List<AirlineAdmin> getAllAirlineAdmin() throws SQLException;
@@ -43,8 +40,8 @@ public interface ReservationsDao {
 	// The data stored in the Airline, Price, and Mileage isn't going to change for
 	// release 1, so probably don't need CRUD but just gets that return objects...I think
 	public Airline getAirline(String airlineName) throws SQLException;
-	public Float getPrice(String time) throws SQLException;
-	public Integer getDistance(String start, String destination)throws SQLException;
+	public float getPrice(String time) throws SQLException;
+	public float getDistance(String start, String destination)throws SQLException;
 	
-	// TODO finish classes for Customer, Flight, Reservation, AirlineAdmin, Airline, Price, Mileage
+	// TODO finish classes for Customer, Flight, Reservation, AirlineAdmin, Airline, Price, Distance
 }
