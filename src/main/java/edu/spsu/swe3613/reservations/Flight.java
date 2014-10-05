@@ -1,11 +1,9 @@
 package edu.spsu.swe3613.reservations;
 
-
 import java.sql.SQLException;
-//import javax.ws.rs.core.Response;
-//import javax.ws.rs.core.Response.ResponseBuilder;
 
 public class Flight {
+<<<<<<< HEAD
 	private int id;
 	private String date;
 	private String airline;
@@ -27,6 +25,15 @@ public class Flight {
 	public Flight(){
 		
 	}
+=======
+	private String ID;
+	private String Date; //This gives us Year, Month, Day, Hour, and Minutes.
+	
+	private float Price;
+	private String Destination;
+	private String Starting_City;
+	private ReservationsDao DAO;
+>>>>>>> Search by price and by date added
 	
 	public Flight(String date, String airline, String start, String destination)
 	{
@@ -36,6 +43,7 @@ public class Flight {
 		this.destination = destination;
 	}
 	
+<<<<<<< HEAD
 	
 	public Flight(int id, String date, String airline, String start, String destination,
 				  float distance, int firstClass, int economy, float price) throws SQLException
@@ -151,6 +159,48 @@ public class Flight {
 		}
 		
 		return false;
+=======
+	public Flight(String id, String date, float price, String destination, String start)
+	{
+		this.ID = id;
+		
+		this.Date = date; //Date and time are now saved together.
+		
+		this.Price = price;
+		this.Destination = destination;
+		this.Starting_City = start;
+	}
+	
+	public String getID(){
+	
+		return ID;
+	}
+	
+	public String getDate(){
+		
+		return Date;
+	}
+	
+	public float getPrice(){
+		
+		return Price;
+	}
+	
+	public String getDestination(){
+		
+		return Destination;
+	}
+	
+	public String getStarting_City(){
+		
+		return Starting_City;
+	}
+	
+	@Inject
+	public Flight(ReservationsDao dao){
+		this.DAO = dao;
+		
+>>>>>>> Search by price and by date added
 	}
 
 
