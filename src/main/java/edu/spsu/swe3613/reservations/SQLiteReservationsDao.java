@@ -1,17 +1,16 @@
 package edu.spsu.swe3613.reservations;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.ArrayList;
-
-import com.google.inject.Inject;
 
 public class SQLiteReservationsDao implements ReservationsDao {
 	
@@ -19,13 +18,12 @@ private Connection connection;
 
 private DateFormat df = new SimpleDateFormat("MM/dd/yy'hh:mm a");
 
-	
-	//We inject the connection so we can switch it up if we need to
-	//And if we do that then we don't have to switch it in multiple places
-	//Just in the module
-	@Inject
-	public SQLiteReservationsDao(Connection connection) {
-		this.connection = connection;
+	public SQLiteReservationsDao() {
+		try {
+			this.connection = DriverManager.getConnection("jdbc:sqlite:WebReserve.db");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Override

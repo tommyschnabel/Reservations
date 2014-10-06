@@ -18,6 +18,7 @@ dependencies {
   compile 'com.sun.jersey:jersey-server:1.17.1'            
   compile 'com.sun.jersey:jersey-servlet:1.17.1'
   compile 'com.sun.jersey:jersey-client:1.17.1'
+  compile 'jetty:javax.servlet:5.1.12'
   testCompile 'junit:junit:4.11'
 }
 
