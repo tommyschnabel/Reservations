@@ -5,12 +5,12 @@
 <web-app>
   <display-name>SWE 3613 Project</display-name>
   <welcome-file>index.html</welcome-file>
-  <servlet>
+<servlet>
     <servlet-name>Reservations</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
     <init-param>
         <param-name>com.sun.jersey.config.property.packages</param-name>
-        <param-value>edu.spsu.swe3613.reservations</param-value>
+        <param-value>edu.spsu.swe3613.reservations;org.codehaus.jackson.jaxrs;</param-value>
     </init-param>
 	<load-on-startup>1</load-on-startup>
    </servlet>
@@ -19,17 +19,17 @@
     <url-pattern>/api/Reservations</url-pattern>
   </servlet-mapping>
   
-  <!-- <servlet>
-    <servlet-name>Client</servlet-name>
+  <servlet>
+    <servlet-name>Login</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
     <init-param>
         <param-name>com.sun.jersey.config.property.packages</param-name>
-        <param-value>edu.spsu.swe3613.client</param-value>
+        <param-value>edu.spsu.swe3613.login;org.codehaus.jackson.jaxrs;</param-value>
     </init-param>
 	<load-on-startup>2</load-on-startup>
    </servlet>
   <servlet-mapping>
-    <servlet-name>Client</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping> -->
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/api/Login</url-pattern>
+  </servlet-mapping>
 </web-app>
