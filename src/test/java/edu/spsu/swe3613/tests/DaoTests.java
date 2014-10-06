@@ -2,13 +2,10 @@ package edu.spsu.swe3613.tests;
 
 import static org.junit.Assert.fail;
 
-import org.junit.Test;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
 
 import org.junit.Before;
 import org.junit.Test;

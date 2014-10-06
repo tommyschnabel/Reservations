@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 
 public class DependencyInjectionExample {
 	
+	@SuppressWarnings("unused")
 	private ExampleObject exampleObject;
 
 	//This constructor should never be called, except when unit testing
