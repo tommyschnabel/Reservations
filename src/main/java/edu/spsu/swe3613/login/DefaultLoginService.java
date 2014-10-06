@@ -6,9 +6,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.google.inject.Inject;
+import com.sun.jersey.api.core.InjectParam;
 
 import edu.spsu.swe3613.reservations.Customer;
 import edu.spsu.swe3613.reservations.ReservationsDao;
+import edu.spsu.swe3613.reservations.SQLiteReservationsDao;
 
 public class DefaultLoginService implements LoginService {
 	
@@ -16,7 +18,7 @@ public class DefaultLoginService implements LoginService {
 	private ReservationsDao reservationsDao;
 	
 	@Inject
-	public DefaultLoginService(LoginDao loginDao, ReservationsDao reservationsDao) {
+	public DefaultLoginService(@InjectParam SqLiteLoginDao loginDao, @InjectParam SQLiteReservationsDao reservationsDao) {
 		this.loginDao = loginDao;
 		this.reservationsDao = reservationsDao;
 	}

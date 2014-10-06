@@ -5,7 +5,23 @@
 <web-app>
   <display-name>SWE 3613 Project</display-name>
   <welcome-file>index.html</welcome-file>
-<servlet>
+  
+  <filter>
+    <filter-name>guice-filter</filter-name>
+    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+    <async-supported>true</async-supported>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>guice-filter</filter-name>
+    <url-pattern></url-pattern>
+  </filter-mapping>
+
+  <listener>
+    <listener-class>edu.spsu.swe3613.main.Main</listener-class>
+  </listener>
+
+  <servlet>
     <servlet-name>Reservations</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
     <init-param>
@@ -27,9 +43,10 @@
         <param-value>edu.spsu.swe3613.login;org.codehaus.jackson.jaxrs;</param-value>
     </init-param>
 	<load-on-startup>2</load-on-startup>
-   </servlet>
+ </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/api/Login</url-pattern>
   </servlet-mapping>
+
 </web-app>
