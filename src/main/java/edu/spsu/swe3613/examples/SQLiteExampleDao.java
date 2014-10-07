@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.google.inject.Inject;
-import com.sun.jersey.api.core.InjectParam;
 
 public class SQLiteExampleDao implements ExampleDao {
 	private Connection connection;
@@ -15,7 +14,7 @@ public class SQLiteExampleDao implements ExampleDao {
 	//And if we do that then we don't have to switch it in multiple places
 	//Just in the module
 	@Inject
-	public SQLiteExampleDao(@InjectParam Connection connection) {
+	public SQLiteExampleDao(Connection connection) {
 		this.connection = connection;
 	}
 

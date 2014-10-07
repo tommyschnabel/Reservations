@@ -6,7 +6,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import com.google.inject.Inject;
-import com.sun.jersey.api.core.InjectParam;
 
 @Path("login/")
 public class LoginWeb {
@@ -14,7 +13,7 @@ public class LoginWeb {
 	private DefaultLoginService loginService;
 
 	@Inject
-	public LoginWeb(@InjectParam DefaultLoginService loginService) {
+	public LoginWeb(DefaultLoginService loginService) {
 		this.loginService = loginService;
 	}
 
@@ -27,6 +26,7 @@ public class LoginWeb {
 	@Path("test/")
 	@Produces("text/plain")
 	public String test() {
+		System.out.println("it got to the server");
 		return "works";
 	}
 	

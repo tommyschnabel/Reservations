@@ -5,17 +5,6 @@
 <web-app>
   <display-name>SWE 3613 Project</display-name>
   <welcome-file>index.html</welcome-file>
-  
-  <filter>
-    <filter-name>guice-filter</filter-name>
-    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
-    <async-supported>true</async-supported>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>guice-filter</filter-name>
-    <url-pattern></url-pattern>
-  </filter-mapping>
 
   <listener>
     <listener-class>edu.spsu.swe3613.main.Main</listener-class>
@@ -28,11 +17,11 @@
         <param-name>com.sun.jersey.config.property.packages</param-name>
         <param-value>edu.spsu.swe3613.reservations;org.codehaus.jackson.jaxrs;</param-value>
     </init-param>
-	<load-on-startup>1</load-on-startup>
+	<load-on-startup>3</load-on-startup>
    </servlet>
   <servlet-mapping>
     <servlet-name>Reservations</servlet-name>
-    <url-pattern>/api/Reservations</url-pattern>
+    <url-pattern>/api/reservations</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -43,10 +32,10 @@
         <param-value>edu.spsu.swe3613.login;org.codehaus.jackson.jaxrs;</param-value>
     </init-param>
 	<load-on-startup>2</load-on-startup>
- </servlet>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
-    <url-pattern>/api/Login</url-pattern>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
 
 </web-app>
