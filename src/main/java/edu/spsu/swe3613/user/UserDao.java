@@ -1,9 +1,10 @@
-package edu.spsu.swe3613.login;
+package edu.spsu.swe3613.user;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
-public interface LoginDao {
+public interface UserDao {
 
 	/**
 	 * 
@@ -13,4 +14,11 @@ public interface LoginDao {
 	 * @throws SQLException Thrown if something goes wrong
 	 */
 	public Boolean addOrUpdateLogin(String email, Timestamp loginTime) throws SQLException;
+	
+	//Methods for Customer
+	public List<User> getAllUsers() throws SQLException;
+	public User getUserById(Integer userId) throws SQLException;
+	public void addUser(User user) throws SQLException;
+	public void updateUser(User user) throws SQLException;
+	public void deleteUser(User user) throws SQLException;
 }

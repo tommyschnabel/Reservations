@@ -4,5 +4,5 @@ import java.sql.SQLException;
 
 public interface ExampleDao {
 	
-	public User getUserById(Integer userId) throws SQLException; 
+	public ExampleUser getUserById(Integer userId) throws SQLException; 
 }

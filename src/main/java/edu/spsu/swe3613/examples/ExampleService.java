@@ -14,7 +14,7 @@ public class ExampleService implements Service {
 	}
 
 	@Override
-	public User getUserById(Integer userId) {
+	public ExampleUser getUserById(Integer userId) {
 		
 		if (userId == null) {
 			return null;

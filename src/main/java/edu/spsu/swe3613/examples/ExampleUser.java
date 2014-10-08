@@ -1,11 +1,11 @@
 package edu.spsu.swe3613.examples;
 
-public class User {
+public class ExampleUser {
 
 	private final Integer id;
 	private String name;
 	
-	public User(Integer id) {
+	public ExampleUser(Integer id) {
 		this.id = id;
 	}
 
