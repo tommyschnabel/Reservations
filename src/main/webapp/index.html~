@@ -41,6 +41,7 @@
 			</li>
 	     </ul>
        </div>
+     	<button ng-click="testJackson()">test jackson</button>
      </div>
      
        <!-- END HEADER -->

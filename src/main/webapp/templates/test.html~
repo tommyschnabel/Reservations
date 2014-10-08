@@ -1,0 +1,3 @@
+<button ng-click="testJackson()">test jackson</button>
+<br>
+<div>Errors: {{errorMessages}}</div>

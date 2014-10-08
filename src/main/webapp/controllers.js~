@@ -47,7 +47,7 @@ controllers.controller('testController', ['$scope', '$http',
 			
 		    $scope.testJackson = function() {
 				$http({ url: 'http://localhost:8080/reservations/api/login/', 
-					method: 'PUT', 
+					method: 'POST', 
 					data: { 
 						email: 'fake@fakemail.org', 
 						password: 'password'

@@ -1,10 +1,10 @@
 package edu.spsu.swe3613.login;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 @Path("login/")
 public class LoginWeb {
@@ -16,17 +16,10 @@ public class LoginWeb {
 		this.loginService = loginService;
 	}
 
-	@POST
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean login(LoginParams loginParams) {
 		return loginService.login(loginParams);
-	}
-	
-	@GET
-	@Path("test/")
-	@Produces("text/plain")
-	public String test() {
-		System.out.println("it got to the server");
-		return "works";
 	}
 	
 }

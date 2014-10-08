@@ -11,9 +11,6 @@ angular.module('reservationsApp', ['ngRoute', 'reservationsControllers'])
           }).when('/register', {
               templateUrl: 'templates/register.html',
               controller: 'registerController'
-          }).when('/test', {
-              templateUrl: 'templates/test.html',
-              controller: 'testController'
           }).otherwise({
               redirectTo: '/home'
           });
