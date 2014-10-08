@@ -152,17 +152,24 @@ private Connection connection;
 	}
 
 	@Override
-	public void addReservation(Reservation reservation) throws SQLException{
+	public Reservation addReservation(Reservation reservation) throws SQLException{
 		String query = 	"INSERT"
 				+ 		" INTO Reservation(CustomerID,FlightID,SeatQuantity,FlightClass) Values("			
 				+		"'"+reservation.getUserId()+"'"		+	"," 
 				+			reservation.getFlightId()		+	","
 				+			reservation.getSeatQuantity()	+	","
 				+		"'"+reservation.getFlightClass()+"'"+	")";
+		String query2 = " SELECT * FROM Reservation WHERE "
+				+ 		" (CustomerID,FlightID,SeatQuantity,FlightClass) = "
+				+ 		" ('"+reservation.getUserId()+"' customer,'"+reservation.getFlightId()+"' flight,'"+reservation.getSeatQuantity()
+				+		"' seat,'"+reservation.getFlightClass()+"' flight)";		
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
+		ResultSet rs = statement.executeQuery(query2);
+		Reservation resultReservation = new Reservation(rs.getInt(1), rs.getString("customer"), rs.getInt("flight"), rs.getInt("seats"), rs.getString("class"));
 		statement.close();
+		return resultReservation;		
 	}
 
 	@Override
@@ -261,7 +268,7 @@ private Connection connection;
 	 * without needing id, price, or distance in the Flight object constructor
 	*/
 	@Override
-	public void addFlight(Flight flight) throws SQLException {
+	public Flight addFlight(Flight flight) throws SQLException {
 		String date = flight.getDate();
 		String time = date.substring(9);
 		float distance =getDistance(flight.getStartingCity(),flight.getDestination()); 		
@@ -278,10 +285,18 @@ private Connection connection;
 				+	"'"+flight.getDestination()+"'" +	","
 				+	"'"+flight.getDistance()+"'"	+	","
 				+	"'"+flight.getPrice()+"'"		+	")";
-		
+		String query2 = " SELECT * FROM Flight WHERE "
+				+ 		" (Date,AirlineName,StartLocation,Destination)="
+				+ 		" ('"+flight.getDate()+"','"+flight.getAirline()+"','"+flight.getStartingCity()+"','"
+				+ 		flight.getDestination()+"')";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
+		ResultSet rs = statement.executeQuery(query2);
+		Flight resultFlight = new Flight(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),
+				 rs.getString(5),rs.getFloat(6), rs.getInt(7),
+				 rs.getInt(8),rs.getFloat(9));
 		statement.close();
+		return resultFlight;
 	}
 
 	@Override
