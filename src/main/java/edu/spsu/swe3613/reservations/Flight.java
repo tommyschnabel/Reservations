@@ -1,62 +1,57 @@
 package edu.spsu.swe3613.reservations;
 
 
-import java.util.GregorianCalendar;
-import com.google.inject.Inject;
+
 //import javax.ws.rs.core.Response;
 //import javax.ws.rs.core.Response.ResponseBuilder;
 
 public class Flight {
-	private String ID;
-	private String Date; //This gives us Year, Month, Day, Hour, and Minutes.
+	private String id;
+	private String date; //This gives us Year, Month, Day, Hour, and Minutes.
 	
-	private float Price;
-	private String Destination;
-	private String Starting_City;
-	private ReservationsDao DAO;
+	private float price;
+	private String destination;
+	private String startingCity;
+	
 	
 	
 	public Flight(String id, String date, float price, String destination, String start)
 	{
-		this.ID = id;
+		this.id = id;
 		
-		this.Date = date; //Date and time are now saved together.
+		this.date = date; //Date and time are now saved together.
 		
-		this.Price = price;
-		this.Destination = destination;
-		this.Starting_City = start;
+		this.price = price;
+		this.destination = destination;
+		this.startingCity = start;
 	}
 	
 	public String getID(){
 	
-		return ID;
+		return id;
 	}
 	
 	public String getDate(){
 		
-		return Date;
+		return date;
 	}
 	
 	public float getPrice(){
 		
-		return Price;
+		return price;
 	}
 	
 	public String getDestination(){
 		
-		return Destination;
+		return destination;
 	}
 	
 	public String getStarting_City(){
 		
-		return Starting_City;
+		return startingCity;
 	}
 	
-	@Inject
-	public Flight(ReservationsDao dao){
-		this.DAO = dao;
-		
-	}
+	
 
 
 	
