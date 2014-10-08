@@ -1,6 +1,6 @@
 package edu.spsu.swe3613.reservations;
 
-import java.util.GregorianCalendar;
+
 import java.sql.SQLException;
 //import javax.ws.rs.core.Response;
 //import javax.ws.rs.core.Response.ResponseBuilder;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class Flight {
 	private int id;
-	private GregorianCalendar date;
+	private String date;
 	private String airline;
 	private String startingCity;
 	private String destination;
@@ -25,7 +25,7 @@ public class Flight {
 	 * and saved to DB. 
 	 */
 	
-	public Flight(GregorianCalendar date, String airline, String start, String destination)
+	public Flight(String date, String airline, String start, String destination)
 	{
 		this.date = date;
 		this.airline = airline;
@@ -34,7 +34,7 @@ public class Flight {
 	}
 	
 	
-	public Flight(int id, GregorianCalendar date, String airline, String start, String destination,
+	public Flight(int id, String date, String airline, String start, String destination,
 				  float distance, int firstClass, int economy, float price) throws SQLException
 	{
 		this.id = id;
@@ -52,11 +52,11 @@ public class Flight {
 		return id;
 	}
 
-	public GregorianCalendar getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(GregorianCalendar date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	

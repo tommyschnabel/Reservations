@@ -70,7 +70,7 @@ insert into Customer values
 drop table if exists AirlineAdmin;
 create table AirlineAdmin(
 	ID		text primary key,
-	AirlineName	text,
+	Airline		text,
 	Password	text,
 	foreign key (AirlineName) references Airline(Name)
 		on delete cascade on update cascade
@@ -88,9 +88,8 @@ insert into MarketingAdmin values
 -- Flight
 drop table if exists Flight;
 create table Flight(
-	FlightNumber	integer primary key,
+	ID		integer primary key,
 	Date		text not null,
-	Time		text not null,
 	AirlineName	text not null,
 	StartLocation	text not null,
 	Destination	text not null,
@@ -98,30 +97,31 @@ create table Flight(
 	RemainingFirstClass integer default 30,
 	RemainingEconomy integer default 70,
 	Price		numeric default 0,
-	foreign key (Time) references Price(Time)
-		on delete cascade on update cascade,
+	
 	foreign key (AirlineName) references Airline(Name)
 		on delete cascade on update cascade
 	foreign key (Mileage) references Mileage(Distance)
 		on delete cascade on update cascade
 	);
-insert into Flight (Date,Time,AirlineName,StartLocation,Destination,Mileage) values
-	('1/1/14','9:00AM','Delta','Atlanta','Chicago',(select Distance from Mileage where LocationA='Atlanta'and LocationB='Chicago' or LocationB='Atlanta' and LocationA='Chicago')),
-	('1/2/14','9:00AM','American','Dallas','San Francisco',(select Distance from Mileage where LocationA='Dallas'and LocationB='San Francisco' or LocationB='Dallas' and LocationA='San Francisco'));
+insert into Flight (Date,AirlineName,StartLocation,Destination,Mileage) values
+	('1/1/14','Delta','Atlanta','Chicago',(select Distance from Mileage where LocationA='Atlanta'and LocationB='Chicago' or LocationB='Atlanta' and LocationA='Chicago')),
+	('1/2/14','American','Dallas','San Francisco',(select Distance from Mileage where LocationA='Dallas'and LocationB='San Francisco' or LocationB='Dallas' and LocationA='San Francisco'));
 
 -- Reservation
 drop table if exists Reservation;
 create table Reservation(
 	ID		integer primary key,
 	CustomerID	text,
-	FlightNumber	integer,
+	FlightID	integer,
+	SeatQuantity	integer,
+	FlightClass	text,
 	foreign key (CustomerID) references Customer(ID)
 		on delete cascade on update cascade,
-	foreign key (FlightNumber) references Flight(FlightNumber)
+	foreign key (FlightID) references Flight(FlightID)
 		on delete cascade on update cascade
 	);
 insert into Reservation values
-	(NULL,'admin',1);
+	(NULL,'admin',1,1,'First Class');
 -- Service
 drop table if exists Service;
 create table Service(
