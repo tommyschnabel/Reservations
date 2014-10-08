@@ -37,9 +37,10 @@ public class UserServiceTests {
 		try {
 		Statement statement;
 		statement = connection.createStatement();
-				statement.executeUpdate("create table Customer(ID text primary key, FirstName text, LastName text,"
-						+ 				"Email text, Password text)");
-					statement.executeUpdate("insert into Customer values('testID','testFName','testLName','test@test.com','1234')");
+		statement.executeUpdate("drop table if exists Customer");
+		statement.executeUpdate("create table Customer(ID text primary key, FirstName text, LastName text,"
+				+ 				"Email text, Password text)");
+			statement.executeUpdate("insert into Customer values('testID','testFName','testLName','test@test.com','1234')");
 		} catch (SQLException e) {
 			fail();
 		}
@@ -47,25 +48,33 @@ public class UserServiceTests {
 		
 	}
 	
-//	@Test
-//	public void registersUserCorrectly() {
-//		User newCustomer = new User(1, "tommy", "schnabel", "tommy@fakemail.com", "password");
-//		
-//		try {
-//			userService.register(newCustomer);
-//			User retrievedUser = userService.getUserById(newCustomer.getId());
-//			if (!retrievedUser.equals(newCustomer)) {
-//				System.out.println("Didn't recieve the same customer by the same id");				
-//				System.out.println(retrievedUser.getId());
-//				System.out.println(retrievedUser.getFName());				
-//				System.out.println(retrievedUser.getLName());
-//				System.out.println(retrievedUser.getEmail());
-//				System.out.println(retrievedUser.getPassword());
+	//TODO make this test actually work
+	@Test
+	public void registersUserCorrectly() {
+		User newCustomer = new User(1, "tommy", "schnabel", "tommy@fakemail.com", "password");
+		
+//		User retrievedUser = new User(1, "t", "schnabel", "tommy@fakemail.com", "password");
+		
+		try {
+			userService.register(newCustomer);
+			User retrievedUser = userService.getUserById(newCustomer.getId());
+			if (retrievedUser.getId() != newCustomer.getId()
+					|| retrievedUser.getFName() != newCustomer.getFName()
+					|| retrievedUser.getLName() != newCustomer.getLName()
+					|| retrievedUser.getEmail() != newCustomer.getEmail()
+					|| retrievedUser.getPassword() != newCustomer.getPassword()) {
+				
+				System.out.println("Didn't recieve the same customer by the same id");			
+				System.out.println("Got: " + retrievedUser.getId() + ',' + "Wanted: " + newCustomer.getId());
+				System.out.println(retrievedUser.getFName() + ',' + newCustomer.getFName());				
+				System.out.println(retrievedUser.getLName() + ',' + newCustomer.getLName());
+				System.out.println(retrievedUser.getEmail() + ',' + newCustomer.getEmail());
+				System.out.println(retrievedUser.getPassword() + ',' + newCustomer.getPassword());
 //				fail();
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//			fail(e.getMessage());
-//		}
-//	}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			fail(e.getMessage());
+		}
+	}
 }

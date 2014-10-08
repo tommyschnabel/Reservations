@@ -39,11 +39,17 @@ public class ReservationsDaoTest {
 		customer = new User(1,"fname","lname","email","pwd");
 		reservation = new Reservation(3,"userId",1,1,"First Class");
 		admin = new AirlineAdmin("adminId","Southwest","password");
-		airlineName = "Delta";		
+		airlineName = "Delta";
 		
 		//Create sample DB test methods
 		//Flight
 		statement = connection.createStatement();
+
+		//Called that before creating tables just to make sure the db is clear
+		//since Sqlite doesn't have a 'drop all tables' command
+		tearDownAfterClass();
+		
+		
 		statement.executeUpdate("create table Flight"
 				+ "(ID integer primary key,Date text,AirlineName text,StartLocation text,Destination text,Mileage numeric default 0, "
 				+ "RemainingFirstClass integer default 30,RemainingEconomy integer default 70, Price numeric default 0)");
@@ -78,13 +84,13 @@ public class ReservationsDaoTest {
 	
 		@AfterClass
 	public static void tearDownAfterClass() throws Exception{
-		statement.executeUpdate("drop table Flight");
-		statement.executeUpdate("drop table Price");
-		statement.executeUpdate("drop table Mileage");
-		statement.executeUpdate("drop table Customer");
-		statement.executeUpdate("drop table Reservation");
-		statement.executeUpdate("drop table Airline");
-		statement.executeUpdate("drop table AirlineAdmin");
+		statement.executeUpdate("drop table if exists Flight");
+		statement.executeUpdate("drop table if exists Price");
+		statement.executeUpdate("drop table if exists Mileage");
+		statement.executeUpdate("drop table if exists Customer");
+		statement.executeUpdate("drop table if exists Reservation");
+		statement.executeUpdate("drop table if exists Airline");
+		statement.executeUpdate("drop table if exists AirlineAdmin");
 	}
 	
 	@Test

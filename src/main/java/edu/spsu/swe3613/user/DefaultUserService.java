@@ -45,15 +45,17 @@ public class DefaultUserService implements UserService {
 	}
 
 	@Override
-	public Response.Status register(User customer) {
+	public Response.Status register(User newUser) {
 		try {
 			List<User> allUsers = userDao.getAllUsers();
 			Integer newUserId = (allUsers.get(allUsers.size() -1).getId()) + 1;
-			customer.setId(newUserId);
-			userDao.addUser(customer);
+			newUser.setId(newUserId);
+			
+			validateUserDoesNotExist(allUsers, newUser);
+			userDao.addUser(newUser);
 			
 			return Status.OK;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return Status.CONFLICT;
 		}
@@ -67,6 +69,16 @@ public class DefaultUserService implements UserService {
 			System.out.println(e.getMessage());
 			return null; //May change to throwing a runtime exception, but 
 						 // we don't want to break absolutely everything...
+		}
+	}
+	
+	private void validateUserDoesNotExist(List<User> allUsers, User newUser) throws Exception {
+		for (User u : allUsers) {
+			//We want to allow users to have same first/last name, or have the same password
+			// so we only check the id and the email of the new user
+			if (u.getId().equals(newUser.getId()) || u.getEmail().equals(newUser.getEmail())) {
+				throw new Exception("The user id or email of the new user already exists");
+			}
 		}
 	}
 
