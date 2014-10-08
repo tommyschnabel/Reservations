@@ -31,7 +31,7 @@ public interface ReservationsDao {
 		
 	
 	//Methods for AirlineAdmin
-	public List<AirlineAdmin> getAllAirlineAdmin() throws SQLException;
+	public List<AirlineAdmin> getAllAirlineAdmins() throws SQLException;
 	public AirlineAdmin getAirlineAdminById(String userId) throws SQLException;
 	public void addAirlineAdmin(AirlineAdmin admin) throws SQLException;
 	public void updateAirlineAdmin(AirlineAdmin admin) throws SQLException;
