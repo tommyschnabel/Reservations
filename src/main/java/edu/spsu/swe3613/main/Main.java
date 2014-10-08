@@ -9,13 +9,19 @@ import edu.spsu.swe3613.login.LoginModule;
 import edu.spsu.swe3613.reservations.ReservationsModule;
 
 public class Main extends GuiceServletContextListener {
+	
+	static Injector injector;
 
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector(new ExampleModule(),
-									new ReservationsModule(),
-									new LoginModule()
-		);
+		
+		injector = Guice.createInjector(new ExampleModule(),
+										new CommonModule(),
+				 						new ReservationsModule(),
+				 						new LoginModule());
+
+		return injector;
 	}
+
 	
 }

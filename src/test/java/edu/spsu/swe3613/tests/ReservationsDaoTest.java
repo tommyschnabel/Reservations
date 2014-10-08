@@ -24,9 +24,9 @@ public class ReservationsDaoTest {
 		
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception{
-		
-		testDao = new SQLiteReservationsDao();
+
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
+		testDao = new SQLiteReservationsDao(connection);
 		
 		flight = new Flight("10/01/14 9:00 AM","Delta","Atlanta","Dallas");
 		customer = new Customer("id","fname","lname","email","pwd");
