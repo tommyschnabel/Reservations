@@ -3,6 +3,7 @@ package edu.spsu.swe3613.main;
 import javax.inject.Inject;
 
 import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.jersey.jackson1.Jackson1Feature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
 import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
@@ -23,6 +24,8 @@ public class Application extends ResourceConfig {
 		
 		guiceBridge.bridgeGuiceInjector(Main.injector);
 		
+		register(Jackson1Feature.class);
+		register(DefaultObjectMapperProvider.class);
 		register(ReservationsWeb.class);
 		register(LoginWeb.class);
 		register(ExampleWeb.class);
