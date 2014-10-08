@@ -193,6 +193,10 @@ label{
 #flightsearch .field.half .input-text{ 
 	width:120px; }
 	
+
+
+
+
 #wrapper {
 	position:absolute;
 	background:#F5F5FA;
@@ -385,6 +389,14 @@ label{
 	top: 227px;
 	
 	}
+	
+/* #footer { 
+	height:30px; 
+	background:#ffffff;
+<<<<<<< HEAD
+	
+} */
+=======
     
 }
 
@@ -696,3 +708,5 @@ h4{
 	
 #bookingBtn:hover{
 	background-color:#FAAC5F; }	
+	
+>>>>>>> update another two pages
