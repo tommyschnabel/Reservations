@@ -5,37 +5,33 @@
 <web-app>
   <display-name>SWE 3613 Project</display-name>
   <welcome-file>index.html</welcome-file>
-
-  <listener>
-    <listener-class>edu.spsu.swe3613.main.Main</listener-class>
-  </listener>
-
+   
   <servlet>
-    <servlet-name>Reservations</servlet-name>
-    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-    <init-param>
-        <param-name>com.sun.jersey.config.property.packages</param-name>
-        <param-value>edu.spsu.swe3613.reservations;org.codehaus.jackson.jaxrs;</param-value>
-    </init-param>
-	<load-on-startup>3</load-on-startup>
-   </servlet>
-  <servlet-mapping>
-    <servlet-name>Reservations</servlet-name>
-    <url-pattern>/api/reservations</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>Login</servlet-name>
-    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-    <init-param>
-        <param-name>com.sun.jersey.config.property.packages</param-name>
-        <param-value>edu.spsu.swe3613.login;org.codehaus.jackson.jaxrs;</param-value>
-    </init-param>
-	<load-on-startup>2</load-on-startup>
+	<servlet-name>JerseyApplication</servlet-name>
+	<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+	<init-param>
+	  <param-name>javax.ws.rs.Application</param-name>
+	  <param-value>edu.spsu.swe3613.main.Application</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Login</servlet-name>
-    <url-pattern>/*</url-pattern>
+	<servlet-name>JerseyApplication</servlet-name>
+	<url-pattern>/api/*</url-pattern>
   </servlet-mapping>
+  
+  <filter>
+    <filter-name>guice-filter</filter-name>
+    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+    <async-supported>true</async-supported>
+  </filter>
+  <filter-mapping>
+    <filter-name>guice-filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <listener>
+	<listener-class>edu.spsu.swe3613.main.Main</listener-class>
+  </listener>
 
 </web-app>

@@ -1,7 +1,6 @@
 package edu.spsu.swe3613.reservations;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,18 +11,17 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.google.inject.Inject;
+
 public class SQLiteReservationsDao implements ReservationsDao {
 	
 private Connection connection;
 
+private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 
-
-	public SQLiteReservationsDao() {
-		try {
-			this.connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+	@Inject
+	public SQLiteReservationsDao(Connection connection) {
+		this.connection = connection;
 	}
 	
 	@Override

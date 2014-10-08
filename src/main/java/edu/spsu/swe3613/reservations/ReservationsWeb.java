@@ -3,10 +3,9 @@ package edu.spsu.swe3613.reservations;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-
-import com.google.inject.Inject;
 
 @Path("reservations/")
 public class ReservationsWeb {
@@ -14,7 +13,7 @@ public class ReservationsWeb {
 	private ReservationsService reservationService;
 	
 	@Inject
-	public ReservationsWeb(DefaultReservationsService reservationService) {
+	public ReservationsWeb(ReservationsService reservationService) {
 		this.reservationService = reservationService;
 	}
 	

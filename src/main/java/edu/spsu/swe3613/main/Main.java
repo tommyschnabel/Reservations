@@ -1,25 +1,27 @@
 package edu.spsu.swe3613.main;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.inject.Module;
-import com.squarespace.jersey2.guice.JerseyGuiceServletContextListener;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.servlet.GuiceServletContextListener;
 
 import edu.spsu.swe3613.examples.ExampleModule;
 import edu.spsu.swe3613.login.LoginModule;
 import edu.spsu.swe3613.reservations.ReservationsModule;
 
-public class Main extends JerseyGuiceServletContextListener {
+public class Main extends GuiceServletContextListener {
+	
+	static Injector injector;
 
 	@Override
-	protected List<? extends Module> modules() {
-		List<Module> modules = new ArrayList<Module>();
-		modules.add(new ExampleModule());
-		modules.add(new LoginModule());
-		modules.add(new ReservationsModule());
+	protected Injector getInjector() {
 		
-		return modules;
+		injector = Guice.createInjector(new ExampleModule(),
+										new CommonModule(),
+				 						new ReservationsModule(),
+				 						new LoginModule());
+
+		return injector;
 	}
+
 	
 }

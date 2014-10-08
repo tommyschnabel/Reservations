@@ -1,19 +1,18 @@
 package edu.spsu.swe3613.login;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import com.google.inject.Inject;
-
 @Path("login/")
 public class LoginWeb {
 	
-	private DefaultLoginService loginService;
+	private LoginService loginService;
 
 	@Inject
-	public LoginWeb(DefaultLoginService loginService) {
+	public LoginWeb(LoginService loginService) {
 		this.loginService = loginService;
 	}
 

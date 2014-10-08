@@ -6,7 +6,7 @@ public class LoginModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(DefaultLoginService.class);
-		bind(SqLiteLoginDao.class);
+		bind(LoginService.class).to(DefaultLoginService.class);
+		bind(LoginDao.class).to(SqLiteLoginDao.class);
 	}
 }

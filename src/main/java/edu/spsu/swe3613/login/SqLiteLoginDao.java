@@ -1,20 +1,18 @@
 package edu.spsu.swe3613.login;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+
+import javax.inject.Inject;
 
 public class SqLiteLoginDao implements LoginDao {
 	
 	private Connection connection;
 	
-	public SqLiteLoginDao() {
-		try {
-			this.connection = DriverManager.getConnection("jdbc:sqlite:WebReserve.db");
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+	@Inject
+	public SqLiteLoginDao(Connection connection) {
+		this.connection = connection;
 	}
 
 	@Override
