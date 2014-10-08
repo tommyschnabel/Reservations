@@ -21,7 +21,7 @@ public class SQLiteExampleDao implements ExampleDao {
 	//This throws an SQLException because we want stuff to break
 	//And us be notified if something goes wrong
 	@Override
-	public User getUserById(Integer userId) throws SQLException {
+	public ExampleUser getUserById(Integer userId) throws SQLException {
 		String query =  "SELECT" //Here we make our query
 				+		"          user.id   id"
 				+ 		"          user.name name"
@@ -34,7 +34,7 @@ public class SQLiteExampleDao implements ExampleDao {
 		ResultSet rs = statement.executeQuery(query); //Here we execute the query and get back the results
 		
 		//Now we make our User and then return it
-		User resultUser = new User(Integer.valueOf(rs.getInt("id")));
+		ExampleUser resultUser = new ExampleUser(Integer.valueOf(rs.getInt("id")));
 		resultUser.setName(rs.getString("name"));
 		return resultUser;
 	}

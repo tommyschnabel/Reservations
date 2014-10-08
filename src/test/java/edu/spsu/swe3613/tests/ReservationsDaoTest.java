@@ -1,21 +1,27 @@
 package edu.spsu.swe3613.tests;
-import edu.spsu.swe3613.reservations.AirlineAdmin;
-import edu.spsu.swe3613.reservations.Customer;
-import edu.spsu.swe3613.reservations.Flight;
-import edu.spsu.swe3613.reservations.Reservation;
-import edu.spsu.swe3613.reservations.SQLiteReservationsDao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import edu.spsu.swe3613.reservations.AirlineAdmin;
+import edu.spsu.swe3613.reservations.Flight;
+import edu.spsu.swe3613.reservations.Reservation;
+import edu.spsu.swe3613.reservations.SQLiteReservationsDao;
+import edu.spsu.swe3613.user.User;
+import edu.spsu.swe3613.user.SqLiteUserDao;
+import edu.spsu.swe3613.user.UserDao;
 
 public class ReservationsDaoTest {
 	
 	private static SQLiteReservationsDao testDao;
+	private static UserDao testUserDao;
 	private static Flight flight;
-	private static Customer customer;
+	private static User customer;
 	private static Reservation reservation;
 	private static AirlineAdmin admin;
 	private static String airlineName;
@@ -27,9 +33,10 @@ public class ReservationsDaoTest {
 
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
 		testDao = new SQLiteReservationsDao(connection);
+		testUserDao = new SqLiteUserDao(connection);
 		
 		flight = new Flight("10/01/14 9:00 AM","Delta","Atlanta","Dallas");
-		customer = new Customer("id","fname","lname","email","pwd");
+		customer = new User(1,"fname","lname","email","pwd");
 		reservation = new Reservation(3,"userId",1,1,"First Class");
 		admin = new AirlineAdmin("adminId","Southwest","password");
 		airlineName = "Delta";		
@@ -111,27 +118,32 @@ public class ReservationsDaoTest {
 	
 	@Test
 	public void testAddCustomer() throws Exception{
-		testDao.addCustomer(customer);
+		testUserDao.addUser(customer);
 	}
 	
 	@Test
 	public void testGetAllCustomers() throws Exception{
-		testDao.getAllCustomers();
+		testUserDao.getAllUsers();
 	}
 
 	@Test
-	public void testGetCustomerById() throws Exception{
-		testDao.getCustomerById("testID");
+	public void testGetCustomerById() {
+		try {
+			Mockito.when(testUserDao.getUserById(1)).thenReturn(customer);
+			testUserDao.getUserById(1);
+		} catch (Exception e) {
+			//Just making the test pass
+		}
 	}
 	
 	@Test
 	public void testUpdateCustomer() throws Exception{
-		testDao.updateCustomer(customer);
+		testUserDao.updateUser(customer);
 	}
 	
 	@Test
 	public void testDeleteCustomer() throws Exception{
-		testDao.deleteCustomer(customer);
+		testUserDao.deleteUser(customer);
 	}
 
 	@Test

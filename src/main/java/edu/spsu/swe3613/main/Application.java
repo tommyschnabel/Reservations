@@ -9,8 +9,8 @@ import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
 import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
 import edu.spsu.swe3613.examples.ExampleWeb;
-import edu.spsu.swe3613.login.LoginWeb;
 import edu.spsu.swe3613.reservations.ReservationsWeb;
+import edu.spsu.swe3613.user.UserWeb;
 
 public class Application extends ResourceConfig {
 	
@@ -27,7 +27,7 @@ public class Application extends ResourceConfig {
 		register(Jackson1Feature.class);
 		register(DefaultObjectMapperProvider.class);
 		register(ReservationsWeb.class);
-		register(LoginWeb.class);
+		register(UserWeb.class);
 		register(ExampleWeb.class);
 	}
 

@@ -1,4 +1,4 @@
-package edu.spsu.swe3613.login;
+package edu.spsu.swe3613.user;
 
 public class LoginParams {
 	

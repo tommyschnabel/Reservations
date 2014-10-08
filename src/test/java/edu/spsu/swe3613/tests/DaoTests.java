@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import edu.spsu.swe3613.reservations.Customer;
-import edu.spsu.swe3613.reservations.ReservationsDao;
+import edu.spsu.swe3613.user.User;
+import edu.spsu.swe3613.user.UserDao;
 
 
 
@@ -42,13 +42,13 @@ public class DaoTests {
  
 	
 		
-		private ReservationsDao daoExample;
+		private UserDao daoExample;
 				
 		//This runs before every test
 		@Before
 		public void testSetup() {
 			//Now we have control over what this obejct does with Mockito.when
-			daoExample = Mockito.mock(ReservationsDao.class);
+			daoExample = Mockito.mock(UserDao.class);
 		}
 
 		@Test (expected = AssertionError.class)
@@ -59,10 +59,10 @@ public class DaoTests {
 		@Test
 		public void getCustomerByIdTest() {
 			try{			
-				Customer customer = new Customer("id","fname","lname","email","pwd");
-				Mockito.when(daoExample.getCustomerById("id")).thenReturn(new Customer("id","fname","lname","email","pwd"));
-				if(daoExample.getCustomerById("id")!=customer)
-				Mockito.verify(daoExample).getCustomerById("id");
+				User customer = new User(1,"fname","lname","email","pwd");
+				Mockito.when(daoExample.getUserById(1)).thenReturn(new User(1,"fname","lname","email","pwd"));
+				if(daoExample.getUserById(1)!=customer)
+				Mockito.verify(daoExample).getUserById(1);
 			}
 			catch (SQLException e){
 				fail();

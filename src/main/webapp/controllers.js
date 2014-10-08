@@ -53,7 +53,8 @@ controllers.controller('testController', ['$scope', '$http',
 						password: 'password'
 					}
 				}).then(function(results) {
-					$scope.status = 'Success';			
+					$scope.status = 'Success';
+					$scope.errorMessages = 'None';		
 				}).catch(function(error) {
 					$scope.status = 'Fail';
 					$scope.errorMessages = error;

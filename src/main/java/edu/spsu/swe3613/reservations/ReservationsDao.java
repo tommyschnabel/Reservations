@@ -8,13 +8,6 @@ public interface ReservationsDao {
 	
 	//Methods for common CRUD operations for each table in the database
 	
-	//Methods for Customer
-	public List<Customer> getAllCustomers() throws SQLException;
-	public Customer getCustomerById(String customerId) throws SQLException;
-	public void addCustomer(Customer customer) throws SQLException;
-	public void updateCustomer(Customer customer) throws SQLException;
-	public void deleteCustomer(Customer customer) throws SQLException;
-	
 	//Methods for Reservation
 	public List<Reservation> getAllReservations() throws SQLException;
 	public Reservation getReservationById(int reservationId) throws SQLException;
