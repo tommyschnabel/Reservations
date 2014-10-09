@@ -30,11 +30,15 @@ public class ReservationsDaoTest {
 		
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception{
-
+		
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
 		testDao = new SQLiteReservationsDao(connection);
+<<<<<<< HEAD
 		testUserDao = new SqLiteUserDao(connection);
 		
+=======
+				
+>>>>>>> Just a couple of tweaks, changed Reservation a little
 		flight = new Flight("10/01/14 9:00 AM","Delta","Atlanta","Dallas");
 		customer = new User(1,"fname","lname","email","pwd");
 		reservation = new Reservation(3,"userId",1,1,"First Class");
