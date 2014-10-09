@@ -1,11 +1,12 @@
 package edu.spsu.swe3613.reservations;
 
 
+import java.sql.SQLException;
 import java.util.List;
-
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 @Path("reservations/")
@@ -20,31 +21,29 @@ public class ReservationsWeb {
 	
 	@GET
 	@Path("search/")
-	public List<Flight> search(float p) {
+	public List<Flight> search(SearchParams searchParams) throws SQLException {
 		//Start with one search param then move on!!!
-		//Start with all flights that are less than or equal to given price
-		//ArrayList<Flight> All_Flights = new ArrayList<Flight>();
-		//ArrayList<Flight> search_Flights = new ArrayList<Flight>();
-		//@Inject
-		//All_Flights = public List<Flight> getAllFlights()
-		
-		
-		return search_price.Search_By_Price(p);
-		
-		
-		
+		return service.search(searchParams);
 		
 	}
 	
 	@GET
-	@Path("search/")
-	public List<Flight> search(String d) {
-		//Start with one search param then move on!!!
-		//ArrayList<Flight> All_Flights = new ArrayList<Flight>();
-		
-		
-		
-		return search_price.Search_By_Date(d);
+	@POST
+	public void create(int id, String userId) throws SQLException {
+		service.createReservation(id, userId);
+	}
+	
+	
+	@GET
+	@POST
+	public void register(String id, String fName, String lName, String email, String password) throws SQLException {
+		service.registerUser(id, fName, lName, email, password);
+	}
+	
+	@GET
+	@DELETE
+	public void delete(int id, String userId) throws SQLException {
+		service.deleteReservation(id, userId);
 	}
 	
 }

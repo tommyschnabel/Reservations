@@ -3,14 +3,15 @@ package edu.spsu.swe3613.reservations;
 import java.sql.SQLException;
 
 public class Flight {
-	private String id;
+	private int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
 	private String date; //This gives us Year, Month, Day, Hour, and Minutes.
 	
 	private float price;
 	private String destination;
 	private String startingCity;
-
-	public Flight(String id, String date, float price, String destination, String start) {
+	
+	public Flight(int id, String date, float price, String destination, String start)
+	{
 		this.id = id;
 		
 		this.date = date; //Date and time are now saved together.
@@ -48,7 +49,7 @@ public class Flight {
 		this.economy = economy;
 	}
 	
-	public String getID(){
+	public int getID(){
 	
 		return id;
 	}

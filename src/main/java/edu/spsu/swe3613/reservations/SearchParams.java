@@ -1,7 +1,5 @@
 package edu.spsu.swe3613.reservations;
 
-import java.util.List;
-
 public class SearchParams {
 	
 	 private int day;
@@ -17,11 +15,12 @@ public class SearchParams {
      private int searchMinute;
      private float price;
      private String date;
+     private String destination;
      private SearchType searchType;
      
 	
 	public enum SearchType {
-	    Date, Time, Price
+	    Date, Time, Price, Destination, Test
 	}
 	
 	
@@ -154,6 +153,16 @@ public class SearchParams {
 	public void setDate(String value) {
 		
 		this.date = value;
+	}
+	
+	public String getDestination(){
+		
+		return this.destination;
+	}
+	
+	public void setDestination(String value){
+		
+		this.destination = value;
 	}
 	
 	
