@@ -6,7 +6,7 @@ package edu.spsu.swe3613.reservations;
 //import javax.ws.rs.core.Response.ResponseBuilder;
 
 public class Flight {
-	private String id;
+	private int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
 	private String date; //This gives us Year, Month, Day, Hour, and Minutes.
 	
 	private float price;
@@ -15,7 +15,7 @@ public class Flight {
 	
 	
 	
-	public Flight(String id, String date, float price, String destination, String start)
+	public Flight(int id, String date, float price, String destination, String start)
 	{
 		this.id = id;
 		
@@ -26,7 +26,7 @@ public class Flight {
 		this.startingCity = start;
 	}
 	
-	public String getID(){
+	public int getID(){
 	
 		return id;
 	}
