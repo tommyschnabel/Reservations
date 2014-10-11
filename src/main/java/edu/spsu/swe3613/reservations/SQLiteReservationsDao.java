@@ -186,21 +186,19 @@ private Connection connection;
 				+	"'"+flight.getAirline()+"'"		+	","
 				+	"'"+flight.getStartingCity()+"'"+	","
 				+	"'"+flight.getDestination()+"'" +	","
+
 				+	    flight.getDistance()    	+	","
 				+	    flight.getPrice()   		+	")";
 		String query2 = " SELECT * FROM Flight WHERE "
 				+ 		" (Date='"+flight.getDate()+"' AND AirlineName='"+flight.getAirline()+"' AND "
 						+ "StartLocation='"+flight.getStartingCity()+"' AND Destination='"+flight.getDestination()+"')";
-				
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
-		statement.close();
-		Statement statement2 = connection.createStatement();
-		ResultSet rs = statement2.executeQuery(query2);
+		ResultSet rs = statement.executeQuery(query2);
 		Flight resultFlight = new Flight(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),
 				 rs.getString(5),rs.getFloat(6), rs.getInt(7),
 				 rs.getInt(8),rs.getFloat(9));
-		statement2.close();
+		statement.close();
 		return resultFlight;
 	}
 
