@@ -4,11 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.google.inject.Inject;
@@ -16,8 +13,6 @@ import com.google.inject.Inject;
 public class SQLiteReservationsDao implements ReservationsDao {
 	
 private Connection connection;
-
-private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 
 	@Inject
 	public SQLiteReservationsDao(Connection connection) {
@@ -31,7 +26,6 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 				+		"	Reservation.ID				id,"
 				+	 	"	Reservation.CustomerID		customer,"
 				+ 		"	Reservation.FlightID		flight,"
-				+ 		"	Reservation.SeatQuantity	seats,"
 				+ 		"	Reservation.FlightClass		class"
 				
 				+ 		" FROM Reservation";
@@ -40,7 +34,7 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 		
 		while(rs.next())
 		{
-			reservations.add(new Reservation(rs.getInt("id"), rs.getString("customer"), rs.getInt("flight"), rs.getInt("seats"), rs.getString("class")));
+			reservations.add(new Reservation(rs.getInt("id"), rs.getInt("customer"), rs.getInt("flight"), rs.getString("class")));
 		}
 		statement.close();
 		return reservations;
@@ -51,7 +45,6 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 		String query =  "SELECT"
 				+ 		"	CustomerID		customer,"
 				+		"	FlightID		flight,"
-				+		"	SeatQuantity	seats,"
 				+		"	FlightClass		class"
 				
 				+		"  FROM Reservation"
@@ -60,34 +53,37 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query); 
 		
-		Reservation resultReservation = new Reservation(reservationId, rs.getString("customer"), rs.getInt("flight"), rs.getInt("seats"), rs.getString("class"));
+		Reservation resultReservation = new Reservation(reservationId, rs.getInt("customer"), rs.getInt("flight"), rs.getString("class"));
 		statement.close();
 		return resultReservation;
 	}
 
 	@Override
-	public void addReservation(Reservation reservation) throws SQLException{
+	public Reservation addReservation(Reservation reservation) throws SQLException{
 		String query = 	"INSERT"
-				+ 		" INTO Reservation(CustomerID,FlightID,SeatQuantity,FlightClass) Values("			
-				+		"'"+reservation.getUserId()+"'"		+	"," 
+				+ 		" INTO Reservation(CustomerID,FlightID,FlightClass) Values("			
+				+			reservation.getUserId()			+	"," 
 				+			reservation.getFlightId()		+	","
-				+			reservation.getSeatQuantity()	+	","
 				+		"'"+reservation.getFlightClass()+"'"+	")";
-		
+		String query2 = " SELECT * FROM Reservation WHERE "
+				+ 		" (CustomerID="+reservation.getUserId()+" AND FlightID="+reservation.getFlightId()+""
+						+ " AND FlightClass='"+reservation.getFlightClass()+"')";		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
+		ResultSet rs = statement.executeQuery(query2);
+		Reservation resultReservation = new Reservation(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4));
 		statement.close();
+		return resultReservation;		
 	}
 
 	@Override
 	public void updateReservation(Reservation reservation) throws SQLException{
 		String query = 	"UPDATE "
 				+		" Reservation SET"
-				+ 			" CustomerID="		+	"'"+reservation.getUserId()+"'"			+	","
-				+ 			" FlightID="		+	"'"+reservation.getFlightId()+"'"		+	","
-				+ 			" SeatQuantity="	+	"'"+reservation.getSeatQuantity()+"'"	+	","
-				+ 			" FlightClass="		+	"'"+reservation.getFlightClass()+"'"
-				+			" WHERE ID="		+	"'"+reservation.getId()+"'";
+				+ 			" CustomerID="		+reservation.getUserId()		+	","
+				+ 			" FlightID="		+reservation.getFlightId()		+	","
+				+ 			" FlightClass="		+"'"+reservation.getFlightClass()+"'"
+				+			" WHERE ID="		+reservation.getId();
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
@@ -175,27 +171,35 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 	 * without needing id, price, or distance in the Flight object constructor
 	*/
 	@Override
-	public void addFlight(Flight flight) throws SQLException {
+	public Flight addFlight(Flight flight) throws SQLException {
 		String date = flight.getDate();
 		String time = date.substring(9);
 		float distance =getDistance(flight.getStartingCity(),flight.getDestination()); 		
 		flight.setDistance(distance);
 		float pricetotal = getPrice(time)*distance;
 		flight.setPrice(pricetotal);		
-				
+			
 		String query = 	"INSERT	INTO Flight "
-				+		"(Date,AirlineName,StartLocation,Destination,Mileage,Price)" 
+				+		"(Date, AirlineName, StartLocation, Destination, Mileage, Price)" 
 				+		" VALUES("
 				+	"'"+flight.getDate()+"'"		+	"," 
 				+	"'"+flight.getAirline()+"'"		+	","
 				+	"'"+flight.getStartingCity()+"'"+	","
 				+	"'"+flight.getDestination()+"'" +	","
-				+	"'"+flight.getDistance()+"'"	+	","
-				+	"'"+flight.getPrice()+"'"		+	")";
-		
+
+				+	    flight.getDistance()    	+	","
+				+	    flight.getPrice()   		+	")";
+		String query2 = " SELECT * FROM Flight WHERE "
+				+ 		" (Date='"+flight.getDate()+"' AND AirlineName='"+flight.getAirline()+"' AND "
+						+ "StartLocation='"+flight.getStartingCity()+"' AND Destination='"+flight.getDestination()+"')";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
+		ResultSet rs = statement.executeQuery(query2);
+		Flight resultFlight = new Flight(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),
+				 rs.getString(5),rs.getFloat(6), rs.getInt(7),
+				 rs.getInt(8),rs.getFloat(9));
 		statement.close();
+		return resultFlight;
 	}
 
 	@Override
@@ -265,16 +269,20 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 	}
 
 	@Override
-	public void addAirlineAdmin(AirlineAdmin admin) throws SQLException{
+	public AirlineAdmin addAirlineAdmin(AirlineAdmin admin) throws SQLException{
 		String query = 	"INSERT"
 				+ 		" INTO AirlineAdmin Values("
 				+ 		"'"+admin.getId()+"'"		+	","
 				+		"'"+admin.getAirline()+"'"	+	"," 
 				+		"'"+admin.getPassword()+"'"	+	")";
-		
+		String query2 = "SELECT * FROM AirlineAdmin WHERE "
+				+ "(ID='"+admin.getId()+"' AND Airline='"+admin.getAirline()+"' AND Password='"+admin.getPassword()+"')";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
+		ResultSet rs = statement.executeQuery(query2);
+		AirlineAdmin resultAdmin = new AirlineAdmin(rs.getString(1),rs.getString(2),rs.getString(3));
 		statement.close();
+		return resultAdmin;
 	}
 
 	@Override
@@ -322,6 +330,7 @@ private DateFormat df = new SimpleDateFormat("MM/dd/yy hh:mm a");
 				+ " PriceRate 	price "
 				+ "	FROM Price "
 				+ "	WHERE Time="+"'"+time+"'";
+		
 		
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query);

@@ -11,14 +11,14 @@ public interface ReservationsDao {
 	//Methods for Reservation
 	public List<Reservation> getAllReservations() throws SQLException;
 	public Reservation getReservationById(int reservationId) throws SQLException;
-	public void addReservation(Reservation reservation) throws SQLException;
+	public Reservation addReservation(Reservation reservation) throws SQLException;
 	public void updateReservation(Reservation reservation) throws SQLException;
 	public void deleteReservation(Reservation reservation) throws SQLException;
 	
 	//Methods for Flight
 	public List<Flight> getAllFlights() throws SQLException, ParseException;
 	public Flight getFlightById(int flightId) throws SQLException, ParseException;
-	public void addFlight(Flight flight) throws SQLException;
+	public Flight addFlight(Flight flight) throws SQLException;
 	public void updateFlight(Flight flight) throws SQLException;
 	public void deleteFlight(Flight flight) throws SQLException;
 		
@@ -26,7 +26,7 @@ public interface ReservationsDao {
 	//Methods for AirlineAdmin
 	public List<AirlineAdmin> getAllAirlineAdmins() throws SQLException;
 	public AirlineAdmin getAirlineAdminById(String userId) throws SQLException;
-	public void addAirlineAdmin(AirlineAdmin admin) throws SQLException;
+	public AirlineAdmin addAirlineAdmin(AirlineAdmin admin) throws SQLException;
 	public void updateAirlineAdmin(AirlineAdmin admin) throws SQLException;
 	public void deleteAirlineAdmin(AirlineAdmin admin) throws SQLException;
 		
