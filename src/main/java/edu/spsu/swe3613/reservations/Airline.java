@@ -1,12 +1,19 @@
 package edu.spsu.swe3613.reservations;
 
 public class Airline {
-	private final String name;
+	
+	private String name;
 	private String info;
+	
+	
 	
 	public Airline(String name, String info){
 		this.name = name;
 		this.info = info;
+	}
+	
+	public Airline() {
+		
 	}
 
 	public String getName() {

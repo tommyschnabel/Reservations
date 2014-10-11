@@ -74,7 +74,7 @@ public class SqLiteUserDao implements UserDao {
 	public void addUser(User user) throws SQLException {
 		String query = 	"INSERT"
 				+ 		" INTO Customer Values("
-				+ 		"'"+user.getId()+"'"	+	","
+				+ 			user.getId()		+	","
 				+		"'"+user.getFName()+"'"	+	"," 
 				+		"'"+user.getLName()+"'"	+	","
 				+		"'"+user.getEmail()+"'"	+	","
@@ -93,7 +93,7 @@ public class SqLiteUserDao implements UserDao {
 				+ 			" LastName="	+"'"+user.getLName()+"'"		+	","
 				+ 			" Email="		+"'"+user.getEmail()+"'"		+	","
 				+ 			" Password="	+"'"+user.getPassword()+"'"
-				+			" WHERE Id="	+	"'"+user.getId()+"'";
+				+			" WHERE Id="	+	user.getId();
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);

@@ -1,7 +1,7 @@
 package edu.spsu.swe3613.reservations;
 
 public class AirlineAdmin {
-	private final String id;
+	private String id;
 	private String airline;
 	private String password;
 	
@@ -9,6 +9,9 @@ public class AirlineAdmin {
 		this.id = id;
 		this.airline = airline;
 		this.password = password;
+	}
+	public AirlineAdmin(){
+		
 	}
 	
 	public String getId(){
@@ -29,5 +32,29 @@ public class AirlineAdmin {
 	
 	public void setPassword(String password){
 		this.password = password;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		AirlineAdmin that;
+		
+		try {
+			that = (AirlineAdmin) obj;
+		} catch (Exception e) {
+			return false;
+		}
+
+		if (this == obj) {
+			return true;
+		} else if (obj == null) {
+			return false;
+		} else if (this.id.equals(that.id) 
+				&& this.airline.equals(that.airline)
+				&& this.password.equals(that.password))
+		{
+			return true;
+		}
+		
+		return false;
 	}
 }

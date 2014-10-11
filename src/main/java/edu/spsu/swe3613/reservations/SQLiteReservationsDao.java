@@ -26,7 +26,6 @@ private Connection connection;
 				+		"	Reservation.ID				id,"
 				+	 	"	Reservation.CustomerID		customer,"
 				+ 		"	Reservation.FlightID		flight,"
-				+ 		"	Reservation.SeatQuantity	seats,"
 				+ 		"	Reservation.FlightClass		class"
 				
 				+ 		" FROM Reservation";
@@ -35,7 +34,7 @@ private Connection connection;
 		
 		while(rs.next())
 		{
-			reservations.add(new Reservation(rs.getInt("id"), rs.getString("customer"), rs.getInt("flight"), rs.getInt("seats"), rs.getString("class")));
+			reservations.add(new Reservation(rs.getInt("id"), rs.getInt("customer"), rs.getInt("flight"), rs.getString("class")));
 		}
 		statement.close();
 		return reservations;
@@ -46,7 +45,6 @@ private Connection connection;
 		String query =  "SELECT"
 				+ 		"	CustomerID		customer,"
 				+		"	FlightID		flight,"
-				+		"	SeatQuantity	seats,"
 				+		"	FlightClass		class"
 				
 				+		"  FROM Reservation"
@@ -55,7 +53,7 @@ private Connection connection;
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query); 
 		
-		Reservation resultReservation = new Reservation(reservationId, rs.getString("customer"), rs.getInt("flight"), rs.getInt("seats"), rs.getString("class"));
+		Reservation resultReservation = new Reservation(reservationId, rs.getInt("customer"), rs.getInt("flight"), rs.getString("class"));
 		statement.close();
 		return resultReservation;
 	}
@@ -63,20 +61,17 @@ private Connection connection;
 	@Override
 	public Reservation addReservation(Reservation reservation) throws SQLException{
 		String query = 	"INSERT"
-				+ 		" INTO Reservation(CustomerID,FlightID,SeatQuantity,FlightClass) Values("			
-				+		"'"+reservation.getUserId()+"'"		+	"," 
+				+ 		" INTO Reservation(CustomerID,FlightID,FlightClass) Values("			
+				+			reservation.getUserId()			+	"," 
 				+			reservation.getFlightId()		+	","
-				+			reservation.getSeatQuantity()	+	","
 				+		"'"+reservation.getFlightClass()+"'"+	")";
 		String query2 = " SELECT * FROM Reservation WHERE "
-				+ 		" (CustomerID,FlightID,SeatQuantity,FlightClass) = "
-				+ 		" ('"+reservation.getUserId()+"' customer,'"+reservation.getFlightId()+"' flight,'"+reservation.getSeatQuantity()
-				+		"' seat,'"+reservation.getFlightClass()+"' flight)";		
-		
+				+ 		" (CustomerID="+reservation.getUserId()+" AND FlightID="+reservation.getFlightId()+""
+						+ " AND FlightClass='"+reservation.getFlightClass()+"')";		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
 		ResultSet rs = statement.executeQuery(query2);
-		Reservation resultReservation = new Reservation(rs.getInt(1), rs.getString("customer"), rs.getInt("flight"), rs.getInt("seats"), rs.getString("class"));
+		Reservation resultReservation = new Reservation(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4));
 		statement.close();
 		return resultReservation;		
 	}
@@ -85,11 +80,10 @@ private Connection connection;
 	public void updateReservation(Reservation reservation) throws SQLException{
 		String query = 	"UPDATE "
 				+		" Reservation SET"
-				+ 			" CustomerID="		+	"'"+reservation.getUserId()+"'"			+	","
-				+ 			" FlightID="		+	"'"+reservation.getFlightId()+"'"		+	","
-				+ 			" SeatQuantity="	+	"'"+reservation.getSeatQuantity()+"'"	+	","
-				+ 			" FlightClass="		+	"'"+reservation.getFlightClass()+"'"
-				+			" WHERE ID="		+	"'"+reservation.getId()+"'";
+				+ 			" CustomerID="		+reservation.getUserId()		+	","
+				+ 			" FlightID="		+reservation.getFlightId()		+	","
+				+ 			" FlightClass="		+"'"+reservation.getFlightClass()+"'"
+				+			" WHERE ID="		+reservation.getId();
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
@@ -184,27 +178,29 @@ private Connection connection;
 		flight.setDistance(distance);
 		float pricetotal = getPrice(time)*distance;
 		flight.setPrice(pricetotal);		
-				
+			
 		String query = 	"INSERT	INTO Flight "
-				+		"(Date,AirlineName,StartLocation,Destination,Mileage,Price)" 
+				+		"(Date, AirlineName, StartLocation, Destination, Mileage, Price)" 
 				+		" VALUES("
 				+	"'"+flight.getDate()+"'"		+	"," 
 				+	"'"+flight.getAirline()+"'"		+	","
 				+	"'"+flight.getStartingCity()+"'"+	","
 				+	"'"+flight.getDestination()+"'" +	","
-				+	"'"+flight.getDistance()+"'"	+	","
-				+	"'"+flight.getPrice()+"'"		+	")";
+				+	    flight.getDistance()    	+	","
+				+	    flight.getPrice()   		+	")";
 		String query2 = " SELECT * FROM Flight WHERE "
-				+ 		" (Date,AirlineName,StartLocation,Destination)="
-				+ 		" ('"+flight.getDate()+"','"+flight.getAirline()+"','"+flight.getStartingCity()+"','"
-				+ 		flight.getDestination()+"')";
+				+ 		" (Date='"+flight.getDate()+"' AND AirlineName='"+flight.getAirline()+"' AND "
+						+ "StartLocation='"+flight.getStartingCity()+"' AND Destination='"+flight.getDestination()+"')";
+				
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
-		ResultSet rs = statement.executeQuery(query2);
+		statement.close();
+		Statement statement2 = connection.createStatement();
+		ResultSet rs = statement2.executeQuery(query2);
 		Flight resultFlight = new Flight(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),
 				 rs.getString(5),rs.getFloat(6), rs.getInt(7),
 				 rs.getInt(8),rs.getFloat(9));
-		statement.close();
+		statement2.close();
 		return resultFlight;
 	}
 
@@ -275,16 +271,20 @@ private Connection connection;
 	}
 
 	@Override
-	public void addAirlineAdmin(AirlineAdmin admin) throws SQLException{
+	public AirlineAdmin addAirlineAdmin(AirlineAdmin admin) throws SQLException{
 		String query = 	"INSERT"
 				+ 		" INTO AirlineAdmin Values("
 				+ 		"'"+admin.getId()+"'"		+	","
 				+		"'"+admin.getAirline()+"'"	+	"," 
 				+		"'"+admin.getPassword()+"'"	+	")";
-		
+		String query2 = "SELECT * FROM AirlineAdmin WHERE "
+				+ "(ID='"+admin.getId()+"' AND Airline='"+admin.getAirline()+"' AND Password='"+admin.getPassword()+"')";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
+		ResultSet rs = statement.executeQuery(query2);
+		AirlineAdmin resultAdmin = new AirlineAdmin(rs.getString(1),rs.getString(2),rs.getString(3));
 		statement.close();
+		return resultAdmin;
 	}
 
 	@Override
@@ -332,6 +332,7 @@ private Connection connection;
 				+ " PriceRate 	price "
 				+ "	FROM Price "
 				+ "	WHERE Time="+"'"+time+"'";
+		
 		
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query);

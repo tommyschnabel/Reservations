@@ -5,7 +5,6 @@ import java.sql.SQLException;
 //import javax.ws.rs.core.Response;
 //import javax.ws.rs.core.Response.ResponseBuilder;
 
-
 public class Flight {
 	private int id;
 	private String date;
@@ -24,6 +23,10 @@ public class Flight {
 	 * When saving the new Flight to the DB via addFlight method, the rest of the fields are calculated
 	 * and saved to DB. 
 	 */
+	
+	public Flight(){
+		
+	}
 	
 	public Flight(String date, String airline, String start, String destination)
 	{
@@ -48,6 +51,9 @@ public class Flight {
 		this.price = price;
 	}
 
+	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -114,6 +120,37 @@ public class Flight {
 
 	public void setEconomy(int economy) {
 		this.economy = economy;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Flight that;
+		
+		try {
+			that = (Flight) obj;
+		} catch (Exception e) {
+			return false;
+		}
+
+		if (this == obj) {
+			return true;
+		} else if (obj == null) {
+			return false;
+		} else if (this.id == that.id 
+				&& this.getDate().equals(that.getDate())
+				&& this.getAirline().equals(that.getAirline())
+				&& this.getStartingCity().equals(that.getStartingCity())
+				&& this.getDestination().equals(that.getDestination())
+				&& this.getDistance() == that.getDistance()
+				&& this.getFirstClass() == that.getFirstClass()
+				&& this.getEconomy() == that.getEconomy()
+				&& this.getPrice() == that.getPrice()) 
+		
+		{
+			return true;
+		}
+		
+		return false;
 	}
 
 
