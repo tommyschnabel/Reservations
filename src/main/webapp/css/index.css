@@ -324,66 +324,415 @@ label{
 }
 
 
-#searchflight{
-	position:absolute;
-	border-top-color:#CCC;
+/*flightsearchpage*/
+.wrap4{
+	width:100%;
+	overflow:auto;
+	height:auto !important; 
+	min-height:700px;
+	background:#F5F5FA;
+	}
+
+.Searchflight{
+	width:100%;
+	overflow:hidden;
+	margin-top:10px;
+	border-top:#CCC;
 	border-top-style:solid;
 	border-top-width:1px;
-	width:100%;
-	top: 110px;
+	border-bottom:#CCC;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
 	}
 	
-#searchflight #searchform{
-	position:relative;
-	padding-top:15px;
-	padding-left:180px;
+.Searchform{
+	width:100px;
+	height: 50px;
+	float:left;
+	margin-left:100px;
+	margin-top:20px;
+	}
+
+#flight-from{
+	height:25px;
+	width:160px;
+	}
 	
+#flight-to{
+	height:25px;
+	width:160px;
+	}
+
+#flight-depart{
+	height:27px;
+	width:160px;
 	}	
 	
-#searchflight  .searchbutton{ 
-	position:absolute; 
-	margin:0; 
+#flight-return{
+	height:27px;
+	width:160px;
+	}
+	
+#searchagain{
+	width:100px;
+	height:30px;  
 	background:#F59738; 
 	color:#fff; 
 	font-weight:700; 
 	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:0; }
+	cursor:pointer;
+	border-radius:3px;
+	}	
 	
-#searchflight  .searchbutton:hover{ 
-	background:#FAAC5F; }
+#searchagain:hover{
+	background:#FAAC5F; 
+	}	
 	
-
+.aside{
+	width:250px;
+	overflow:hidden;
+	float:left;
+	margin-left:100px;
+	}
+		
+.filterlist li{
+    list-style-type:none;
+	color:#666;
+	font-family:Verdana, Geneva, sans-serif;
 	
-#searchflight .input-text{
-	height:30px;
-	width:210px;
+		
+	}
+		
+h3{
+	color:#4F617D;}	
+	
+h4{
+	color:#636D87;
+	}
+	
+.resultbg{
+	background:#FFF;
 	}
 
-#searchflight .input-text input-cal{
-	height:30px;
-	width:210px;
-	}	
-#searchresult{
-	position:absolute;
-	width:710px;
-	heitht:auto;
-	top:251px;
-	z-index:20px;
-	left:432px;
-	height: 156px;
+.sortNav{
+	margin-left:10px;
+	margin-top:10px;
+	background:#FFF;
+	border-color:#CCC;
+	border-width:2px;
+	border-style:outset;
+	border-radius:5px;
+	width:630px;
+	height:45px;
+	float:left;
 }
- 	
-#ads{
-	position:absolute;
-	border-top:#CCC;
-	border-style:dashed;
-	width:206px;
-	height:300px;
-	left: 179px;
-	top: 227px;
 	
+#sort{
+	width:60px;
+	float:left;
+	color:#666;}
+	
+#flightSortBar ul li{
+	list-style-type:none;
+	text-decoration:none;
+	float:left;
+	padding-left:20px;
+	}	
+	
+#flightSortBar ul li a{
+	text-decoration:none;
+	color:#4F617D;
+    }
+
+#flightSortBar ul li a:hover{
+	color:#C60;
+}
+
+.flightReasultList{
+	position:absolute;
+	background:#FFF;
+	top:280px;
+	left:360px;
+	width:640px;
+	height:800px;
+	border-color:#CCC;
+	border-style:solid;
+	border-width:2px;
+	border-radius:3px;
+	}	
+	
+.flightInfo{
+	padding-top:10px;
+	width:640px;
+	height:180px;
+	float:left;
+	}
+
+		
+.flightInfo.Left{
+	width:100px;
+	height:140px;
+	margin-left:30px;
+	}
+	
+.flightprice{
+	color:#3c445e; 
+	font-size:20px;
+	padding-top:30px;}
+
+.selectbtn{
+	width:75px;
+	height:28px;  
+	background:#F59738; 
+	color:#fff; 
+	font-weight:700; 
+	border-radius:3px;
+	cursor:pointer;
+	margin-top:15px;
+	
+}
+	
+.selectbtn:hover{
+	background:#FAAC5F; 
+	}		
+	
+.flightInfo.Right{
+	height:140px;
+	width:500px;
+	float:left;
+	margin-right:10px;
+	}
+	
+	
+	
+.flightInfoDetail{
+	width:500px;
+	}	
+	
+.flightcompany{
+	width:100px;
+	color:#666;
+	float:left;
+	margin-left:20px;
+	}	
+	
+#seats{
+	float:left;}
+	
+.day{
+	display:block;
+	}	
+
+.flightdepart{
+	width:120px;
+	float:left;
+	color:#666;
+	}	
+
+.flightreturn{
+	width:120px;
+	float:left;
+	color:#666;
+	}	
+	
+.flightduration{
+	width:120px;
+	float:left;
+	color:#666;
+	}	
+	
+#seats{
+	width:90px;
+	color:#666;
+	}	
+	
+.seats{
+	float:left;
+	width:10px;
+	color:#666;
+	}	
+	
+.suggestion{
+	position:absolute;
+	border-style:dashed;
+	border-color:#CCC;
+	width:154px;
+	height:348px;
+	left: 1074px;
+	top: 280px;
+}
+	
+/*passengerinformation*/	
+.wrap5{
+	width:100%;
+	height:600px;
+	background:#F5F5FA;
+
+	}
+	
+.passengerInfoTitle{
+	padding-left:100px;
+	padding-top:10px;
+	padding-bottom:20px;
+	font:Verdana, Geneva, sans-serif;
+	color: #3c445e;
+	font-size:20px;
+	font-weight:bolder;
+	}
+	
+#PassengerInfowrap{
+	margin-left:100px;
+	width:500px;
+	height:400px;
+	background-color:#FFF;
+	border:solid;
+	border-width:1px;
+	border-color:#999;
+	border-radius:5px;
+	}
+
+.informationlabel{
+	color:#000;
+	font-weight:bold;
+	font-size:12px;}
+
+#firstNameFiled{
+	float:left;
+	padding-top:20px;
+	padding-left:30px;
+	padding-right:30px;
+	}
+
+#lastNameFiled{
+	padding-top:20px;
+	padding-left:20px;
+	}	
+	
+#genderfield{
+	padding-top:20px;
+	padding-left:30px;
+	}
+
+#birthdayField{
+	padding-top:20px;
+	padding-left:30px;}
+
+#phonefield{
+	padding-top:20px;
+	padding-left:30px;
+	padding-right:30px;
+	float:left;
+	}	
+	
+#emailfield{
+	padding-top:20px;
+	padding-left:30px;
+	}
+	
+#bookingBtn{
+	margin-top:50px;
+	margin-left:30px;
+	background:#3c445e; 
+	color:#fff; 
+	font-weight:700;
+	border:0 none; 
+	padding:10px 20px; 
+	cursor:pointer; 
+	border-radius:3px;
+	}
+	
+#bookingBtn:hover{
+	background-color:#F59738; }	
+	
+/*travel summary*/
+.wrap6{
+	position:relative;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:18px;
+	width:100%;
+    background-color:#F5F5FA;
+	min-height:600px;
+	height:auto !important;
+	}
+	
+#travelsummary_details{
+	margin-left:100px;
+	background-color:#FFF;
+	border-style:solid;
+	border-color:#CFD7EB;
+	border-width:1px;
+	border-radius:10px;
+	width:860px;
+	height:450px;
+	}		
+	
+.pricesummary{
+	margin:20px 0px 20px 20px;
+	width:820px;
+	height:60px;
+	border-radius:10px;
+	border-color:#8997B8;
+	border-style:solid;
+	border-width:1px;
+	}	
+	
+.pricesummary_left{
+	float:left;
+	margin:5px 0px 5px 10px;}	
+
+.pricesummary_left_text{
+	font:Verdana, Geneva, sans-serif;
+	font-size:12px;}	
+
+.pricesummary_right{
+	float:right;
+	margin:5px 0px 5px 10px; }
+
+.pricesummary_right_title{
+	font-size:18px;}
+	
+.pricesummary_right_text2{
+	font-size:14px; }
+	
+.travelsummary{
+	width:820px;
+	margin-left:20px;
+	background-color:white;
+	border-color:#8997B8;
+	border-style:solid;
+	border-width:1px;
+	border-radius:10px;
+	}		
+
+td{
+	font-size:12px;}
+	
+.flightsummary_table_title{
+	display:block;}
+
+.travelsummary_buttonarea{
+	margin-left:20px;}
+
+.button{ 
+	background:#3c445e; 
+	color:#fff; 
+	font-weight:700;
+	cursor:pointer; 
+	border-radius:5px;
+	height:40px;
+	width:170px; 
+	border:0 none; 
+	margin-top:60px;
+	padding:10px 20px; 
+	}
+	
+.button:hover{
+	background:#F59738;}	
+
+.clear{
+	margin:0px;
+	padding:0px;
+	clear:both;
 	}
     
 }
