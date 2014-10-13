@@ -5,9 +5,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
 @Path("reservations/")
 public class ReservationsWeb {
@@ -18,32 +20,26 @@ public class ReservationsWeb {
 	public ReservationsWeb(ReservationsService reservationService) {
 		this.reservationService = reservationService;
 	}
-	
-	@GET
+
+    @POST
 	@Path("search/")
-	public List<Flight> search(SearchParams searchParams) throws SQLException {
-		//Start with one search param then move on!!!
-		return service.search(searchParams);
+	public List<Flight> search(SearchParams searchParams) {
+		return reservationService.search(searchParams);
 		
 	}
-	
-	@GET
+
 	@POST
-	public void create(int id, String userId) throws SQLException {
-		service.createReservation(id, userId);
+    @Path("create/")
+	public Response.Status create(CreateReservationParams createReservationParams) {
+		return reservationService.createReservation(createReservationParams.getFlightId(),
+                                             createReservationParams.getUserId(),
+                                             createReservationParams.getSeatClass());
 	}
-	
-	
-	@GET
-	@POST
-	public void register(String id, String fName, String lName, String email, String password) throws SQLException {
-		service.registerUser(id, fName, lName, email, password);
-	}
-	
-	@GET
+
 	@DELETE
-	public void delete(int id, String userId) throws SQLException {
-		service.deleteReservation(id, userId);
+    @Path("delete/")
+	public Response.Status delete(DeleteParams deleteParams) {
+		return reservationService.deleteReservation(deleteParams.getReservationId(), deleteParams.getUserId());
 	}
 	
 }
