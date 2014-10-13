@@ -1,6 +1,5 @@
 var controllers = angular.module('reservationsControllers', []);
 
-
 //HEADER CONTROLLER
 controllers.controller('headerController', ['$scope', '$location', '$http',
   		function ($scope, $location, $http) {
@@ -9,7 +8,11 @@ controllers.controller('headerController', ['$scope', '$location', '$http',
 		    };
 			
 		    $scope.testJackson = function() {
-			$http({ url: 'http://localhost:8080/reservations/api/login/', method: 'POST', data: { email: 'fake@fakemail.org', password: 'password'}});
+                $http({ 
+                    url: 'http://localhost:8080/reservations/api/login/', 
+                    method: 'POST', 
+                    data: { email: 'fake@fakemail.org', password: 'password'}
+                });
 		    }
   		}
 	]
@@ -39,34 +42,22 @@ controllers.controller('registerController', ['$scope', '$location',
 	]
 );
 
-<<<<<<< HEAD
 //TEST CONTROLLER
 controllers.controller('testController', ['$scope', '$http',
-=======
-controllers.controller('headerController', ['$scope', '$http',
->>>>>>> Working on implementing Jackson
   		function ($scope, $http) {
 		    $scope.status = 'Nothing has happened yet';
 		    $scope.errorMessages = 'None';
 			
 		    $scope.testJackson = function() {
-				$http({ url: 'http://localhost:8080/reservations/api/login/', 
-<<<<<<< HEAD
-					method: 'PUT', 
-=======
+				$http({ url: 'http://localhost:8080/reservations/api/login/',
 					method: 'POST', 
->>>>>>> Working on implementing Jackson
 					data: { 
 						email: 'fake@fakemail.org', 
 						password: 'password'
 					}
 				}).then(function(results) {
-<<<<<<< HEAD
 					$scope.status = 'Success';
-					$scope.errorMessages = 'None';		
-=======
-					$scope.status = 'Success';			
->>>>>>> Working on implementing Jackson
+					$scope.errorMessages = 'None';
 				}).catch(function(error) {
 					$scope.status = 'Fail';
 					$scope.errorMessages = error;
