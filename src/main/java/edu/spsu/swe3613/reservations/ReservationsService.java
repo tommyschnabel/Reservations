@@ -1,9 +1,6 @@
 package edu.spsu.swe3613.reservations;
 
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public interface ReservationsService {
