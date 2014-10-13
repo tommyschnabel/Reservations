@@ -9,19 +9,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import edu.spsu.swe3613.reservations.Airline;
-import edu.spsu.swe3613.reservations.AirlineAdmin;
+import edu.spsu.swe3613.edu.spsu.swe3613.admin.AirlineAdmin;
 import edu.spsu.swe3613.reservations.Flight;
 import edu.spsu.swe3613.reservations.Reservation;
 import edu.spsu.swe3613.reservations.SQLiteReservationsDao;
-import edu.spsu.swe3613.user.User;
 import edu.spsu.swe3613.user.SqLiteUserDao;
 import edu.spsu.swe3613.user.UserDao;
 
