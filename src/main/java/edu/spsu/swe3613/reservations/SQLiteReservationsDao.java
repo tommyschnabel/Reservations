@@ -34,7 +34,10 @@ private Connection connection;
 		
 		while(rs.next())
 		{
-			reservations.add(new Reservation(rs.getInt("id"), rs.getInt("customer"), rs.getInt("flight"), rs.getString("class")));
+			reservations.add(new Reservation(rs.getInt("id"),
+                                             rs.getInt("customer"),
+                                             rs.getInt("flight"),
+                                             Reservation.SeatClass.valueOf(rs.getString("class"))));
 		}
 		statement.close();
 		return reservations;
@@ -53,7 +56,10 @@ private Connection connection;
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query); 
 		
-		Reservation resultReservation = new Reservation(reservationId, rs.getInt("customer"), rs.getInt("flight"), rs.getString("class"));
+		Reservation resultReservation = new Reservation(reservationId,
+                                                        rs.getInt("customer"),
+                                                        rs.getInt("flight"),
+                                                        Reservation.SeatClass.valueOf(rs.getString("class")));
 		statement.close();
 		return resultReservation;
 	}
@@ -71,7 +77,10 @@ private Connection connection;
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
 		ResultSet rs = statement.executeQuery(query2);
-		Reservation resultReservation = new Reservation(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4));
+		Reservation resultReservation = new Reservation(rs.getInt(1),
+                                                        rs.getInt(2),
+                                                        rs.getInt(3),
+                                                        Reservation.SeatClass.valueOf(rs.getString(4)));
 		statement.close();
 		return resultReservation;		
 	}
@@ -127,9 +136,15 @@ private Connection connection;
 		while(rs.next())	//For each row in the DB
 		{
 			
-			flights.add(new Flight(rs.getInt("id"),rs.getString("date"),rs.getString("airline"),rs.getString("start"),
-					 rs.getString("end"), rs.getFloat("distance"), rs.getInt("firstClass"),
-					 rs.getInt("economy"),rs.getFloat("price")));
+			flights.add(new Flight(rs.getInt("id"),
+                                   rs.getString("date"),
+                                   Airline.valueOf(rs.getString("airline")),
+                                   rs.getString("start"),
+					               rs.getString("end"),
+                                   rs.getFloat("distance"),
+                                   rs.getInt("firstClass"),
+					               rs.getInt("economy"),
+                                   rs.getFloat("price")));
 		}
 		statement.close();
 		return flights;		
@@ -156,9 +171,15 @@ private Connection connection;
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query);
 		
-		Flight resultFlight = new Flight(rs.getInt("id"),rs.getString("date"),rs.getString("airline"),rs.getString("start"),
-										 rs.getString("end"),rs.getFloat("distance"), rs.getInt("firstClass"),
-										 rs.getInt("economy"),rs.getFloat("price"));
+		Flight resultFlight = new Flight(rs.getInt("id"),
+                                         rs.getString("date"),
+                                         Airline.valueOf(rs.getString("airline")),
+                                         rs.getString("start"),
+										 rs.getString("end"),
+                                         rs.getFloat("distance"),
+                                         rs.getInt("firstClass"),
+										 rs.getInt("economy"),
+                                         rs.getFloat("price"));
 		statement.close();
 		return resultFlight;
 	}
@@ -195,9 +216,15 @@ private Connection connection;
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
 		ResultSet rs = statement.executeQuery(query2);
-		Flight resultFlight = new Flight(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),
-				 rs.getString(5),rs.getFloat(6), rs.getInt(7),
-				 rs.getInt(8),rs.getFloat(9));
+		Flight resultFlight = new Flight(rs.getInt(1),
+                                         rs.getString(2),
+                                         Airline.valueOf(rs.getString(3)),
+                                         rs.getString(4),
+				                         rs.getString(5),
+                                         rs.getFloat(6),
+                                         rs.getInt(7),
+				                         rs.getInt(8),
+                                         rs.getFloat(9));
 		statement.close();
 		return resultFlight;
 	}
@@ -309,20 +336,20 @@ private Connection connection;
 		statement.close();
 	}
 
-	@Override
-	public Airline getAirline(String airlineName) throws SQLException{
-		String query = "SELECT"
-				+ " Airline.Name			name,"
-				+ " Airline.Information		info"
-				+ " FROM Airline "
-				+ " WHERE Name = "+"'"+airlineName+"'";
-		Statement statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery(query); 
-		
-		Airline resultAirline = new Airline(rs.getString("name"), rs.getString("info"));
-		statement.close();
-		return resultAirline;
-	}
+//	@Override
+//	public Airline getAirline(String airlineName) throws SQLException {
+//		String query = "SELECT"
+//				+ " Airline.Name			name,"
+//				+ " Airline.Information		info"
+//				+ " FROM Airline "
+//				+ " WHERE Name = "+"'"+airlineName+"'";
+//		Statement statement = connection.createStatement();
+//		ResultSet rs = statement.executeQuery(query);
+//
+//		Airline resultAirline = new Airline(rs.getString("name"), rs.getString("info"));
+//		statement.close();
+//		return resultAirline;
+//	}
 
 	@Override
 	public float getPrice(String time) throws SQLException {

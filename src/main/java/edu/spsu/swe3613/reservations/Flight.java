@@ -1,159 +1,104 @@
 package edu.spsu.swe3613.reservations;
 
-
 import java.sql.SQLException;
-//import javax.ws.rs.core.Response;
-//import javax.ws.rs.core.Response.ResponseBuilder;
 
 public class Flight {
-	private int id;
-	private String date;
-	private String airline;
-	private String startingCity;
-	private String destination;
-	private float distance;
-	private int firstClass;
-	private int economy;
+	private int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
+	private String date; //This gives us Year, Month, Day, Hour, and Minutes.
+	
 	private float price;
-	
-	
-	
-	/*Need a constructor so that an administrator level user can add a flight with: 
-	 * Date and Time, Airline, StartingCity and Destination.
-	 * When saving the new Flight to the DB via addFlight method, the rest of the fields are calculated
-	 * and saved to DB. 
-	 */
-	
-	public Flight(){
-		
-	}
-	
-	public Flight(String date, String airline, String start, String destination)
-	{
-		this.date = date;
-		this.airline = airline;
-		this.startingCity = start;
-		this.destination = destination;
-	}
-	
-	
-	public Flight(int id, String date, String airline, String start, String destination,
-				  float distance, int firstClass, int economy, float price) throws SQLException
-	{
+    private float distance;
+	private String destination;
+	private String startingCity;
+    private int seatsInFirstClass;
+    private int seatsInEconomy;
+    private Airline airline;
+
+	public Flight(int id,
+                  String date,
+                  Airline airline,
+                  String start,
+                  String end,
+                  Float distance,
+                  int seatsInFirstClass,
+                  int seatsInEconomy,
+                  float price) {
 		this.id = id;
-		this.date = date;
-		this.airline = airline;
+		this.date = date; //Date and time are now saved together.
+		this.price = price;
+		this.destination = end;
 		this.startingCity = start;
-		this.destination = destination;
-		this.distance = distance;
-		this.firstClass = firstClass;
-		this.economy = economy;
-		this.price = price;
+        this.distance = distance;
+        this.seatsInEconomy = seatsInEconomy;
+        this.seatsInFirstClass = seatsInFirstClass;
+        this.airline = airline;
 	}
 
-	
-	
-	
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-	
-	public String getAirline() {
-		return airline;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public void setAirline(String airline) {
-		this.airline = airline;
-	}
-	
-	public String getDestination() {
-		return destination;
-	}
+    public float getPrice() {
+        return price;
+    }
 
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
-	public String getStartingCity() {
-		return startingCity;
-	}
+    public float getDistance() {
+        return distance;
+    }
 
-	public void setStartingCity(String startingCity) {
-		this.startingCity = startingCity;
-	}
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
 
-	public float getPrice(){
-		return price;
-	}
-	
-	public void setPrice(float price){
-		this.price = price;
-	}
+    public String getDestination() {
+        return destination;
+    }
 
-	public float getDistance() {
-		return distance;
-	}
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
 
-	public void setDistance(float distance) {
-		this.distance = distance;
-	}
+    public String getStartingCity() {
+        return startingCity;
+    }
 
-	public int getFirstClass() {
-		return firstClass;
-	}
+    public void setStartingCity(String startingCity) {
+        this.startingCity = startingCity;
+    }
 
-	public void setFirstClass(int firstClass) {
-		this.firstClass = firstClass;
-	}
+    public int getSeatsInFirstClass() {
+        return seatsInFirstClass;
+    }
 
-	public int getEconomy() {
-		return economy;
-	}
+    public void setSeatsInFirstClass(int seatsInFirstClass) {
+        this.seatsInFirstClass = seatsInFirstClass;
+    }
 
-	public void setEconomy(int economy) {
-		this.economy = economy;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		Flight that;
-		
-		try {
-			that = (Flight) obj;
-		} catch (Exception e) {
-			return false;
-		}
+    public int getSeatsInEconomy() {
+        return seatsInEconomy;
+    }
 
-		if (this == obj) {
-			return true;
-		} else if (obj == null) {
-			return false;
-		} else if (this.id == that.id 
-				&& this.getDate().equals(that.getDate())
-				&& this.getAirline().equals(that.getAirline())
-				&& this.getStartingCity().equals(that.getStartingCity())
-				&& this.getDestination().equals(that.getDestination())
-				&& this.getDistance() == that.getDistance()
-				&& this.getFirstClass() == that.getFirstClass()
-				&& this.getEconomy() == that.getEconomy()
-				&& this.getPrice() == that.getPrice()) 
-		
-		{
-			return true;
-		}
-		
-		return false;
-	}
+    public void setSeatsInEconomy(int seatsInEconomy) {
+        this.seatsInEconomy = seatsInEconomy;
+    }
 
+    public Airline getAirline() {
+        return airline;
+    }
 
-	
-	
+    public void setAirline(Airline airline) {
+        this.airline = airline;
+    }
 }
