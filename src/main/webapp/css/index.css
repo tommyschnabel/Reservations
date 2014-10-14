@@ -41,7 +41,7 @@ header .top_nav li {
 	padding-top:2px;
 	padding-bottom:3px;
 	font-family:Verdana, Geneva, sans-serif;
-	}
+
 	
 header .top_nav ul li{
 	text-decoration:none;
@@ -109,13 +109,6 @@ header .top_nav ul li a:hover{
 	height: 600px;
 	}
 
-/*#menu li {
-	float:left;
-	padding-right:30px;
-	list-style:none;
-	margin-right:20px; 
-	padding-top:2px;
-	padding-bottom:3px}	*/
 
 #mainContent { 
 	height:500px; 
@@ -193,29 +186,25 @@ label{
 #flightsearch .field.half .input-text{ 
 	width:120px; }
 	
-#wrapper {
-	position:absolute;
-	background:#F5F5FA;
+
+/*Loginpage*/
+.wrap2{
 	width:100%;
-	height:100%;
-	top: 113px;
+	height:600px;
+	background:#F5F5FA;
 	}
-	
-#Logintitle{
-	position:relative;
-	padding-left:150px;
-	padding-top:20px;
-	color:#3c445e;
-	}
-	
+		
 #LoginForm{
 	position:relative;
 	background-color:#FFF;
-	width:1000px;
+    	border:solid;
+	border-width:1px;
+	border-color:#CFD7EB;
+	border-radius:5px;
+	width:860px;
 	height:300px;
-	left:150px;
-	padding-left: 2em;
-	top: 20px;
+	left:100px;
+	padding-left:2em;
 	}	
 	
 #LoginForm .username{
@@ -223,7 +212,6 @@ label{
 	height:30px;
 	}
 
-	
 #LoginForm .password{
 	width:300px;
 	height:30px;
@@ -232,52 +220,53 @@ label{
 #LoginForm .Loginlabel{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:10px;
-	color:#666;
+	color:#333;
 	padding-top:20px;
-}
+	}
 
 #LoginForm .secondary {
 	margin:10px 0;
 	font-size: 0.8em;
 	line-height: 1.4;
+	}
 	
-}
 #LoginForm a{
 	color: #3c445e;
     margin: 0;
 	text-decoration:none;
-}
+	}
 
 #LoginForm a:hover{
 	color: #A39481;
     margin: 0;
 	text-decoration:underline;
-}
+	}
 
+/*Registerpage*/
+.wrap3{
+	width:100%;
+	height:800px;
+	background:#F5F5FA;
+	}
 
-#loginform .loginbutton{
-	position:relative;  
-	margin-top:60px; 
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700; 
-	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:0; }
-	
-#loginform .loginbutton:hover{ 
-	background:#FAAC5F; 
-}
+.Registertitle{
+	position:relative;
+	padding-left:150px;
+	padding-top:20px;
+	color:#3c445e;}
 
 #RegisterForm{
 	position:relative;
 	background-color:#FFF;
-	width:1000px;
+	width:860px;
 	height:500px;
-	left:150px;
-	padding-left: 2em;
-	top: 21px;
+	left:100px;
+	padding-left:2em;
+	border:solid;
+	border-width:1px;
+	border-color:#CFD7EB;
+	border-radius:5px;
+
 	}
 
 #RegisterForm .firstname{
@@ -303,33 +292,16 @@ label{
 #RegisterForm .Registerlabel{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:10px;
-	color:#666;
+	color:#333;
 	padding-top:20px;
-}
-
-
-#registerform .registerbutton{
-	position:relative;  
-	margin-top:30px; 
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700; 
-	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:0; }
-	
-#registerform .registerbutton:hover{ 
-	background:#FAAC5F; 
 }
 
 
 /*flightsearchpage*/
 .wrap4{
 	width:100%;
-	overflow:auto;
 	height:auto !important; 
-	min-height:700px;
+	min-height:800px;
 	background:#F5F5FA;
 	}
 
@@ -454,7 +426,7 @@ h4{
 	top:280px;
 	left:360px;
 	width:640px;
-	height:800px;
+	height:600px;
 	border-color:#CCC;
 	border-style:solid;
 	border-width:2px;
@@ -560,8 +532,8 @@ h4{
 	height:348px;
 	left: 1074px;
 	top: 280px;
-}
-	
+}	
+
 /*passengerinformation*/	
 .wrap5{
 	width:100%;
@@ -570,7 +542,7 @@ h4{
 
 	}
 	
-.passengerInfoTitle{
+.InfoTitle{
 	padding-left:100px;
 	padding-top:10px;
 	padding-bottom:20px;
@@ -587,19 +559,18 @@ h4{
 	background-color:#FFF;
 	border:solid;
 	border-width:1px;
-	border-color:#999;
+	border-color:#CFD7EB;
 	border-radius:5px;
 	}
 
 .informationlabel{
-	color:#000;
-	font-weight:bold;
+	color:#333;
 	font-size:12px;}
 
 #firstNameFiled{
 	float:left;
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
 	padding-right:30px;
 	}
 
@@ -610,39 +581,28 @@ h4{
 	
 #genderfield{
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
 	}
 
 #birthdayField{
 	padding-top:20px;
-	padding-left:30px;}
+	padding-left:20px;}
 
 #phonefield{
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
 	padding-right:30px;
 	float:left;
 	}	
 	
 #emailfield{
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
 	}
-	
-#bookingBtn{
-	margin-top:50px;
-	margin-left:30px;
-	background:#3c445e; 
-	color:#fff; 
-	font-weight:700;
-	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:3px;
+
+.buttonfield{
+	margin-left:20px;
 	}
-	
-#bookingBtn:hover{
-	background-color:#F59738; }	
 	
 /*travel summary*/
 .wrap6{
@@ -650,7 +610,7 @@ h4{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:18px;
 	width:100%;
-    background-color:#F5F5FA;
+    	background-color:#F5F5FA;
 	min-height:600px;
 	height:auto !important;
 	}
@@ -710,8 +670,6 @@ td{
 .flightsummary_table_title{
 	display:block;}
 
-.travelsummary_buttonarea{
-	margin-left:20px;}
 
 .button{ 
 	background:#3c445e; 
@@ -723,7 +681,7 @@ td{
 	width:170px; 
 	border:0 none; 
 	margin-top:60px;
-	padding:10px 20px; 
+	margin-left:20px;
 	}
 	
 .button:hover{
@@ -735,313 +693,34 @@ td{
 	clear:both;
 	}
     
-}
 
-
-
-/*flightresult*/
-.wrap4{
-	width:100%;
-	overflow:hidden;
-	}
-
-.Searchflight{
-	width:100%;
-	overflow:hidden;
-	margin-top:10px;
-	border-top:#CCC;
-	border-top-style:solid;
-	border-top-width:1px;
-	border-bottom:#CCC;
-	border-bottom-style:solid;
-	border-bottom-width:1px;
-	}
-	
-.Searchform{
-	width:100px;
-	height: 50px;
-	float:left;
-	margin-left:100px;
-	margin-top:20px;
-	}
-
-#flight-from{
-	height:25px;
-	width:160px;
-	}
-	
-#flight-to{
-	height:25px;
-	width:160px;
-	}
-
-#flight-depart{
-	height:27px;
-	width:160px;
-	}	
-	
-#flight-return{
-	height:27px;
-	width:160px;
-	}
-	
-#searchagain{
-	width:100px;
-	height:30px;  
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700; 
-	border:0 none; 
-	cursor:pointer;
-	border-radius:3px;
-	}	
-	
-#searchagain:hover{
-	background:#FAAC5F; 
-	}	
-	
-.aside{
-	width:250px;
-	overflow:hidden;
-	float:left;
-	margin-left:100px;
-	}
-		
-.filterlist li{
-    list-style-type:none;
-	color:#666;
-	font-family:Verdana, Geneva, sans-serif;
-	
-		
-	}
-		
-h3{
-	color:#4F617D;}	
-	
-h4{
-	color:#636D87;
-	}
-	
-.resultbg{
-	background:#FFF;
-	}
-
-.sortNav{
-	margin-left:10px;
-	margin-top:10px;
-	background:#FFF;
-	border-color:#CCC;
-	border-width:2px;
-	border-style:outset;
-	border-radius:5px;
-	width:630px;
-	height:45px;
-	float:left;
-}
-	
-#sort{
-	width:60px;
-	float:left;
-	color:#666;}
-	
-#flightSortBar ul li{
-	list-style-type:none;
-	text-decoration:none;
-	float:left;
-	padding-left:20px;
-	}	
-	
-#flightSortBar ul li a{
-	text-decoration:none;
-	color:#4F617D;
-    }
-
-#flightSortBar ul li a:hover{
-	color:#C60;
-}
-
-.flightReasultList{
-	position:absolute;
-	background:#FFF;
-	top:280px;
-	left:360px;
-	width:640px;
-	height:800px;
-	border-color:#CCC;
-	border-style:solid;
-	border-width:2px;
-	border-radius:3px;
-	}	
-	
-.flightInfo{
-	padding-top:10px;
-	width:640px;
-	height:180px;
-	float:left;
-	}
-
-		
-.flightInfo.Left{
-	width:100px;
-	height:140px;
-	margin-left:30px;
-	}
-	
-.flightprice{
-	color:#3c445e; 
-	font-size:20px;
-	padding-top:30px;}
-
-.selectbtn{
-	width:75px;
-	height:28px;  
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700; 
-	border-radius:3px;
-	cursor:pointer;
-	margin-top:15px;
-	
-}
-	
-.selectbtn:hover{
-	background:#FAAC5F; 
-	}		
-	
-.flightInfo.Right{
-	height:140px;
-	width:500px;
-	float:left;
-	margin-right:10px;
-	}
-	
-	
-	
-.flightInfoDetail{
-	width:500px;
-	}	
-	
-.flightcompany{
-	width:100px;
-	color:#666;
-	float:left;
-	margin-left:20px;
-	}	
-	
-#seats{
-	float:left;}
-	
-.day{
-	display:block;
-	}	
-
-.flightdepart{
-	width:120px;
-	float:left;
-	color:#666;
-	}	
-
-.flightreturn{
-	width:120px;
-	float:left;
-	color:#666;
-	}	
-	
-.flightduration{
-	width:120px;
-	float:left;
-	color:#666;
-	}	
-	
-#seats{
-	width:90px;
-	color:#666;
-	}	
-	
-.seats{
-	float:left;
-	width:10px;
-	color:#666;
-	}	
-
-/*passengerinformation*/
-.wrap5{
+/*confirmnumber*/
+.wrap7{
 	width:100%;
 	height:600px;
 	background:#F5F5FA;
-
 	}
 	
-.passengerInfoTitle{
-	padding-left:100px;
-	padding-top:10px;
-	padding-bottom:20px;
-	font:Verdana, Geneva, sans-serif;
-	color: #3c445e;
-	font-size:20px;
-	font-weight:bolder;
-	}
-	
-#PassengerInfowrap{
+.ticketinfo{
 	margin-left:100px;
-	width:500px;
-	height:400px;
 	background-color:#FFF;
-	border:solid;
+	border-style:solid;
+	border-color:#CFD7EB;
 	border-width:1px;
-	border-color:#999;
-	border-radius:5px;
-	}
-
-.informationlabel{
-	color:#000;
-	font-weight:bold;
-	font-size:12px;}
-
-#firstNameFiled{
-	float:left;
-	padding-top:20px;
-	padding-left:30px;
-	padding-right:30px;
-	}
-
-#lastNameFiled{
-	padding-top:20px;
-	padding-left:20px;
-	}	
+	border-radius:10px;
+	width:860px;
+	height:400px;}
 	
-#genderfield{
-	padding-top:20px;
-	padding-left:30px;
+.ticketinfo_top{
+	margin-left:20px;}
+	
+.ticketinfo_detail{
+	margin-left:20px;}	
+		
+	
+/*#footer { 
+	height:30px; 
+	background:#ffffff;
 	}
+*/	
 
-#birthdayField{
-	padding-top:20px;
-	padding-left:30px;}
-
-#phonefield{
-	padding-top:20px;
-	padding-left:30px;
-	padding-right:30px;
-	float:left;
-	}	
-	
-#emailfield{
-	padding-top:20px;
-	padding-left:30px;
-	}
-	
-#bookingBtn{
-	margin-top:50px;
-	margin-left:30px;
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700;
-	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:3px;
-	}
-	
-#bookingBtn:hover{
-	background-color:#FAAC5F; }	
