@@ -41,7 +41,7 @@ header .top_nav li {
 	padding-top:2px;
 	padding-bottom:3px;
 	font-family:Verdana, Geneva, sans-serif;
-	}
+
 	
 header .top_nav ul li{
 	text-decoration:none;
@@ -109,13 +109,6 @@ header .top_nav ul li a:hover{
 	height: 600px;
 	}
 
-/*#menu li {
-	float:left;
-	padding-right:30px;
-	list-style:none;
-	margin-right:20px; 
-	padding-top:2px;
-	padding-bottom:3px}	*/
 
 #mainContent { 
 	height:500px; 
@@ -193,29 +186,25 @@ label{
 #flightsearch .field.half .input-text{ 
 	width:120px; }
 	
-#wrapper {
-	position:absolute;
-	background:#F5F5FA;
+
+/*Loginpage*/
+.wrap2{
 	width:100%;
-	height:100%;
-	top: 113px;
+	height:600px;
+	background:#F5F5FA;
 	}
-	
-#Logintitle{
-	position:relative;
-	padding-left:150px;
-	padding-top:20px;
-	color:#3c445e;
-	}
-	
+		
 #LoginForm{
 	position:relative;
 	background-color:#FFF;
-	width:1000px;
+    	border:solid;
+	border-width:1px;
+	border-color:#CFD7EB;
+	border-radius:5px;
+	width:860px;
 	height:300px;
-	left:150px;
-	padding-left: 2em;
-	top: 20px;
+	left:100px;
+	padding-left:2em;
 	}	
 	
 #LoginForm .username{
@@ -223,7 +212,6 @@ label{
 	height:30px;
 	}
 
-	
 #LoginForm .password{
 	width:300px;
 	height:30px;
@@ -232,52 +220,53 @@ label{
 #LoginForm .Loginlabel{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:10px;
-	color:#666;
+	color:#333;
 	padding-top:20px;
-}
+	}
 
 #LoginForm .secondary {
 	margin:10px 0;
 	font-size: 0.8em;
 	line-height: 1.4;
+	}
 	
-}
 #LoginForm a{
 	color: #3c445e;
     margin: 0;
 	text-decoration:none;
-}
+	}
 
 #LoginForm a:hover{
 	color: #A39481;
     margin: 0;
 	text-decoration:underline;
-}
+	}
 
+/*Registerpage*/
+.wrap3{
+	width:100%;
+	height:800px;
+	background:#F5F5FA;
+	}
 
-#loginform .loginbutton{
-	position:relative;  
-	margin-top:60px; 
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700; 
-	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:0; }
-	
-#loginform .loginbutton:hover{ 
-	background:#FAAC5F; 
-}
+.Registertitle{
+	position:relative;
+	padding-left:150px;
+	padding-top:20px;
+	color:#3c445e;}
 
 #RegisterForm{
 	position:relative;
 	background-color:#FFF;
-	width:1000px;
+	width:860px;
 	height:500px;
-	left:150px;
-	padding-left: 2em;
-	top: 21px;
+	left:100px;
+	padding-left:2em;
+	border:solid;
+	border-width:1px;
+	border-color:#CFD7EB;
+	border-radius:5px;
+
 	}
 
 #RegisterForm .firstname{
@@ -303,97 +292,17 @@ label{
 #RegisterForm .Registerlabel{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:10px;
-	color:#666;
+	color:#333;
 	padding-top:20px;
 }
 
 
-#registerform .registerbutton{
-	position:relative;  
-	margin-top:30px; 
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700; 
-	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:0; }
-	
-#registerform .registerbutton:hover{ 
-	background:#FAAC5F; 
-}
-
-
-#searchflight{
-	position:absolute;
-	border-top-color:#CCC;
-	border-top-style:solid;
-	border-top-width:1px;
-	width:100%;
-	top: 110px;
-	}
-	
-#searchflight #searchform{
-	position:relative;
-	padding-top:15px;
-	padding-left:180px;
-	
-	}	
-	
-#searchflight  .searchbutton{ 
-	position:absolute; 
-	margin:0; 
-	background:#F59738; 
-	color:#fff; 
-	font-weight:700; 
-	border:0 none; 
-	padding:10px 20px; 
-	cursor:pointer; 
-	border-radius:0; }
-	
-#searchflight  .searchbutton:hover{ 
-	background:#FAAC5F; }
-	
-
-	
-#searchflight .input-text{
-	height:30px;
-	width:210px;
-	}
-
-#searchflight .input-text input-cal{
-	height:30px;
-	width:210px;
-	}	
-#searchresult{
-	position:absolute;
-	width:710px;
-	heitht:auto;
-	top:251px;
-	z-index:20px;
-	left:432px;
-	height: 156px;
-}
- 	
-#ads{
-	position:absolute;
-	border-top:#CCC;
-	border-style:dashed;
-	width:206px;
-	height:300px;
-	left: 179px;
-	top: 227px;
-	
-	}
-    
-}
-
-
-
-/*flightresult*/
+/*flightsearchpage*/
 .wrap4{
 	width:100%;
-	overflow:hidden;
+	height:auto !important; 
+	min-height:800px;
+	background:#F5F5FA;
 	}
 
 .Searchflight{
@@ -517,7 +426,7 @@ h4{
 	top:280px;
 	left:360px;
 	width:640px;
-	height:800px;
+	height:600px;
 	border-color:#CCC;
 	border-style:solid;
 	border-width:2px;
@@ -614,8 +523,18 @@ h4{
 	width:10px;
 	color:#666;
 	}	
+	
+.suggestion{
+	position:absolute;
+	border-style:dashed;
+	border-color:#CCC;
+	width:154px;
+	height:348px;
+	left: 1074px;
+	top: 280px;
+}	
 
-/*passengerinformation*/
+/*passengerinformation*/	
 .wrap5{
 	width:100%;
 	height:600px;
@@ -623,7 +542,7 @@ h4{
 
 	}
 	
-.passengerInfoTitle{
+.InfoTitle{
 	padding-left:100px;
 	padding-top:10px;
 	padding-bottom:20px;
@@ -640,19 +559,18 @@ h4{
 	background-color:#FFF;
 	border:solid;
 	border-width:1px;
-	border-color:#999;
+	border-color:#CFD7EB;
 	border-radius:5px;
 	}
 
 .informationlabel{
-	color:#000;
-	font-weight:bold;
+	color:#333;
 	font-size:12px;}
 
 #firstNameFiled{
 	float:left;
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
 	padding-right:30px;
 	}
 
@@ -663,36 +581,146 @@ h4{
 	
 #genderfield{
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
 	}
 
 #birthdayField{
 	padding-top:20px;
-	padding-left:30px;}
+	padding-left:20px;}
 
 #phonefield{
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
 	padding-right:30px;
 	float:left;
 	}	
 	
 #emailfield{
 	padding-top:20px;
-	padding-left:30px;
+	padding-left:20px;
+	}
+
+.buttonfield{
+	margin-left:20px;
 	}
 	
-#bookingBtn{
-	margin-top:50px;
-	margin-left:30px;
-	background:#F59738; 
+/*travel summary*/
+.wrap6{
+	position:relative;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:18px;
+	width:100%;
+    	background-color:#F5F5FA;
+	min-height:600px;
+	height:auto !important;
+	}
+	
+#travelsummary_details{
+	margin-left:100px;
+	background-color:#FFF;
+	border-style:solid;
+	border-color:#CFD7EB;
+	border-width:1px;
+	border-radius:10px;
+	width:860px;
+	height:450px;
+	}		
+	
+.pricesummary{
+	margin:20px 0px 20px 20px;
+	width:820px;
+	height:60px;
+	border-radius:10px;
+	border-color:#8997B8;
+	border-style:solid;
+	border-width:1px;
+	}	
+	
+.pricesummary_left{
+	float:left;
+	margin:5px 0px 5px 10px;}	
+
+.pricesummary_left_text{
+	font:Verdana, Geneva, sans-serif;
+	font-size:12px;}	
+
+.pricesummary_right{
+	float:right;
+	margin:5px 0px 5px 10px; }
+
+.pricesummary_right_title{
+	font-size:18px;}
+	
+.pricesummary_right_text2{
+	font-size:14px; }
+	
+.travelsummary{
+	width:820px;
+	margin-left:20px;
+	background-color:white;
+	border-color:#8997B8;
+	border-style:solid;
+	border-width:1px;
+	border-radius:10px;
+	}		
+
+td{
+	font-size:12px;}
+	
+.flightsummary_table_title{
+	display:block;}
+
+
+.button{ 
+	background:#3c445e; 
 	color:#fff; 
 	font-weight:700;
-	border:0 none; 
-	padding:10px 20px; 
 	cursor:pointer; 
-	border-radius:3px;
+	border-radius:5px;
+	height:40px;
+	width:170px; 
+	border:0 none; 
+	margin-top:60px;
+	margin-left:20px;
 	}
 	
-#bookingBtn:hover{
-	background-color:#FAAC5F; }	
+.button:hover{
+	background:#F59738;}	
+
+.clear{
+	margin:0px;
+	padding:0px;
+	clear:both;
+	}
+    
+
+/*confirmnumber*/
+.wrap7{
+	width:100%;
+	height:600px;
+	background:#F5F5FA;
+	}
+	
+.ticketinfo{
+	margin-left:100px;
+	background-color:#FFF;
+	border-style:solid;
+	border-color:#CFD7EB;
+	border-width:1px;
+	border-radius:10px;
+	width:860px;
+	height:400px;}
+	
+.ticketinfo_top{
+	margin-left:20px;}
+	
+.ticketinfo_detail{
+	margin-left:20px;}	
+		
+	
+/*#footer { 
+	height:30px; 
+	background:#ffffff;
+	}
+*/	
+
