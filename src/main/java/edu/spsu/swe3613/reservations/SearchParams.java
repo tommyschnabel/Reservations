@@ -42,7 +42,7 @@ public class SearchParams {
 	
 	public void setMonth(int value) {
 		
-		this.day = value;
+		this.month = value;
 	}
 	
 	public int getYear(){
@@ -175,10 +175,5 @@ public class SearchParams {
 		
 		this.searchType = value;
 	}
-	
-	
-	
-	
-	
 
 }
