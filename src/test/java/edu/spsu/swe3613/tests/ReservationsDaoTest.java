@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminDao;
+import edu.spsu.swe3613.edu.spsu.swe3613.admin.SqLiteAdminDao;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,11 +26,11 @@ public class ReservationsDaoTest {
 	
 	private static SQLiteReservationsDao testDao;
 	private static UserDao testUserDao;
+    private static AdminDao testAdminDao;
 	
-	private static Flight flight = new Flight("10/01/14 9:00 AM","Delta","Atlanta","Dallas");
-	private static Reservation reservation = new Reservation(1,1,1,"First Class");	
+	private static Flight flight = new Flight(1,"10/01/14 9:00 AM",Airline.Delta,"Atlanta","Dallas", 5f,10,10,45.00f);
+	private static Reservation reservation = new Reservation(1,1,1, Reservation.SeatClass.firstClass);
 	private static AirlineAdmin admin = new AirlineAdmin("adminId","Southwest","password");
-	private static Airline airline = new Airline("American","test description");
 	
 	private static Connection connection;
 	private static Statement statement;
@@ -39,6 +41,7 @@ public class ReservationsDaoTest {
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
 		testDao = new SQLiteReservationsDao(connection);
 		testUserDao = new SqLiteUserDao(connection);
+        testAdminDao = new SqLiteAdminDao(connection);
 		statement = connection.createStatement();
 		//Create sample DB test methods
 		//Flight
@@ -126,7 +129,7 @@ public class ReservationsDaoTest {
 			String date = "12/12/12 1:00 PM";
 			String time = date.substring(9);
 			testFlight.setDate(date);
-			testFlight.setAirline("Southwest");
+			testFlight.setAirline(Airline.Southwest);
 			testFlight.setStartingCity("San Francisco");
 			testFlight.setDestination("New York");
 			float distance = testDao.getDistance("San Francisco","New York");
@@ -135,7 +138,7 @@ public class ReservationsDaoTest {
 			testFlight.setPrice(distance*priceRate);
 			testDao.updateFlight(testFlight);
 			if(!testFlight.equals(testDao.getFlightById(testFlight.getId())))
-				fail();		
+				fail();
 		}
 		catch (SQLException|ParseException e){
 			fail();
@@ -208,7 +211,7 @@ public class ReservationsDaoTest {
 			testDao.addReservation(reservation);
 			reservation.setFlightId(2);
 			reservation.setUserId(2);
-			reservation.setFlightClass("Economy");
+			reservation.setFlightClass(Reservation.SeatClass.economy);
 			testDao.updateReservation(reservation);
 			Reservation testReservation = testDao.getReservationById(reservation.getId());
 			if(!reservation.equals(testReservation))
@@ -239,7 +242,7 @@ public class ReservationsDaoTest {
 	@Test
 	public void testAddAirlineAdmin(){
 		try{
-			AirlineAdmin testAdmin = testDao.addAirlineAdmin(admin);
+			AirlineAdmin testAdmin = testAdminDao.addAirlineAdmin(admin);
 			if(!testAdmin.equals(admin))
 				fail();
 		}
@@ -253,8 +256,8 @@ public class ReservationsDaoTest {
 		try{
 			List<AirlineAdmin> testList = new ArrayList<AirlineAdmin>(); 
 			testList.add(admin);
-			testDao.addAirlineAdmin(admin);
-			List<AirlineAdmin> resultList = testDao.getAllAirlineAdmins();
+			testAdminDao.addAirlineAdmin(admin);
+			List<AirlineAdmin> resultList = testAdminDao.getAllAirlineAdmins();
 			if (testList.size() != resultList.size())
 				fail("List is not the right size");
 			for (int i=0; i<resultList.size();i++)
@@ -269,8 +272,8 @@ public class ReservationsDaoTest {
 	@Test
 	public void testGetAirlineAdminById(){
 		try{
-			testDao.addAirlineAdmin(admin);
-			AirlineAdmin testAdmin = testDao.getAirlineAdminById(admin.getId());
+			testAdminDao.addAirlineAdmin(admin);
+			AirlineAdmin testAdmin = testAdminDao.getAirlineAdminById(admin.getId());
 			if(!admin.equals(testAdmin))
 				fail("Admin ID error");
 		}
@@ -282,11 +285,11 @@ public class ReservationsDaoTest {
 	@Test
 	public void testUpdateAirlineAdmin(){
 		try{
-			testDao.addAirlineAdmin(admin);
+			testAdminDao.addAirlineAdmin(admin);
 			admin.setAirline("American");
 			admin.setPassword("tiger");
-			testDao.updateAirlineAdmin(admin);
-			AirlineAdmin testAdmin = testDao.getAirlineAdminById(admin.getId());
+			testAdminDao.updateAirlineAdmin(admin);
+			AirlineAdmin testAdmin = testAdminDao.getAirlineAdminById(admin.getId());
 			if(!admin.equals(testAdmin))
 				fail();	
 		}
@@ -298,12 +301,12 @@ public class ReservationsDaoTest {
 	@Test
 	public void testDeleteAirlineAdmin(){
 		try{
-			AirlineAdmin testAdmin = testDao.addAirlineAdmin(admin);
-			List<AirlineAdmin> testList = testDao.getAllAirlineAdmins();
+			AirlineAdmin testAdmin = testAdminDao.addAirlineAdmin(admin);
+			List<AirlineAdmin> testList = testAdminDao.getAllAirlineAdmins();
 			if(!testList.contains(testAdmin))
 				fail();
-			testDao.deleteAirlineAdmin(admin);
-			List<AirlineAdmin> resultList = testDao.getAllAirlineAdmins();
+            testAdminDao.deleteAirlineAdmin(admin);
+			List<AirlineAdmin> resultList = testAdminDao.getAllAirlineAdmins();
 			if(resultList.contains(testAdmin))
 				fail();
 		}
@@ -311,19 +314,20 @@ public class ReservationsDaoTest {
 			fail();
 		}
 	}
-	
-	@Test
-	public void testGetAirline(){
-		try{
-			Airline testAirline = testDao.getAirline(airline.getName());
-			if(!airline.getName().equals(testAirline.getName())
-			|| !airline.getInfo().equals(testAirline.getInfo()))
-				fail();
-		}
-		catch (SQLException e){
-			fail();
-		}
-	}
+
+//    Commented out since refactoring of Airline turned it into an enum
+//	@Test
+//	public void testGetAirline(){
+//		try{
+//			Airline testAirline = testAdminDao.getAirline(airline.getName());
+//			if(!airline.getName().equals(testAirline.getName())
+//			|| !airline.getInfo().equals(testAirline.getInfo()))
+//				fail();
+//		}
+//		catch (SQLException e){
+//			fail();
+//		}
+//	}
 	
 
 
