@@ -1,81 +1,85 @@
 @charset "utf-8";
 /* CSS Document */
 
-body {
+body{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:14px;
 	margin:0;
-	color: #CCC;
 	}
 
-header{
-	width:100%;
+.wrapper{
+	position:relative;
 	overflow:hidden;
-    	height:100px;
+	margin:0 auto;
+	width:100%;
+	height:100%;
+	}
+	
+/*header*/
+header{
+	display:block;
+	width:100%;
+    height:60px;
 	background:#3c445e; 
 	}
 
-header img{
-	position:absolute;
-	top:13px;
-	left:26px;
-	z-index:10px;
-}
+.logo{
+	padding-top:10px;
+	padding-left:10px;
+	width:190px;
+	height:50px;
+	float:left;
+	}
 
-header .top_nav {
-	position:absolute;
-	left:997px;
-	top:11px;
-	margin:5px;
-	padding:5px;
-	overflow:hidden;
-	width: 246px;
+.top_nav {
+	float:right;
+	padding-top:10px;
+	padding-right:30px;
+	height:50px;
+	width:200px;
+
 	}
 	
-header .top_nav li {
+.top_nav li {
 	float:left;
-	padding-right:30px;
 	list-style-type:none;
 	text-decoration:none;
-	margin-right:20px; 
-	padding-top:2px;
-	padding-bottom:3px;
+	padding-right:30px; 
 	font-family:Verdana, Geneva, sans-serif;
-
+	}
 	
-header .top_nav ul li{
+ul{
+	float:left;
+	}
+	
+.top_nav ul li{
 	text-decoration:none;
     }
 
-
-header .top_nav ul li a{
+.top_nav ul li a{
 	text-decoration:none;
 	color:white;
 	font-family:Verdana, Geneva, sans-serif;
 	}	
 	
-header .top_nav ul li a:hover{
+.top_nav ul li a:hover{
 	color:white;
 	background-color:#b18475;
 	}
 
-
-
-
+/*nav*/
 .nav{
-	margin:0 auto;
-	position:absolute;
-	top:66px;
 	width:100%;
 	background-color:white;
-	left: 0px;
-	height: 41px;
+	height:40px;
+	border-bottom-style:solid;
+	border-bottom-color:#CCC;
+	border-bottom-width:1px;
 	}
 	
 .nav ul{
 	list-style-type:none;
 	margin-left:40%;
-	padding:0px;
 	text-decoration:none;
 	}
 	
@@ -100,38 +104,35 @@ header .top_nav ul li a:hover{
 	background-color:#febd84;
 	}
 
-#content{
-	position:absolute;
-	z-index:10px;
-	left:130px;
-	top:140px;
-	width: 1220px;
-	height: 600px;
-	}
-
-
-#mainContent { 
+/*homepage*/
+.wrap1 { 
+    margin:0px;
 	height:500px; 
 	background:url(../image/backgroud.png) no-repeat;
-	margin-bottom:50px;
-	background-position: 100% 100%;
-	z-index:8px;
+	position:relative;
+	}
+
+#content{
+	position:relative;
+	left:15%;
+	top: 30px;
+	width: 900px;
+	height: 400px;
 	}
 
 .title{
 	position:absolute;
-	top:50px;
-	left:255px;
+	top:80px;
+	left:200px;
 	color:#FFF;
-	z-index:20px;
-	font-family:Verdana, Geneva, sans-serif;
-	height: 68px;
+	font-weight:bold;
+	font-size:20px;
 	}	
 	
 #flightsearch{
 	position:absolute;
-	top:125px;
-	left:255px;
+	top:138px;
+	left:180px;
 	width:700px;
 	height:auto;
 	
@@ -163,7 +164,7 @@ label{
 	border:0 none; 
 	padding:10px 20px; 
 	cursor:pointer; 
-	border-radius:0; }
+	border-radius:5px; }
 	
 #flightsearch  .search:hover{ 
 	background:#FAAC5F; }
@@ -187,6 +188,7 @@ label{
 	width:120px; }
 	
 
+
 /*Loginpage*/
 .wrap2{
 	width:100%;
@@ -197,7 +199,7 @@ label{
 #LoginForm{
 	position:relative;
 	background-color:#FFF;
-    	border:solid;
+    border:solid;
 	border-width:1px;
 	border-color:#CFD7EB;
 	border-radius:5px;
@@ -241,6 +243,21 @@ label{
     margin: 0;
 	text-decoration:underline;
 	}
+	
+.button{ 
+	background:#3c445e; 
+	color:#fff; 
+	font-weight:700;
+	cursor:pointer; 
+	border-radius:5px;
+	height:40px;
+	width:170px; 
+	border:0 none; 
+	margin-top:60px;
+	}
+	
+.button:hover{
+	background:#F59738;}	
 
 /*Registerpage*/
 .wrap3{
@@ -295,6 +312,7 @@ label{
 	color:#333;
 	padding-top:20px;
 }
+
 
 
 /*flightsearchpage*/
