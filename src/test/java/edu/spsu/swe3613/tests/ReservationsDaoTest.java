@@ -1,4 +1,5 @@
 package edu.spsu.swe3613.tests;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminDao;
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.SqLiteAdminDao;
+import jersey.repackaged.com.google.common.base.Objects;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,10 +27,9 @@ import edu.spsu.swe3613.user.UserDao;
 public class ReservationsDaoTest {
 	
 	private static SQLiteReservationsDao testDao;
-	private static UserDao testUserDao;
     private static AdminDao testAdminDao;
 	
-	private static Flight flight = new Flight(1,"10/01/14 9:00 AM",Airline.Delta,"Atlanta","Dallas", 5f,10,10,45.00f);
+	private Flight flight;
 	private static Reservation reservation = new Reservation(1,1,1, Reservation.SeatClass.firstClass);
 	private static AirlineAdmin admin = new AirlineAdmin("adminId","Southwest","password");
 	
@@ -37,10 +38,11 @@ public class ReservationsDaoTest {
 		
 	@Before
 	public void setUpBefore() throws Exception{
+
+        flight = new Flight(1,"10/01/14 9:00 AM",Airline.Delta,"Atlanta","Dallas", 5f,10,10,45.00f);
 		
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
 		testDao = new SQLiteReservationsDao(connection);
-		testUserDao = new SqLiteUserDao(connection);
         testAdminDao = new SqLiteAdminDao(connection);
 		statement = connection.createStatement();
 		//Create sample DB test methods
@@ -89,19 +91,23 @@ public class ReservationsDaoTest {
 		catch (SQLException e){
 			fail();
 		}
-	}	
+	}
+
 	@Test
 	public void testGetAllFlights(){
 		try{
-			Flight testFlight = testDao.addFlight(flight);
-			List<Flight> testList = new ArrayList<Flight>();
-			testList.add(testFlight);
+			testDao.addFlight(flight);
 			List<Flight> resultList = testDao.getAllFlights();
-			if (testList.size() != resultList.size())
-				fail("List is not the right size");
-			for (int i=0; i<resultList.size();i++)
-				if(!resultList.get(i).equals(testList.get(i)))
-					fail("List contains incorrect data");		
+            Boolean foundAddedFlight = false;
+            for (Flight f : resultList) {
+                if (Objects.equal(f.getId(), flight.getId())
+                        && Objects.equal(f.getDate(), flight.getDate())) {
+                    foundAddedFlight = true;
+                }
+            }
+            if (!foundAddedFlight) {
+                fail("Dao didn't return added flight when all flights requested");
+            }
 		}
 		catch (SQLException|ParseException e){
 			fail();
@@ -112,10 +118,12 @@ public class ReservationsDaoTest {
 	@Test
 	public void testGetFlightById(){
 		try{
-			Flight testFlight = testDao.addFlight(flight);
-			Flight resultFlight = testDao.getFlightById(testFlight.getId());
-			if(!testFlight.equals(resultFlight))
-				fail("Flight ID error");
+			testDao.addFlight(flight);
+			Flight resultFlight = testDao.getFlightById(flight.getId());
+			if (!Objects.equal(flight.getId(), resultFlight.getId())
+                    && !Objects.equal(flight.getDate(), resultFlight.getDate())) {
+                fail("Flight ID error");
+            }
 		}
 		catch (SQLException|ParseException e){
 			fail();
@@ -125,20 +133,23 @@ public class ReservationsDaoTest {
 	@Test
 	public void testUpdateFlight() {
 		try{
-			Flight testFlight = testDao.addFlight(flight);
+			testDao.addFlight(flight);
 			String date = "12/12/12 1:00 PM";
 			String time = date.substring(9);
-			testFlight.setDate(date);
-			testFlight.setAirline(Airline.Southwest);
-			testFlight.setStartingCity("San Francisco");
-			testFlight.setDestination("New York");
+			flight.setDate(date);
+			flight.setAirline(Airline.Southwest);
+            flight.setStartingCity("San Francisco");
+            flight.setDestination("New York");
 			float distance = testDao.getDistance("San Francisco","New York");
 			float priceRate = testDao.getPrice(time);
-			testFlight.setDistance(distance);
-			testFlight.setPrice(distance*priceRate);
-			testDao.updateFlight(testFlight);
-			if(!testFlight.equals(testDao.getFlightById(testFlight.getId())))
-				fail();
+            flight.setDistance(distance);
+            flight.setPrice(distance*priceRate);
+			testDao.updateFlight(flight);
+            Flight updatedFlight = testDao.getFlightById(flight.getId());
+            if(!Objects.equal(updatedFlight.getId(), flight.getId())
+                    || !Objects.equal(updatedFlight.getDate(), flight.getDate())) {
+                fail("the updated flight was not equal to the original flight");
+            }
 		}
 		catch (SQLException|ParseException e){
 			fail();
@@ -148,13 +159,10 @@ public class ReservationsDaoTest {
 	@Test
 	public void testDeleteFlight(){
 		try{
-			Flight testFlight = testDao.addFlight(flight);
-			List<Flight> testList = testDao.getAllFlights();
-			if(!testList.contains(testFlight))
-				fail();
-			testDao.deleteFlight(testFlight);
+            testDao.addFlight(flight);
+			testDao.deleteFlight(flight);
 			List<Flight> resultList = testDao.getAllFlights();
-			if(resultList.contains(testFlight))
+			if(resultList.contains(flight))
 				fail();
 		}
 		catch (SQLException|ParseException e){
@@ -181,11 +189,12 @@ public class ReservationsDaoTest {
 			List<Reservation> testList = new ArrayList<Reservation>(); 
 			testList.add(testReservation);		
 			List<Reservation> resultList = testDao.getAllReservations();
-			if (testList.size() != resultList.size())
-				fail("List is not the right size");
-			for (int i=0; i<resultList.size();i++)
-				if(!resultList.get(i).equals(testList.get(i)))
-					fail("List contains incorrect data");
+			if (testList.size() != resultList.size()) {
+                fail("List is not the right size");
+            }
+			for (int i=0; i<resultList.size();i++){
+                assertEquals(resultList.get(i),testList.get(i));
+            }
 		}
 		catch (SQLException e){
 			fail();
