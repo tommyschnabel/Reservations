@@ -65,7 +65,7 @@ create table Customer(
 	Password	text
 	);
 insert into Customer values
-	('admin','John','Doe','johndoe@gmail.com','root');
+	(1,'John','Doe','johndoe@gmail.com','root');
 -- Airline Admin
 drop table if exists AirlineAdmin;
 create table AirlineAdmin(
@@ -113,7 +113,6 @@ create table Reservation(
 	ID		integer primary key,
 	CustomerID	integer,
 	FlightID	integer,
-	SeatQuantity	integer,
 	FlightClass	text,
 	foreign key (CustomerID) references Customer(ID)
 		on delete cascade on update cascade,
