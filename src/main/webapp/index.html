@@ -11,19 +11,21 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
+        <div class="wrapper">
 	
 	<!-- HEADER -->
 	<!-- Static, doesn't change per page -->
     <div ng-controller="headerController">
       <header>
-	    <a href="/home" id="logo"><img src="image/logo.png" width="180" height="45" alt="1" /></a>
-        <div class="top_nav">
+<div class="logo">
+	    <a href="/home" id="logo"><img src="image/logo.png" width="180" height="40" alt="1" /></a>
+</div>       
+ <div class="top_nav">
           <ul>
 		    <li><a href="#/register">Register</a></li>
 	        <li><a href="#/login">Login</a></li>
 		  </ul>
 	    </div>
-	    <p>&nbsp;</p>
 	   </header>           
 
 	   <div class="nav">
@@ -34,10 +36,6 @@
             <li>|</li>
 			<li>
 				<a href="#/flight"> FLIGHT</a>
-			</li>
-            <li>|</li>
-			<li>
-				<a href="#/passenger">CONTACTS</a>
 			</li>
 	     </ul>
        </div>
@@ -50,11 +48,10 @@
 	   <!-- 
 	   FOOTER
 	   Also static and on every page
-		<div id="footer">
-			<span style="font-family:'Comic Sans MS', cursive; color:#666; position:absolute; margin-left:40%; width: 315px; height: 24px;">
-				Copyright &copy;2014 www.webreservation.com
-			</span>
-		</div>
+		<footer>
+		<span class="footerlabel">Copyright &copy;2014 www.webreservation.com</span>
+		</footer>
 		END FOOTER -->
+</div>
 	</body>
 </html>
