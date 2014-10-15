@@ -120,7 +120,7 @@ create table Reservation(
 		on delete cascade on update cascade
 	);
 insert into Reservation values
-	(NULL,'admin',1,1,'First Class');
+	(NULL,1,1,'First Class');
 -- Service
 drop table if exists Service;
 create table Service(
