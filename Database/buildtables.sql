@@ -58,7 +58,7 @@ insert into Airline values
 -- Customer
 drop table if exists Customer;
 create table Customer(
-	ID		text primary key,
+	ID		integer primary key,
 	FirstName	text,
 	LastName	text,
 	Email		text,
@@ -111,7 +111,7 @@ insert into Flight (Date,AirlineName,StartLocation,Destination,Mileage) values
 drop table if exists Reservation;
 create table Reservation(
 	ID		integer primary key,
-	CustomerID	text,
+	CustomerID	integer,
 	FlightID	integer,
 	SeatQuantity	integer,
 	FlightClass	text,
