@@ -1,140 +1,122 @@
 <div class="wrap4">
-<div class="Searchflight">
-      <div class="Searchform">
-      <input type="text"  id="flight-from" placeholder="From" autocomplete="off" />
-      </div>
-      <div class="Searchform">
-      <input type="text"  id="flight-to" placeholder="To" autocomplete="off" />
-      </div>
-      <div class="Searchform">
-      <input type="date" id="flight-depart" name="csserdate" class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
-      </div>
-      <div class="Searchform">
-      <input type="date" id="flight-return" name="csserdate" class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
-      </div>
-      <div class="Searchform">
-      <button type="submit" id="searchagain" class="search">Search</button>
-      </div>	
-</div>
-      
-<div class="resultbg">
-       <div class="aside">
-		<form name="filter" id="filter" action="" >
-			<div class="filterSec" id="filterSection">
-			<h3 class="filterSec-header">Filter your results by</h3>
-            
-				<div id="filterContent">
-                
-				<h4 class="filterSec-sub-header"> Airlines</h4>
-					<ul id="AirlinesFilterList" class="filterlist">
-						<li>
-	
-						  <input type="checkbox" class="flightCheckBox" id="airline_DL" name="airline" value="DL">
-                        	<span class="filterlabel">Delta</span>
-
-                        </li>
-                        <li>
-						
-						  <input type="checkbox" class="flightCheckBox" id="airline_SW" name="airline" value="SW">
-                        	<span class="filterlabel">Southwest</span>
-                        
-                        </li>
-                        <li>
-							
-						  <input type="checkbox" class="flightCheckBox" id="airline_AA" name="airline" value="AA">
-                        	<span class="filterlabel">American</span>
-                        	
-                        </li>
-                  </ul>
-
-                 <h4 class="filterSec-sub-header"> Time</h4>
-					<ul id="TimeFilterList" class="filterlist">
-						<li>
-							
-							<input type="checkbox" class="lesftside" id="time_mon" name="time" value="moning">
-                        	<span class="filterlabel time">9:00AM</span>
-                        
-                        </li>
-                        <li>
-							
-							<input type="checkbox" class="lesftside" id="time_noon" name="time" value="noon">
-                        	<span class="filterlabel time">1:00PM</span>
-                        
-                        </li>
-                        <li>
-							
-							<input type="checkbox" class="lesftside" id="time-aft" name="time" value="afternoon">
-                        	<span class="filterlabel time">5:00PM</span>
-                        	
-                        </li>
-                          <li>
-
-							<input type="checkbox" class="lesftside" id="time-eve" name="time" value="evening">
-                        	<span class="filterlabel time">9:00PM</span>
-                        
-                        </li>
-                  </ul>
-                        
-                 <h4 class="filterSec-sub-header">Price</h4>
-				  	<ul id="PriceFilterList" class="filterlist">
-						<li>
-							
-							<input type="checkbox" class="lesftside" id="Price_low" name="Price" value="low">
-                        	<span class="filterlabel">$500.00 and under</span>
-                       
-                        </li>
-                        <li>
-							
-							<input type="checkbox" class="lesftside" id="Price_mid" name="Price" value="middle">
-                        	<span class="filterlabel">$500.00-$1000.00</span>
-                       
-                        </li>
-                        <li>
-							
-							<input type="checkbox" class="lesftside" id="Price_high" name="Price" value="High">
-                        	<span class="filterlabel">$1000.00 and over</span>
-                        	
-                        </li>
-                  </ul>
-                </div>
+    <div class="Searchflight">
+          <div class="Searchform">
+          <input type="text"  id="flight-from" placeholder="From" autocomplete="off" />
           </div>
-         </form>                          
-  	   </div>
+          <div class="Searchform">
+          <input type="text"  id="flight-to" placeholder="To" autocomplete="off" />
+          </div>
+          <div class="Searchform">
+          <input type="date" id="flight-depart" name="csserdate" class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+          </div>
+          <div class="Searchform">
+          <input type="date" id="flight-return" name="csserdate" class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+          </div>
+          <div class="Searchform">
+          <button type="submit" id="searchagain" class="search">Search</button>
+          </div>
+    </div>
 
-<div id="flightSortBar" class="sortNav">
-<ul class="flight_sort">
-<label for="sort" name="sort" id="sort">Sort by:</label>
-<li><a class="sortheader" href="#" id="Price">Price</a></li>
-<li><a class="sortheader" href="#" id="Price">Departure</a></li>
-<li><a class="sortheader" href="#" id="Price">Arrival</a></li>
-<li><a class="sortheader" href="#" id="Price">Duration</a></li>
-</ul>
-</div>
+    <div class="resultbg">
+       <div class="aside">
+           <form name="filter" id="filter" action="" >
+                <div class="filterSec" id="filterSection">
+                    <h3 class="filterSec-header">Filter your results by</h3>
 
-<div class="flightReasultList">
-    <!--for earch flight-->
-	<div class="flightInfo">
-        <div class="flightInfo Left">
-			<span class="flightprice" id="price1">$520.00</span>
-            <div class="selectbutton">
-            <input value="select" type="submit" class="selectbtn" id="select0">
+                    <div id="filterContent">
+
+                        <h4 class="filterSec-sub-header"> Airlines</h4>
+                        <ul id="AirlinesFilterList" class="filterlist">
+                            <li>
+                                <input type="checkbox" class="flightCheckBox" id="airline_DL" name="airline" value="DL">
+                                <span class="filterlabel">Delta</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="flightCheckBox" id="airline_SW" name="airline" value="SW">
+                                <span class="filterlabel">Southwest</span>
+                            </li>
+                            <li>
+
+                                <input type="checkbox" class="flightCheckBox" id="airline_AA" name="airline" value="AA">
+                                <span class="filterlabel">American</span>
+
+                            </li>
+                        </ul>
+
+                        <h4 class="filterSec-sub-header"> Time</h4>
+                        <ul id="TimeFilterList" class="filterlist">
+                            <li>
+                                <input type="checkbox" class="lesftside" id="time_mon" name="time" value="moning">
+                                <span class="filterlabel time">9:00AM</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="lesftside" id="time_noon" name="time" value="noon">
+                                <span class="filterlabel time">1:00PM</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="lesftside" id="time-aft" name="time" value="afternoon">
+                                <span class="filterlabel time">5:00PM</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="lesftside" id="time-eve" name="time" value="evening">
+                                <span class="filterlabel time">9:00PM</span>
+                            </li>
+                        </ul>
+
+                        <h4 class="filterSec-sub-header">Price</h4>
+                        <ul id="PriceFilterList" class="filterlist">
+                            <li>
+                                <input type="checkbox" class="lesftside" id="Price_low" name="Price" value="low">
+                                <span class="filterlabel">$500.00 and under</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="lesftside" id="Price_mid" name="Price" value="middle">
+                                <span class="filterlabel">$500.00-$1000.00</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="lesftside" id="Price_high" name="Price" value="High">
+                                <span class="filterlabel">$1000.00 and over</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+           </form>
+        </div>
+
+        <div id="flightSortBar" class="sortNav">
+            <ul class="flight_sort">
+                <label for="sort" name="sort" id="sort">Sort by:</label>
+                <li><a class="sortheader" href="#" id="Price">Price</a></li>
+                <li><a class="sortheader" href="#" id="Departure">Departure</a></li>
+                <li><a class="sortheader" href="#" id="Arrival">Arrival</a></li>
+                <li><a class="sortheader" href="#" id="Duration">Duration</a></li>
+            </ul>
+        </div>
+
+        <div class="flightReasultList">
+            <!--for earch flight-->
+            <div class="flightInfo">
+                <div class="flightInfo Left">
+                    <span class="flightprice" id="price1">$520.00</span>
+                    <div class="selectbutton">
+                    <input value="select" type="submit" class="selectbtn" id="select0">
+                    </div>
+                </div>
+                <div class="flightInfo Right">
+                    <div class="flightInfoDetail">
+                        <div class="flightcompany"> Delta</div>
+                        <div class="flightdepart">ATL 11:00AM
+                            <span class="day">Mon</span>
+                        </div>
+                        <div class="flightreturn">NY 3:00PM
+                            <span class="day">Mon</span>
+                        </div>
+                        <div class="flightduration">6hr00min</div>
+                            <label id="seats">Seats Left:</label>
+                        <div class="seats">8</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="flightInfo Right">
-        	<div class="flightInfoDetail">
-        	<div class="flightcompany"> Delta</div>      
-        	<div class="flightdepart">ATL 11:00AM
-        	<span class="day">Mon</span>
-        	</div>
-            <div class="flightreturn">NY 3:00PM
-            <span class="day">Mon</span>
-            </div>
-            <div class="flightduration">6hr00min</div> 
-            <label id="seats">Seats Left:</label>
-            <div class="seats">8</div>
-            </div>
-        </div>
-	</div>
-</div>
-</div> 
+    </div>
 </div>
