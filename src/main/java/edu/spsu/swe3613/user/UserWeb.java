@@ -2,7 +2,7 @@ package edu.spsu.swe3613.user;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,14 +17,14 @@ public class UserWeb {
 		this.userService = userService;
 	}
 
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("login/")
-	public Boolean login(LoginParams loginParams) {
+	public User login(LoginParams loginParams) {
 		return userService.login(loginParams);
 	}
 	
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("register/")
 	public Response.Status register(User newUser) {

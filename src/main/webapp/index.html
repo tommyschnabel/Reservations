@@ -19,11 +19,13 @@
       <header>
 <div class="logo">
 	    <a href="/home" id="logo"><img src="image/logo.png" width="180" height="40" alt="1" /></a>
-</div>       
+</div>
  <div class="top_nav">
           <ul>
-		    <li><a href="#/register">Register</a></li>
-	        <li><a href="#/login">Login</a></li>
+		    <li ng-hide="$root.user"><a href="#/register">Register</a></li>
+	        <li ng-hide="$root.user"><a href="#/login">Login</a></li>
+            <li ng-show="$root.user">Welcome {{$root.user.fname}} {{$root.user.lname}} <button ng-click="logout()">Logout</button></li>
+            <li ng-show="$root.user"></li>
 		  </ul>
 	    </div>
 	   </header>           
@@ -33,9 +35,9 @@
 			<li>
 				<a href="#/home">HOME</a>
 			</li>
-            <li>|</li>
+            <li ng-show="$root.user">|</li>
 			<li>
-				<a href="#/flight"> FLIGHT</a>
+				<a href="#/myAccount" ng-show="$root.user"> MY ACCOUNT</a>
 			</li>
 	     </ul>
        </div>

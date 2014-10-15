@@ -8,15 +8,15 @@ public interface UserService {
 	 * @param loginParams The email and password of the person loggin in
 	 * @return Whether or not the person was successfully logged in
 	 */
-	public Boolean login(LoginParams loginParams);
+	public User login(LoginParams loginParams);
 	
 	/**
-	 * @param customerId The user to register
+	 * @param user The user to register
 	 */
 	public Response.Status register(User user);
 	
 	/**
-	 * @param customerId
+	 * @param userId The user's id
 	 */
 	public User getUserById(Integer userId);
 }

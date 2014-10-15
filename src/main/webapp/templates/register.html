@@ -1,23 +1,27 @@
+<div ng-show="errorMessages">There was an error, please try again
+    <div>Error: {{errorMessages}}</div>
+</div>
+
 <div class="wrap3">
 	<div class="InfoTitle">Create an Account</div>
 	<div id="RegisterForm">
-		<form id="registerform" action="" method="post">
+		<form id="registerform" action="" method="post" ng-submit="submit()">
 			<label class="Registerlabel" for="firstname">First Name:</label>
-			<input type="text" class="firstname" placeholder="enter your first name"/>
+			<input type="text" class="firstname" ng-model="firstname" placeholder="enter your first name"/>
 			<br>
 			<label class="Registerlabel" for="lastname">Last Name:</label>
-			<input type="text" class="lastname"  placeholder="enter your last name"/>
+			<input type="text" class="lastname" ng-model="lastname" placeholder="enter your last name"/>
 			<br>
 			<label class="Registerlabel" for="email">Email:</label>
-			<input type="text" class="email"  placeholder="enter your email(used to login)"/>
+			<input type="text" class="email" ng-model="email" placeholder="enter your email(used to login)"/>
 			<br>
 			<label class="Registerlabel" for="password">Password</label>
-			<input type="password" class="password"  placeholder="create your password(8-20 characters)" />
+			<input type="text" class="password" ng-model="password" placeholder="create your password(8-20 characters)" />
 			<br>
 			<label class="Registerlabel" for="password">Confirm Password</label>
-			<input type="password" class="password" placeholder="enter your password again" />
+			<input type="text" class="password" ng-model="confirmPassword" placeholder="enter your password again" />
 			<br>
-			<button type="submit" class="button" id="registerbutton">Create Account</button>		
+			<button type="submit" class="button" id="registerbutton">Create Account</button>
 			<br class="clear" />
 		</form>
 	</div>
