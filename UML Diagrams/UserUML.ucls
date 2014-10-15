@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="edu.spsu.swe3613.user.User" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/user/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="213" x="-26" y="-77"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="edu.spsu.swe3613.user.SqLiteUserDao" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/user/SqLiteUserDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="207" width="248" x="227" y="-77"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="edu.spsu.swe3613.user.DefaultUserService" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/user/DefaultUserService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="259" x="705" y="-77"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="edu.spsu.swe3613.user.UserWeb" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/user/UserWeb.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="160" x="1004" y="-77"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="edu.spsu.swe3613.user.UserDao" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/user/UserDao.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="248" x="466" y="350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="edu.spsu.swe3613.user.UserService" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/user/UserService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="160" x="854" y="350"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="7" language="java" name="edu.spsu.swe3613.user.LoginParams" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/user/LoginParams.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="150" x="515" y="-77"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="8">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="9" name="userService"/>      
+      <multiplicity id="10" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="11">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="12">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="13" name="userDao"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="15">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>

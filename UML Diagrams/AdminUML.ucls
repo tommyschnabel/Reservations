@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="edu.spsu.swe3613.edu.spsu.swe3613.admin.DefaultAdminService" 
+    project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/edu/spsu/swe3613/admin/DefaultAdminService.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="235" x="554" y="-60"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="edu.spsu.swe3613.edu.spsu.swe3613.admin.SqLiteAdminDao" 
+    project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/edu/spsu/swe3613/admin/SqLiteAdminDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="189" width="235" x="279" y="-60"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminWeb" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/edu/spsu/swe3613/admin/AdminWeb.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="221" x="829" y="-60"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="edu.spsu.swe3613.edu.spsu.swe3613.admin.AirlineAdmin" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/edu/spsu/swe3613/admin/AirlineAdmin.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="261" width="195" x="44" y="-60"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminService" 
+    project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/edu/spsu/swe3613/admin/AdminService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="235" x="692" y="241"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminDao" project="SWE-Flight-Project" 
+    file="/SWE-Flight-Project/src/main/java/edu/spsu/swe3613/edu/spsu/swe3613/admin/AdminDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="235" x="417" y="241"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <realization id="7">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="8">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="9" name="adminDao"/>      
+      <multiplicity id="10" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="11">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="12">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="13" name="adminService"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>
