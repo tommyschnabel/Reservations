@@ -1,24 +1,25 @@
+<div ng-show="errorMessages">There was an error, please try again
+    <div>Error: {{errorMessages}}</div>
+</div>
+
 <div class="wrap2">
 	<div class="InfoTitle">Login</div>
 	<div id="LoginForm">
-		<form id="loginform" action="" method="post" onsubmit="return validateForm(this)">
-		
-		<label class="Loginlabel" for="username">User Name:</label>
-		<input type="text" class="username"  placeholder="enter your username" />
-		<br>
-		<label class="Loginlabel" for="password">Password:</label>
-		<input type="password" class="password"  placeholder="enter your password" />
-		<br>
-		
-		<p class="secondary">
-			<a href="Retrievepassword.html">Forgot your password?</a>
-			<br>
-		</p>
-		
-		<button type="submit" class="button" id="loginbutton">Login</button>		
-		<br class="clear" />	
-		
-		
+		<form id="loginform" ng-submit="submit()">
+            <label class="Loginlabel" for="username">Email:</label>
+            <input type="text" class="username" ng-model="email"  placeholder="Enter your email" />
+            <br>
+            <label class="Loginlabel" for="password">Password:</label>
+            <input type="text" class="password" ng-model="password" placeholder="Enter your password" />
+            <br>
+
+            <p class="secondary">
+                <a href="Retrievepassword.html">Forgot your password?</a>
+                <br>
+            </p>
+
+            <button type="submit" class="button" id="loginbutton">Login</button>
+            <br class="clear" />
 		</form>
 	</div>
 </div>

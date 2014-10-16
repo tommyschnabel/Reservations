@@ -20,28 +20,29 @@ public class DefaultUserService implements UserService {
 	}
 
 	@Override
-	public Boolean login(LoginParams loginParams) {
+	public User login(LoginParams loginParams) {
 		List<User> users;
 		Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
 		try {
 			users = userDao.getAllUsers();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return false;
+			return null;
 		}
 		
-		for (User c : users) {
-			if (c.getEmail().equals(loginParams.getEmail()) && c.getPassword().equals(loginParams.getPassword())) {
+		for (User user : users) {
+			if (user.getEmail().equals(loginParams.getEmail()) && user.getPassword().equals(loginParams.getPassword())) {
 				try {
 					userDao.addOrUpdateLogin(loginParams.getEmail(), time);
+                    System.out.println("Logged in user " + user.getFName() + " " + user.getLName());
+                    return user;
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
-					return false;
+					return null;
 				}
 			}
 		}
-
-		return true;
+        return null;
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class DefaultUserService implements UserService {
 			
 			validateUserDoesNotExist(allUsers, newUser);
 			userDao.addUser(newUser);
-			
+			System.out.println("Registered user " + newUser.getFName() + " " + newUser.getLName());
 			return Status.OK;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
