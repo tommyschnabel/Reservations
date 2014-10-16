@@ -52,62 +52,51 @@ public class DefaultReservationsService implements ReservationsService {
 	
 	//Search by Date (Day, Month, Year)
 	
-		private List<Flight> searchByDate(SearchParams searchParams) throws ParseException {
-			
-			try {
-				allFlights = dao.getAllFlights();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
-			
-			searchParams.setSearchYear(Integer.parseInt(searchParams.getDate().substring(0, 4)));
-			searchParams.setSearchMonth(Integer.parseInt(searchParams.getDate().substring(4, 6)));
-			searchParams.setSearchDay(Integer.parseInt(searchParams.getDate().substring(6, 8)));
-			
-			for(int i=0; i < allFlights.size(); i++ )
-			{
-				searchParams.setSearchDate(allFlights.get(i).getDate());
-				searchParams.setSearchYear(Integer.parseInt(searchParams.getSearchDate().substring(0, 4)));
-				searchParams.setSearchMonth(Integer.parseInt(searchParams.getSearchDate().substring(4, 6)));
-				searchParams.setSearchDay(Integer.parseInt(searchParams.getSearchDate().substring(6, 8)));
-				
-				if(searchParams.getSearchYear() == searchParams.getYear()){
-					if(searchParams.getSearchMonth() == searchParams.getMonth()){
-						if(searchParams.getSearchDay() == searchParams.getDay()){
-							searchFlights.add(allFlights.get(i));
-						}
-					}
-				}
-			}
-			return searchFlights;
-		}
-		private List<Flight> searchByTime(SearchParams searchParams) throws ParseException {
-			
-			try {
-					allFlights = dao.getAllFlights();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				searchParams.setHour(Integer.parseInt(searchParams.getDate().substring(8, 10)));
-				searchParams.setMinute(Integer.parseInt(searchParams.getDate().substring(10, 12)));
-								
-				for(int i=0; i < allFlights.size(); i++ )
-				{
-					searchParams.setSearchDate(allFlights.get(i).getDate());
-					searchParams.setSearchHour(Integer.parseInt(searchParams.getSearchDate().substring(8, 10)));
-					searchParams.setSearchMinute(Integer.parseInt(searchParams.getSearchDate().substring(10, 12)));
-					
-					if(searchParams.getSearchHour() == searchParams.getHour()){
-						if(searchParams.getSearchMinute() == searchParams.getMinute()){
-							
-								searchFlights.add(allFlights.get(i));
-							
-						}
-					}
-				}
-				return searchFlights;
-			}
+    private List<Flight> searchByDate(SearchParams searchParams) throws ParseException, SQLException {
+
+        allFlights = dao.getAllFlights();
+
+        searchParams.setSearchYear(Integer.parseInt(searchParams.getDate().substring(0, 4)));
+        searchParams.setSearchMonth(Integer.parseInt(searchParams.getDate().substring(4, 6)));
+        searchParams.setSearchDay(Integer.parseInt(searchParams.getDate().substring(6, 8)));
+
+        for(int i=0; i < allFlights.size(); i++) {
+            searchParams.setSearchDate(allFlights.get(i).getDate());
+            searchParams.setSearchYear(Integer.parseInt(searchParams.getSearchDate().substring(0, 4)));
+            searchParams.setSearchMonth(Integer.parseInt(searchParams.getSearchDate().substring(4, 6)));
+            searchParams.setSearchDay(Integer.parseInt(searchParams.getSearchDate().substring(6, 8)));
+
+            if(searchParams.getSearchYear() == searchParams.getYear()){
+                if(searchParams.getSearchMonth() == searchParams.getMonth()){
+                    if(searchParams.getSearchDay() == searchParams.getDay()){
+                        searchFlights.add(allFlights.get(i));
+                    }
+                }
+            }
+        }
+        return searchFlights;
+    }
+
+    private List<Flight> searchByTime(SearchParams searchParams) throws ParseException, SQLException {
+        allFlights = dao.getAllFlights();
+        searchParams.setHour(Integer.parseInt(searchParams.getDate().substring(8, 10)));
+        searchParams.setMinute(Integer.parseInt(searchParams.getDate().substring(10, 12)));
+
+        for(int i=0; i < allFlights.size(); i++ ) {
+            searchParams.setSearchDate(allFlights.get(i).getDate());
+            searchParams.setSearchHour(Integer.parseInt(searchParams.getSearchDate().substring(8, 10)));
+            searchParams.setSearchMinute(Integer.parseInt(searchParams.getSearchDate().substring(10, 12)));
+
+            if(searchParams.getSearchHour() == searchParams.getHour()){
+                if(searchParams.getSearchMinute() == searchParams.getMinute()){
+
+                    searchFlights.add(allFlights.get(i));
+
+                }
+            }
+        }
+        return searchFlights;
+    }
 	
 	//Search by Price
 	private List<Flight> searchByPrice(SearchParams searchParams) throws ParseException {
@@ -138,13 +127,10 @@ public class DefaultReservationsService implements ReservationsService {
 		}
 	
 	// search by destination
-	private List<Flight> searchByDestination(SearchParams searchParams) throws ParseException {
+	private List<Flight> searchByDestination(SearchParams searchParams) throws ParseException, SQLException {
 		searchFlights.clear();
-		try {
-			allFlights = dao.getAllFlights();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+        allFlights = dao.getAllFlights();
 		
 		for(int i=0; i < allFlights.size(); i++ )
 		{
@@ -155,7 +141,7 @@ public class DefaultReservationsService implements ReservationsService {
 		}
 		
 		return searchFlights;
-		}
+    }
 	
 	//Create a new flight and add it to the list of flights.
 	@Override

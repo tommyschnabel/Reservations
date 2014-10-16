@@ -12,9 +12,21 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
 );
 
 
-//HOME CONTROLLER
+//HOME/SEARCH CONTROLLER
 controllers.controller('homeController', ['$scope', '$location',
         function ($scope, $location) {
+        }
+    ]
+);
+
+
+//SEARCH RESULTS CONTROLLER
+controllers.controller('searchResultsController', ['$scope',
+        function($scope) {
+            $scope.resultsGridOptions = { data: [
+                                            {name: 'tommy', age: 20},
+                                            {name: 'christine', age: 21}
+                                        ]};
         }
     ]
 );
