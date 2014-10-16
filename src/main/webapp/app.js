@@ -15,7 +15,7 @@ angular.module('reservationsApp', ['ngRoute', 'ui.bootstrap', 'reservationsContr
                     templateUrl: 'templates/flight.html',
                     controller: 'flightController'
                 }).when('/searchResults', {
-                    templateUrl: 'templates/searchResults.html',
+                    templateUrl: 'templates/results.html',
                     controller: 'searchResultsController'
                 }).when('/passenger', {
                     templateUrl: 'templates/passengerinformation.html',

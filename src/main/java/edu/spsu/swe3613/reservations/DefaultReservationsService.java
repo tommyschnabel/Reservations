@@ -2,6 +2,7 @@ package edu.spsu.swe3613.reservations;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,31 +24,41 @@ public class DefaultReservationsService implements ReservationsService {
         this.dao = resDao;
     }
 	
-	//Error Code does not want breaks "This method must return a result of type List<Flight>. Note that a problem regarding missing 'default:' on 'switch' has been suppressed, which is perhaps related to this problem"
 	@Override
-    public List<Flight> search(SearchParams searchParams) {
+    public List<Flight> search(SimpleSearchParams searchParams) {
 
+        System.out.println("Starting Search");
+        System.out.println(searchParams.getStartCity() + " " + searchParams.getStartDate()
+                            + " -> " + searchParams.getEndCity() + " " + searchParams.getEndDate());
+
+        List<Flight> flights;
+        List<Flight> searchResults = new ArrayList<Flight>();
+
+        Integer startDate = Integer.valueOf(searchParams.getStartDate());
+        Integer endDate = Integer.valueOf(searchParams.getEndDate());
         try {
-            switch (searchParams.getSearchType()) {
-                case Date:
-                    return searchByDate(searchParams);
-                //break;
-                case Time:
-                    return searchByTime(searchParams);
-                // break;
-                case Price:
-                    return searchByPrice(searchParams);
-                //break;
-                case Destination:
-                    return searchByDestination(searchParams);
-                default:
-                    return dao.getAllFlights();
-            }
+            flights = dao.getAllFlights();
         } catch (Exception e) {
-            System.out.println("Something went wrong while searching the flights");
+            System.out.println("Something went wrong while retrieving the flights");
             System.out.println(e.getMessage());
             return null;
         }
+
+        for (Flight f : flights) {
+            Integer flightDate = Integer.valueOf(f.getDate());
+
+            if (flightDate < startDate || flightDate > endDate) {
+                searchResults.add(f);
+            }
+
+            if (f.getStartingCity().toString() != searchParams.getStartCity().toString()
+                    || f.getDestination().toString() != searchParams.getEndCity().toString()) {
+                searchResults.add(f);
+            }
+        }
+
+        System.out.println("Returning " + searchResults.size() + " flights");
+        return searchResults;
 	}
 	
 	//Search by Date (Day, Month, Year)
@@ -100,31 +111,31 @@ public class DefaultReservationsService implements ReservationsService {
 	
 	//Search by Price
 	private List<Flight> searchByPrice(SearchParams searchParams) throws ParseException {
-			
-			searchFlights.clear();
-			try {
-				allFlights = dao.getAllFlights();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-			for(int i=0; i < allFlights.size(); i++ )
-			{
-				if(allFlights.get(i).getPrice() <= searchParams.getPrice())
-				{
-					searchFlights.add(allFlights.get(i));
-				}
-			}
-			
-			Collections.sort(searchFlights,  new Comparator<Flight>() {
-				public int compare(Flight p1, Flight p2) 
-				{
-					return Float.compare(p1.getPrice(), p2.getPrice());
-				}
-			});
-			return searchFlights;
-			
-		}
+
+        searchFlights.clear();
+        try {
+            allFlights = dao.getAllFlights();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        for(int i=0; i < allFlights.size(); i++ )
+        {
+            if(allFlights.get(i).getPrice() <= searchParams.getPrice())
+            {
+                searchFlights.add(allFlights.get(i));
+            }
+        }
+
+        Collections.sort(searchFlights,  new Comparator<Flight>() {
+            public int compare(Flight p1, Flight p2)
+            {
+                return Float.compare(p1.getPrice(), p2.getPrice());
+            }
+        });
+        return searchFlights;
+
+    }
 	
 	// search by destination
 	private List<Flight> searchByDestination(SearchParams searchParams) throws ParseException, SQLException {
@@ -134,7 +145,7 @@ public class DefaultReservationsService implements ReservationsService {
 		
 		for(int i=0; i < allFlights.size(); i++ )
 		{
-			if(allFlights.get(i).getDestination() == searchParams.getDestination())
+			if(allFlights.get(i).getDestination().toString() == searchParams.getDestination())
 			{
 				searchFlights.add(allFlights.get(i));
 			}

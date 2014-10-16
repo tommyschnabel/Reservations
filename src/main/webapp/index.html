@@ -5,12 +5,16 @@
 		<title>Reservations</title>
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="angular/angularjs_1.2.25.js"></script>
-		<script src="angular/angular-routes-1.2.25.js"></script>
-        <script src="angular/ui-bootstrap-0.11.2.min.js"></script>
         <script src="angular/ng-grid-2.0.8.min.js"></script>
+        <script src="angular/ui-bootstrap-0.11.2.min.js"></script>
+		<script src="angular/angular-routes-1.2.25.js"></script>
         <script src="bootstrap/bootstrap.min.js"></script>
 		<script src="app.js"></script>
         <script src="controllers.js"></script>
+        <!--Was getting a console error saying that these were undefined-->
+        <!--Fixed the error but left these here just in case we need them-->
+        <!--<script src="angular/angular-route.min.js.map"></script>-->
+        <!--<script src="angular/angular-route.min.js.map"></script>-->
         <link href="css/index.css" rel="stylesheet" type="text/css" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
         <link href="bootstrap/bootstrap.min.js">
@@ -23,10 +27,10 @@
 	<!-- Static, doesn't change per page -->
     <div ng-controller="headerController">
       <header>
-<div class="logo">
-	    <a href="#/home" id="logo"><img src="image/logo.png" width="180" height="40" alt="1" /></a>
-</div>
- <div class="top_nav">
+        <div class="logo">
+	        <a href="#/home" id="logo"><img src="image/logo.png" width="180" height="40" alt="1" /></a>
+        </div>
+        <div class="top_nav">
           <ul>
 		    <li ng-hide="$root.user"><a href="#/register">Register</a></li>
 	        <li ng-hide="$root.user"><a href="#/login">Login</a></li>
@@ -36,7 +40,13 @@
 	    </div>
 	   </header>
 
-	   <div class="nav">
+	  <div class="nav">
+          <!-- <i>Excellent</i> error messaging :)-->
+          <div ng-show="$root.errorMessages">
+              <div>There was an error, please try again</div>
+              <div ng-repeat="error in $root.errorMessages">Error: {{error}}</div>
+              <button ng-click="clearErrors()">Clear Error Messages</button>
+          </div>
          <ul>
 			<li>
 				<a href="#/home">HOME</a>
@@ -46,8 +56,8 @@
 				<a href="#/myAccount" ng-show="$root.user"> MY ACCOUNT</a>
 			</li>
 	     </ul>
-       </div>
-     </div>
+      </div>
+    </div>
      
        <!-- END HEADER -->
        

@@ -17,8 +17,8 @@
 
           			<div class="field">
 						<label for="flight-from">Flying from:</label>
-                        <select id="flight-from">
-                            <option selected>Atlanta</option>
+                        <select id="flight-from" ng-model="flightFrom">
+                            <option>Atlanta</option>
                             <option>Chicago</option>
                             <option>Dallas</option>
                             <option>New York</option>
@@ -27,23 +27,33 @@
            			</div>
 					<div class="field">
 						<label for="flight-to">Flying to:</label>
-                        <select id="flight-to">
+                        <select id="flight-to" ng-model="flightTo">
                             <option>Atlanta</option>
                             <option>Chicago</option>
-                            <option selected>Dallas</option>
+                            <option>Dallas</option>
                             <option>New York</option>
                             <option>San Francisco</option>
                         </select>
                     </div>
 		    		<div class="field half">
 						<label for="flight-depart">Depart:</label>
-                		<input type="text" id="flight-depart" name="csserdate"
-                               class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+                		<input type="text"
+                               id="flight-depart"
+                               name="csserdate"
+                               class="input-text input-cal"
+                               placeholder="09/15/2014"
+                               autocomplete="off"
+                               ng-model="flightDepart">
             		</div>
 					<div class="field half even">
 						<label for="flight-return">Return:</label>
-                		<input type="text" id="flight-return" name="csserdate"
-                               class="input-text input-cal" placeholder="09/15/2014" autocomplete="off">
+                		<input type="text"
+                               id="flight-return"
+                               name="csserdate"
+                               class="input-text input-cal"
+                               placeholder="09/15/2014"
+                               autocomplete="off"
+                               ng-model="flightReturn">
             		</div>
 
 <!--<div class="field">
@@ -66,7 +76,7 @@
 						<!--</select>-->
 					<!--</div>-->
 
-					<button type="submit" class="search">Search</button>						
+					<button type="button" ng-click="search()" class="search">Search</button>
 
 				</form>
 			</div>

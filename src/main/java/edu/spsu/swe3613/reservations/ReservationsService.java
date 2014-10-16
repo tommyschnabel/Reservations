@@ -4,7 +4,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 public interface ReservationsService {
-    public List<Flight> search(SearchParams searchParams);
+    public List<Flight> search(SimpleSearchParams searchParams);
     public Response.Status createReservation(int flightId, int userId, Reservation.SeatClass seatClass);
     public Response.Status deleteReservation(int id, int userId);
 }
