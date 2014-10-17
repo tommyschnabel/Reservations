@@ -147,6 +147,25 @@ ul{
 	
 	}
 
+/* For angular UI */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.modal {
+    display: block;
+}
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    float: left;
+}
+.confirm-res-buttons {
+    float: right;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.reserve-message {
+    margin-top: 15px;
+    float: left;
+}
+
 #flightsearch .radio{
 	width:220px;
 	float:left}

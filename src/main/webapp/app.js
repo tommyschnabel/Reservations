@@ -17,6 +17,9 @@ angular.module('reservationsApp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'reserva
                 }).when('/searchResults', {
                     templateUrl: 'templates/results.html',
                     controller: 'searchResultsController'
+                }).when('/reservationConfirm', {
+                    templateUrl: 'templates/reservation.html',
+                    controller: 'reservationConfirmController'
                 }).when('/passenger', {
                     templateUrl: 'templates/passengerinformation.html',
                     controller: 'passengerController'

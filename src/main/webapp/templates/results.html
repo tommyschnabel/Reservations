@@ -1,1 +1,15 @@
-<div class="gridStyle" ng-grid="resultsGridOptions"></div>
+<div class="container">
+
+    <h3>Search Results</h3>
+
+    <!-- <i>Excellent</i> error messaging :)-->
+    <div ng-show="$root.errorMessages">
+        <div>There was an error, please try again</div>
+        <div>{{$root.errorMessages}}</div>
+        <button ng-click="clearErrors()">Clear Error Messages</button>
+    </div>
+
+    <div ng-show="$root.user">You can make a reservation by selecting a flight here</div>
+    <div ng-hide="$root.user">You can't make a reservation until you are logged in</div>
+    <div class="gridStyle" ng-grid="resultsGridOptions"></div>
+</div>
