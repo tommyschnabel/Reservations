@@ -109,13 +109,38 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
 //SEARCH RESULTS CONTROLLER
 controllers.controller('searchResultsController', ['$scope', '$rootScope',
         function($scope, $rootScope) {
-//            $scope.data = [ //Dummy data
-//                {name: 'tommy', age: 20},
-//                {name: 'christine', age: 21}
-//            ];
 
             $scope.data = $scope.searchResults.data || $rootScope.searchResults.data;
-            $scope.resultsGridOptions = { data: 'data' };
+            $scope.resultsGridOptions = {
+                data: 'data',
+                columnDefs: [
+                    {
+                        field: 'startingCity',
+                        displayName: 'Starting City'
+                    },
+                    {
+                        field: 'destination',
+                        displayName: 'Destination'
+                    },
+                    {
+                        field: 'airline',
+                        displayName: 'Airline'
+                    },
+                    {
+                        field: 'price',
+                        displayName: 'Price',
+                        width: '*'
+                    },
+                    {
+                        field: 'seatsInFirstClass',
+                        displayName: 'Seats In First Class'
+                    },
+                    {
+                        field: 'seatsInEconomy',
+                        displayName: 'Seats In Economy'
+                    }
+                ]
+            };
         }
     ]
 );

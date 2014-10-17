@@ -1,4 +1,4 @@
-angular.module('reservationsApp', ['ngRoute', 'ui.bootstrap', 'reservationsControllers'])
+angular.module('reservationsApp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'reservationsControllers'])
     .config(['$routeProvider',
         function($routeProvider) {
             $routeProvider.

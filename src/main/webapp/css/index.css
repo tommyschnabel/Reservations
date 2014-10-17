@@ -127,8 +127,17 @@ ul{
 	color:#FFF;
 	font-weight:bold;
 	font-size:20px;
-	}	
-	
+	}
+
+.ngTopPanel {
+    width: 0 !important;
+    height: 29px;
+}
+
+.ngViewport {
+    height: 500px;
+}
+
 #flightsearch{
 	position:absolute;
 	top:138px;
