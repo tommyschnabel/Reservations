@@ -20,9 +20,8 @@ public class ReservationsWeb {
 
     @POST
 	@Path("search/")
-	public List<Flight> search(SearchParams searchParams) {
+	public List<Flight> search(SimpleSearchParams searchParams) {
 		return reservationService.search(searchParams);
-		
 	}
 
 	@POST

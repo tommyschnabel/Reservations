@@ -140,8 +140,8 @@ private Connection connection;
 			flights.add(new Flight(rs.getInt("id"),
                                    rs.getString("date"),
                                    Airline.valueOf(rs.getString("airline")),
-                                   rs.getString("start"),
-					               rs.getString("end"),
+                                   City.valueOf(rs.getString("start").replace(" ", "")),
+					               City.valueOf(rs.getString("end").replace(" ", "")),
                                    rs.getFloat("distance"),
                                    rs.getInt("firstClass"),
 					               rs.getInt("economy"),
@@ -175,8 +175,8 @@ private Connection connection;
 		Flight resultFlight = new Flight(rs.getInt("id"),
                                          rs.getString("date"),
                                          Airline.valueOf(rs.getString("airline")),
-                                         rs.getString("start"),
-										 rs.getString("end"),
+                                         City.valueOf(rs.getString("start").replace(" ", "")),
+										 City.valueOf(rs.getString("end").replace(" ", "")),
                                          rs.getFloat("distance"),
                                          rs.getInt("firstClass"),
 										 rs.getInt("economy"),
@@ -196,7 +196,7 @@ private Connection connection;
 	public Flight addFlight(Flight flight) throws SQLException {
 		String date = flight.getDate();
 		String time = date.substring(9);
-		float distance =getDistance(flight.getStartingCity(),flight.getDestination()); 		
+		float distance =getDistance(flight.getStartingCity().toString(),flight.getDestination().toString());
 		flight.setDistance(distance);
 		float pricetotal = getPrice(time)*distance;
 		flight.setPrice(pricetotal);		
@@ -220,8 +220,8 @@ private Connection connection;
 		Flight resultFlight = new Flight(rs.getInt(1),
                                          rs.getString(2),
                                          Airline.valueOf(rs.getString(3)),
-                                         rs.getString(4),
-				                         rs.getString(5),
+                                         City.valueOf(rs.getString(4).replace(" ", "")),
+				                         City.valueOf(rs.getString(5).replace(" ", "")),
                                          rs.getFloat(6),
                                          rs.getInt(7),
 				                         rs.getInt(8),

@@ -1,15 +1,13 @@
 package edu.spsu.swe3613.reservations;
 
-import java.sql.SQLException;
-
 public class Flight {
 	private int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
 	private String date; //This gives us Year, Month, Day, Hour, and Minutes.
 	
 	private float price;
     private float distance;
-	private String destination;
-	private String startingCity;
+	private City destination;
+	private City startingCity;
     private int seatsInFirstClass;
     private int seatsInEconomy;
     private Airline airline;
@@ -17,8 +15,8 @@ public class Flight {
 	public Flight(int id,
                   String date,
                   Airline airline,
-                  String start,
-                  String end,
+                  City start,
+                  City end,
                   Float distance,
                   int seatsInFirstClass,
                   int seatsInEconomy,
@@ -62,19 +60,19 @@ public class Flight {
         this.distance = distance;
     }
 
-    public String getDestination() {
+    public City getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(City destination) {
         this.destination = destination;
     }
 
-    public String getStartingCity() {
+    public City getStartingCity() {
         return startingCity;
     }
 
-    public void setStartingCity(String startingCity) {
+    public void setStartingCity(City startingCity) {
         this.startingCity = startingCity;
     }
 

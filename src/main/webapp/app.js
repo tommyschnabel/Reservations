@@ -1,6 +1,6 @@
-angular.module('reservationsApp', ['ngRoute', 'reservationsControllers'])
+angular.module('reservationsApp', ['ngRoute', 'ui.bootstrap', 'reservationsControllers'])
     .config(['$routeProvider',
-        function($routeProvider, $locationProvider) {
+        function($routeProvider) {
             $routeProvider.
                 when('/home', {
                     templateUrl: 'templates/home.html',
@@ -14,6 +14,9 @@ angular.module('reservationsApp', ['ngRoute', 'reservationsControllers'])
                 }).when('/flight', {
                     templateUrl: 'templates/flight.html',
                     controller: 'flightController'
+                }).when('/searchResults', {
+                    templateUrl: 'templates/results.html',
+                    controller: 'searchResultsController'
                 }).when('/passenger', {
                     templateUrl: 'templates/passengerinformation.html',
                     controller: 'passengerController'

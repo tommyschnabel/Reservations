@@ -3,6 +3,14 @@ var controllers = angular.module('reservationsControllers', []);
 //HEADER CONTROLLER
 controllers.controller('headerController', ['$scope', '$location', '$rootScope',
   		function ($scope, $location, $rootScope) {
+
+            $rootScope.errorMessages = [];
+
+            $scope.clearErrors = function() {
+                $rootScope.errorMessages = [];
+                $scope.errorMessages = [];
+            };
+
             $scope.logout = function() {
                 $rootScope.user = null;
                 $location.path('#/home');
@@ -12,9 +20,102 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
 );
 
 
-//HOME CONTROLLER
-controllers.controller('homeController', ['$scope', '$location',
-        function ($scope, $location) {
+//HOME/SEARCH CONTROLLER
+controllers.controller('homeController', ['$scope', '$location', '$http', '$rootScope',
+        function ($scope, $location, $http, $rootScope) {
+            $scope.flightFrom = 'Atlanta';
+            $scope.flightTo = 'Chicago';
+
+            $scope.search = function() {
+                var startDate = '',
+                    endDate = '';
+
+                //Validate cities aren't the same
+                if ($scope.flightFrom === $scope.flightTo) {
+                    $rootScope.errorMessages.push('You cannot fly to the same city you are departing from');
+                    return;
+                }
+
+                //Validate dates are entered
+                if ($scope.flightDepart === '' || $scope.flightReturn === ''
+                    || $scope.flightDepart === undefined || $scope.flightReturn === undefined) {
+                    $rootScope.errorMessages.push('One of the date fields is empty');
+                    return;
+                }
+
+                //Validate dates are in right format
+                if ($scope.flightDepart.length !== 10 || $scope.flightReturn.length !== 10
+                    || $scope.flightDepart[2] != '/' || $scope.flightDepart[5] != '/'
+                    || $scope.flightReturn[2] != '/' || $scope.flightReturn[5] != '/') {
+                    $rootScope.errorMessages.push('One of the date fields is not in the format "MM/dd/yyyy"');
+                    return;
+                }
+
+                //Year
+                for (var i = 6; i < 10; i++) {
+                    startDate += $scope.flightDepart[i];
+                    endDate += $scope.flightReturn[i];
+                }
+
+                //Month
+                for (var i = 0; i < 2; i++) {
+                    startDate += $scope.flightDepart[i];
+                    endDate += $scope.flightReturn[i];
+                }
+
+                //Day
+                for (var i = 3; i < 5; i++) {
+                    startDate += $scope.flightDepart[i];
+                    endDate += $scope.flightReturn[i];
+                }
+
+                //Send search request
+                $http({
+                    url: '/Reservations/api/reservations/search/',
+                    method: 'POST',
+                    data: {
+                        searchType: 'Date',
+                        startCity: $scope.flightFrom,
+                        endCity: $scope.flightTo,
+                        startDate: startDate,
+                        endDate: endDate
+                    }
+                }).then(function(results) {
+                    //Set results
+                    if (results.status === 200 && results.data.length > 0) {
+                        $rootScope.searchResults = results;
+                        $scope.searchResults = results;
+                        $location.path('/searchResults');
+                        return;
+                    } else if (results.status === 500) {
+                        //Do nothing because for some reason some requests are happening twice
+                        // and it'll throw this back
+                    } else if (results === {} || results === undefined || results === ''
+                        || results.data === '' || results.data === {} || results.data === undefined) {
+                        $rootScope.errorMessages.push('The search results came back empty');
+                        $scope.searchResults = results;
+                        $rootScope.searchResults = results;
+                        return;
+                    }
+                }).catch(function(error) {
+                    $rootScope.errorMessages.push(error);
+                });
+            };
+        }
+    ]
+);
+
+
+//SEARCH RESULTS CONTROLLER
+controllers.controller('searchResultsController', ['$scope', '$rootScope',
+        function($scope, $rootScope) {
+//            $scope.data = [ //Dummy data
+//                {name: 'tommy', age: 20},
+//                {name: 'christine', age: 21}
+//            ];
+
+            $scope.data = $scope.searchResults.data || $rootScope.searchResults.data;
+            $scope.resultsGridOptions = { data: 'data' };
         }
     ]
 );
@@ -36,14 +137,14 @@ controllers.controller('loginController', ['$scope', '$http', '$location', '$roo
                     if (results !== null) {
                         $rootScope.user = results.data;
                     } else {
-                        $scope.errorMessages = "Could not log in, reason unknown";
+                        $rootScope.errorMessages.push("Could not log in, reason unknown");
                         return;
                     }
 
                     //Navigate back to home page after login
                     $location.path('#/home');
                 }).catch(function(error) {
-                    $scope.errorMessages = error;
+                    $rootScope.errorMessages.push(error);
                 });
             };
   		}
@@ -58,11 +159,11 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
 
                 //make sure the passwords match
                 if ($scope.password === '' || $scope.confirmPassword === '') {
-                    $scope.errorMessages = 'Make sure to enter a password and confirm it';
+                    $rootScope.errorMessages.push('Make sure to enter a password and confirm it');
                 }
 
                 if ($scope.password !== $scope.confirmPassword) {
-                    $scope.errorMessages = "Your passwords don't match";
+                    $rootScope.errorMessages.push("Your passwords don't match");
                     return;
                 }
 
@@ -92,7 +193,7 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
                         if (results !== null) {
                             $rootScope.user = results.data;
                         } else {
-                            $scope.errorMessages = 'Registered user correctly. Could not log in, reason unknown';
+                            $rootScope.errorMessages.push('Registered user correctly. Could not log in, reason unknown');
                             return;
                         }
 
@@ -100,10 +201,10 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
                         $location.path('#/home');
 
                     }).catch(function(error) {
-                        $scope.errorMessages = error;
+                        $rootScope.errorMessages = error;
                     });
                 }).catch(function(error) {
-                    $scope.errorMessages = error;
+                    $rootScope.errorMessages = error;
                 });
             };
   		}
