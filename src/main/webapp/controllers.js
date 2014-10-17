@@ -15,14 +15,38 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
                 $rootScope.user = null;
                 $location.path('#/home');
             };
+
+            $rootScope.errorModal = function ($scope, $modal, $log, $templateCache) {
+
+                $scope.close = function() {
+                    $modal.dismiss();
+                };
+            };
   		}
 	]
 );
 
 
+////ERROR MODAL CONTROLLER
+//controllers.controller('errorModalController', '$templateCache',
+//    function ($scope, $modal, $log, $templateCache) {
+//
+//        $scope.close = function() {
+//            $modal.close();
+//        };
+//
+//    }
+//);
+//$modal.open({
+//    templateUrl: 'errorModal.html',
+//    controller: $rootScope.errorModal,
+//    size: 'lg',
+//    backdrop: 'static'
+//});
+
 //HOME/SEARCH CONTROLLER
-controllers.controller('homeController', ['$scope', '$location', '$http', '$rootScope',
-        function ($scope, $location, $http, $rootScope) {
+controllers.controller('homeController', ['$scope', '$location', '$http', '$rootScope', '$modal',
+        function ($scope, $location, $http, $rootScope, $modal) {
             $scope.flightFrom = 'Atlanta';
             $scope.flightTo = 'Chicago';
 
@@ -33,6 +57,7 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 //Validate cities aren't the same
                 if ($scope.flightFrom === $scope.flightTo) {
                     $rootScope.errorMessages.push('You cannot fly to the same city you are departing from');
+
                     return;
                 }
 
@@ -107,12 +132,18 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
 
 
 //SEARCH RESULTS CONTROLLER
-controllers.controller('searchResultsController', ['$scope', '$rootScope',
-        function($scope, $rootScope) {
+controllers.controller('searchResultsController', ['$scope', '$rootScope', '$location',
+        function($scope, $rootScope, $location) {
 
-            $scope.data = $scope.searchResults.data || $rootScope.searchResults.data;
+            $rootScope.selectedItems = [];
+
+            if ($rootScope.searchResults === undefined) {
+                $rootScope.searchResults = { data: [] };
+            }
+
             $scope.resultsGridOptions = {
-                data: 'data',
+                data: $rootScope.searchResults.data,
+                selectedItems: $rootScope.selectedItems,
                 columnDefs: [
                     {
                         field: 'startingCity',
@@ -128,8 +159,7 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope',
                     },
                     {
                         field: 'price',
-                        displayName: 'Price',
-                        width: '*'
+                        displayName: 'Price'
                     },
                     {
                         field: 'seatsInFirstClass',
@@ -141,9 +171,51 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope',
                     }
                 ]
             };
+
+            $rootScope.watch('selectedItems', function(newValue, oldValue) {
+                $rootScope.reservations = newValue;
+                $location.path('/reservationConfirm');
+            });
         }
     ]
 );
+
+
+//RESERVATION CONFIRMATION CONTROLLER
+controllers.controller('reservationConfirmController', ['$scope', '$http', '$location', '$rootScope',
+    function ($scope, $http, $location, $rootScope) {
+
+        $scope.reservationsGridOptions = {
+            data: $rootScope.reservations,
+            columnDefs: [
+                {
+                    field: 'startingCity',
+                    displayName: 'Starting City'
+                },
+                {
+                    field: 'destination',
+                    displayName: 'Destination'
+                },
+                {
+                    field: 'airline',
+                    displayName: 'Airline'
+                },
+                {
+                    field: 'price',
+                    displayName: 'Price'
+                }
+            ]
+        };
+
+        $scope.confirm = function() {
+
+        };
+
+        $scope.cancel = function() {
+            $location.path('/searchResults');
+        };
+    }
+]);
 
 
 //LOGIN CONTROLLER
@@ -249,6 +321,7 @@ controllers.controller('passengerController', ['$scope', '$location',
         }
     ]
 );
+
 
 //TEST CONTROLLER
 controllers.controller('testController', ['$scope', '$http',

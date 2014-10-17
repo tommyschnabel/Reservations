@@ -6,7 +6,8 @@
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="angular/angularjs_1.2.25.js"></script>
         <script src="angular/ng-grid-2.0.8.min.js"></script>
-        <script src="angular/ui-bootstrap-0.11.2.min.js"></script>
+        <script src="angular/ui-bootstrap-tpls-0.11.2.min.js"></script>
+        <!--<script src="angular/ui-bootstrap-0.11.2.min.js"></script>-->
 		<script src="angular/angular-routes-1.2.25.js"></script>
         <script src="bootstrap/bootstrap.min.js"></script>
 		<script src="app.js"></script>
@@ -17,7 +18,8 @@
         <!--<script src="angular/angular-route.min.js.map"></script>-->
         <link href="css/index.css" rel="stylesheet" type="text/css" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-        <link href="bootstrap/bootstrap.min.js" rel="stylesheet" type="text/css">
+        <link href="bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="bootstrap/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
         <link href="angular/ng-grid.min.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
@@ -35,21 +37,14 @@
 		    <li ng-hide="$root.user"><a href="#/register">Register</a></li>
 	        <li ng-hide="$root.user"><a href="#/login">Login</a></li>
             <li ng-show="$root.user">Welcome {{$root.user.fname}} {{$root.user.lname}} <button ng-click="logout()">Logout</button></li>
-            <li ng-show="$root.user"></li>
 		  </ul>
 	    </div>
 	   </header>
 
 	  <div class="nav">
-          <!-- <i>Excellent</i> error messaging :)-->
-          <div ng-show="$root.errorMessages">
-              <div>There was an error, please try again</div>
-              <div ng-repeat="error in $root.errorMessages">Error: {{error}}</div>
-              <button ng-click="clearErrors()">Clear Error Messages</button>
-          </div>
          <ul>
 			<li>
-				<a href="#/home">HOME</a>
+				<a href="#/home">Search</a>
 			</li>
             <li ng-show="$root.user">|</li>
 			<li>
