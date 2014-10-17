@@ -82,6 +82,17 @@ private Connection connection;
                                                         rs.getInt(2),
                                                         rs.getInt(3),
                                                         Reservation.SeatClass.valueOf(rs.getString(4)));
+		String seatClass;
+		int seats;
+		if(reservation.getFlightClass() == Reservation.SeatClass.firstClass)
+			seatClass = "RemainingFirstClass";
+		else
+			seatClass = "RemainingEconomy";
+		rs= statement.executeQuery("SELECT "+seatClass+" seats FROM FLIGHT"	
+								 + "WHERE ID="+reservation.getFlightId());
+		seats = rs.getInt("seats");
+		seats--;
+		statement.executeUpdate("UPDATE Flight SET "+seatClass+"= "+seats);
 		statement.close();
 		return resultReservation;		
 	}
