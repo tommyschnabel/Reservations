@@ -13,11 +13,13 @@ import java.util.List;
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminDao;
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.SqLiteAdminDao;
 import jersey.repackaged.com.google.common.base.Objects;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.spsu.swe3613.reservations.Airline;
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.AirlineAdmin;
+import edu.spsu.swe3613.reservations.City;
 import edu.spsu.swe3613.reservations.Flight;
 import edu.spsu.swe3613.reservations.Reservation;
 import edu.spsu.swe3613.reservations.SQLiteReservationsDao;
@@ -30,7 +32,7 @@ public class ReservationsDaoTest {
     private static AdminDao testAdminDao;
 	
 	private Flight flight;
-	private static Reservation reservation = new Reservation(1,1,1, Reservation.SeatClass.firstClass);
+	private static Reservation reservation;
 	private static AirlineAdmin admin = new AirlineAdmin("adminId","Southwest","password");
 	
 	private static Connection connection;
@@ -39,7 +41,8 @@ public class ReservationsDaoTest {
 	@Before
 	public void setUpBefore() throws Exception{
 
-        flight = new Flight(1,"10/01/14 9:00 AM",Airline.Delta,"Atlanta","Dallas", 5f,10,10,45.00f);
+        flight = new Flight(1,"10/01/14 9:00 AM",Airline.Delta,City.Atlanta,City.Dallas, 5f,10,10,45.00f);
+        reservation = new Reservation(1,1,1, Reservation.SeatClass.firstClass);
 		
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
 		testDao = new SQLiteReservationsDao(connection);
@@ -55,9 +58,9 @@ public class ReservationsDaoTest {
 		statement.executeUpdate("drop table if exists Mileage");
 		statement.executeUpdate("create table Mileage"
 				+ "(ID integer primary key, LocationA text, LocationB text, Distance numeric)");
-		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance) values ('Atlanta','Chicago',586),('Atlanta','Dallas',721),('Atlanta','New York',746),"
-				+ "('Atlanta','San Francisco',2140),('Chicago','Dallas',802),('Chicago','New York',714),('Chicago','San Francisco',1858),"
-				+ "('Dallas','New York',1373),('Dallas','San Francisco',1483),('New York','San Francisco',2572)");
+		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance) values ('Atlanta','Chicago',586),('Atlanta','Dallas',721),('Atlanta','NewYork',746),"
+				+ "('Atlanta','SanFrancisco',2140),('Chicago','Dallas',802),('Chicago','NewYork',714),('Chicago','SanFrancisco',1858),"
+				+ "('Dallas','NewYork',1373),('Dallas','SanFrancisco',1483),('NewYork','SanFrancisco',2572)");
 		//Price
 		statement.executeUpdate("drop table if exists Price");
 		statement.executeUpdate("create table Price (Time text primary key, PriceRate numeric)");
@@ -138,9 +141,9 @@ public class ReservationsDaoTest {
 			String time = date.substring(9);
 			flight.setDate(date);
 			flight.setAirline(Airline.Southwest);
-            flight.setStartingCity("San Francisco");
-            flight.setDestination("New York");
-			float distance = testDao.getDistance("San Francisco","New York");
+            flight.setStartingCity(City.SanFrancisco);
+            flight.setDestination(City.NewYork);
+			float distance = testDao.getDistance(City.SanFrancisco.toString(),City.NewYork.toString());
 			float priceRate = testDao.getPrice(time);
             flight.setDistance(distance);
             flight.setPrice(distance*priceRate);
@@ -171,10 +174,15 @@ public class ReservationsDaoTest {
 	}
 		
 	@Test
-	public void testAddReservation() {
+	public void testAddReservation() throws Exception{
 		try{
+			Flight testFlight = testDao.addFlight(flight);
 			Reservation testReservation = testDao.addReservation(reservation);
+			Flight resultFlight = testDao.getFlightById(flight.getId());
 			if(!reservation.equals(testReservation))
+				fail();
+			if(resultFlight.getSeatsInEconomy() != (testFlight.getSeatsInEconomy()-1)
+				&& resultFlight.getSeatsInFirstClass()	 != (testFlight.getSeatsInFirstClass()-1))
 				fail();
 		}
 		catch(SQLException e){
@@ -185,6 +193,7 @@ public class ReservationsDaoTest {
 	@Test
 	public void testGetAllReservations(){
 		try{
+			testDao.addFlight(flight);
 			Reservation testReservation = testDao.addReservation(reservation);
 			List<Reservation> testList = new ArrayList<Reservation>(); 
 			testList.add(testReservation);		
@@ -204,19 +213,20 @@ public class ReservationsDaoTest {
 	@Test
 	public void testGetReservationById(){
 		try{
+			testDao.addFlight(flight);
 			testDao.addReservation(reservation);
 			Reservation testReservation = testDao.getReservationById(reservation.getId());
 			if(!reservation.equals(testReservation))
 				fail("Reservation ID error");
 		}
 		catch (SQLException e){
-			fail();
 		}
 	}
 	
 	@Test
-	public void testUpdateReservation(){
+	public void testUpdateReservation() throws Exception{
 		try{
+			testDao.addFlight(flight);
 			testDao.addReservation(reservation);
 			reservation.setFlightId(2);
 			reservation.setUserId(2);
@@ -234,6 +244,7 @@ public class ReservationsDaoTest {
 	@Test
 	public void testDeleteReservation(){
 		try{
+			testDao.addFlight(flight);
 			Reservation testReservation = testDao.addReservation(reservation);
 			List<Reservation> testList = testDao.getAllReservations();
 			if(!testList.contains(testReservation))

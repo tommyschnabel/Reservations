@@ -45,6 +45,13 @@ insert into Mileage values
 	(NULL,'Dallas','NewYork',1373),
 	(NULL,'Dallas','SanFrancisco',1483),
 	(NULL,'NewYork','SanFrancisco',2572);
+-- Airline
+drop table if exists Airline;
+create table Airline(Name text primary key);
+insert into Airline values
+	('Delta'),
+	('Southwest'),
+	('American');
 -- Customer
 drop table if exists Customer;
 create table Customer(
