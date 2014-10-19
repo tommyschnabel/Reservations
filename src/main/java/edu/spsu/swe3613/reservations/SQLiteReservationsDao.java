@@ -73,7 +73,7 @@ private Connection connection;
 				+			reservation.getFlightId()		+	","
 				+		"'"+reservation.getFlightClass()+"'"+	")";
 		String query2 = " SELECT * FROM Reservation WHERE "
-				+ 		" (CustomerID="+reservation.getUserId()+" AND FlightID="+reservation.getFlightId()+""
+				+ 		" (CustomerID="+reservation.getUserId()+" AND FlightID="+reservation.getFlightId()
 						+ " AND FlightClass='"+reservation.getFlightClass()+"')";		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
@@ -82,17 +82,21 @@ private Connection connection;
                                                         rs.getInt(2),
                                                         rs.getInt(3),
                                                         Reservation.SeatClass.valueOf(rs.getString(4)));
+		
 		String seatClass;
 		int seats;
-		if(reservation.getFlightClass() == Reservation.SeatClass.firstClass)
+		if(reservation.getFlightClass().toString().equals("firstClass"))
 			seatClass = "RemainingFirstClass";
 		else
 			seatClass = "RemainingEconomy";
-		rs= statement.executeQuery("SELECT "+seatClass+" seats FROM FLIGHT"	
-								 + "WHERE ID="+reservation.getFlightId());
-		seats = rs.getInt("seats");
+		
+		ResultSet rs2 = statement.executeQuery("SELECT "+seatClass+" FROM Flight "	
+								 + " WHERE ID="+reservation.getFlightId());
+		seats = rs2.getInt(1);
 		seats--;
-		statement.executeUpdate("UPDATE Flight SET "+seatClass+"= "+seats);
+		statement.executeUpdate("UPDATE Flight SET "+seatClass+"="+seats
+							+	" WHERE ID="+reservation.getFlightId());
+		
 		statement.close();
 		return resultReservation;		
 	}
