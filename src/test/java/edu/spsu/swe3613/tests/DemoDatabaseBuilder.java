@@ -68,10 +68,10 @@ public class DemoDatabaseBuilder {
 		statement.executeUpdate("drop table if exists Price");
 		statement.executeUpdate("create table Price (Time text primary key, PriceRate numeric)");
 		statement.executeUpdate("insert into Price values "
-														+ "('9:00 AM',1.15),"
-														+ "('1:00 PM',1.5),"
-														+ "('5:00 PM',1),"
-														+ "('8:00 PM',.85)");
+														+ "('0900',1.15),"
+														+ "('1300',1.5),"
+														+ "('1700',1),"
+														+ "('2000',.85)");
 		//Reservation
 		statement.executeUpdate("drop table if exists Reservation");
 		statement.executeUpdate("create table Reservation (ID integer primary key, CustomerID integer, FlightID integer, FlightClass text)");
@@ -129,26 +129,26 @@ public class DemoDatabaseBuilder {
 	@Test
 	public void generateFlights() throws Exception{
 		
-		try{
+//		try{
 			
 			List<Flight> flights = new ArrayList<Flight>();
 			List<City> locations=new ArrayList<City>(
 					Arrays.asList(City.Atlanta,City.Chicago,City.NewYork,City.Dallas,City.SanFrancisco));
 			List<String> times = new ArrayList<String>(
-					Arrays.asList("9:00 AM","1:00 PM","5:00 PM","8:00 PM"));
+					Arrays.asList("0900","1300","1700","2000"));
 			List<Airline> airline = new ArrayList<Airline>(
 					Arrays.asList(Airline.Delta, Airline.Southwest, Airline.American));
 			Random rand = new Random();
 			int count = 1;
 			
-			for(int k=10;k<13;k++)
-				for(int i=1;i<29;i++)
-					for(int j=0;j<17;j++)
+			for(int k=10;k<13;k++)//months
+				for(int i=1;i<29;i++)//days
+					for(int j=0;j<17;j++)//flights per day
 					{
 						if(k<10){
 							if(i<10){
 								Flight testFlight = new Flight(count,
-										"0"+k+"/0"+i+"/14 "+times.get((j/3)%4),
+										"20140"+k+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -159,7 +159,7 @@ public class DemoDatabaseBuilder {
 								}
 								else{
 									Flight testFlight = new Flight(count,
-											"0"+k+"/"+i+"/14 "+times.get((j/3)%4),
+											"20140"+k+i+times.get((j/3)%4),
 											airline.get(j%3), locations.get(rand.nextInt(5)), 
 											locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 									if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -173,7 +173,7 @@ public class DemoDatabaseBuilder {
 						else{
 							if(i<10){
 								Flight testFlight = new Flight(count,
-										k+"/0"+i+"/14 "+times.get((j/3)%4),
+										"2014"+k+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -184,7 +184,7 @@ public class DemoDatabaseBuilder {
 							}
 							else{
 								Flight testFlight = new Flight(count,
-										k+"/"+i+"/14 "+times.get((j/3)%4),
+										"2014"+k+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -212,10 +212,10 @@ public class DemoDatabaseBuilder {
 								   	   resultFlight.getSeatsInFirstClass()+" "+
 								   	   resultFlight.getSeatsInEconomy());
 				}
-		}
-		catch (SQLException|ParseException e){
-			fail();
-		}
+//		}
+//		catch (SQLException|ParseException e){
+//			fail();
+//		}
 	}
 }
 
