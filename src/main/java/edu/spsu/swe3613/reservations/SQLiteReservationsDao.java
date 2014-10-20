@@ -210,7 +210,7 @@ private Connection connection;
 	@Override
 	public Flight addFlight(Flight flight) throws SQLException {
 		String date = flight.getDate();
-		String time = date.substring(9);
+		String time = date.substring(8);
 		float distance =getDistance(flight.getStartingCity().toString(),flight.getDestination().toString());
 		flight.setDistance(distance);
 		float pricetotal = getPrice(time)*distance;
