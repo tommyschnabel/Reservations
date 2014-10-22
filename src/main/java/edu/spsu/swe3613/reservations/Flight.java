@@ -2,7 +2,7 @@ package edu.spsu.swe3613.reservations;
 
 public class Flight {
 	private int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
-	private String date; //This gives us Year, Month, Day, Hour, and Minutes.
+	private String date; //Format YYYYMMddHHmm
 	
 	private float price;
     private float distance;

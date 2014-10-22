@@ -45,8 +45,8 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
 //});
 
 //HOME/SEARCH CONTROLLER
-controllers.controller('homeController', ['$scope', '$location', '$http', '$rootScope', '$modal',
-        function ($scope, $location, $http, $rootScope, $modal) {
+controllers.controller('homeController', ['$scope', '$location', '$http', '$rootScope',
+        function ($scope, $location, $http, $rootScope) {
             $scope.flightFrom = 'Atlanta';
             $scope.flightTo = 'Chicago';
 
@@ -64,7 +64,7 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 //Validate dates are entered
                 if ($scope.flightDepart === '' || $scope.flightReturn === ''
                     || $scope.flightDepart === undefined || $scope.flightReturn === undefined) {
-                    $rootScope.errorMessages.push('One of the date fields is empty');
+                    $rootScope.errorMessages.push('One of the date fields in search was empty');
                     return;
                 }
 
@@ -94,6 +94,16 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                     endDate += $scope.flightReturn[i];
                 }
 
+                //Add Hours and Minutes
+                startDate += '0000'; //Search from start of the first day
+                endDate += '2359';   // to the end of the last day
+
+                //Validate the start date isn't after the end date
+                if (startDate > endDate) {
+                    $rootScope.errorMessages.push('The starting date was after the ending date in the search');
+                    $location.path('/searchResults');
+                }
+
                 //Send search request
                 $http({
                     url: '/Reservations/api/reservations/search/',
@@ -104,24 +114,18 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                         endCity: $scope.flightTo,
                         startDate: startDate,
                         endDate: endDate
-                    }
+                    },
+                    timeout: 2000
                 }).then(function(results) {
                     //Set results
-                    if (results.status === 200 && results.data.length > 0) {
+                    if (results.status === 200) {
                         $rootScope.searchResults = results;
                         $scope.searchResults = results;
-                        $location.path('/searchResults');
-                        return;
                     } else if (results.status === 500) {
                         //Do nothing because for some reason some requests are happening twice
                         // and it'll throw this back
-                    } else if (results === {} || results === undefined || results === ''
-                        || results.data === '' || results.data === {} || results.data === undefined) {
-                        $rootScope.errorMessages.push('The search results came back empty');
-                        $scope.searchResults = results;
-                        $rootScope.searchResults = results;
-                        return;
                     }
+                    $location.path('/searchResults');
                 }).catch(function(error) {
                     $rootScope.errorMessages.push(error);
                 });
@@ -132,19 +136,68 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
 
 
 //SEARCH RESULTS CONTROLLER
-controllers.controller('searchResultsController', ['$scope', '$rootScope', '$location',
-        function($scope, $rootScope, $location) {
+controllers.controller('searchResultsController', ['$scope', '$rootScope', '$location', '$filter',
+        function($scope, $rootScope, $location, $filter) {
 
-            $rootScope.selectedItems = [];
-
-            if ($rootScope.searchResults === undefined) {
-                $rootScope.searchResults = { data: [] };
+            if ($scope.searchResults === undefined) {
+                $scope.searchResults = { data: [] };
             }
 
+            $scope.setViewableDate = function(item) {
+                var originalDate = item.date,
+                    viewableDate = '',
+                    temp,
+                    timeOfDay = 'AM';
+
+                //Month
+                viewableDate += originalDate[4];
+                viewableDate += originalDate[5];
+                viewableDate += '/';
+                //Day
+                viewableDate += originalDate[6];
+                viewableDate += originalDate[7];
+                viewableDate += '/';
+                //Year
+                viewableDate += originalDate[0];
+                viewableDate += originalDate[1];
+                viewableDate += originalDate[2];
+                viewableDate += originalDate[3];
+                viewableDate += ' ';
+
+                //Hour
+                temp = originalDate[8] + originalDate[9];
+                if (temp > 12) {
+                    temp -= 12;
+                    timeOfDay = 'PM';
+                }
+                viewableDate += temp;
+                viewableDate += ':';
+
+                //Minute
+                viewableDate += originalDate[10];
+                viewableDate += originalDate[11];
+                viewableDate += timeOfDay;
+
+                item.viewableDate = viewableDate;
+            };
+
+            angular.forEach($scope.searchResults.data, function(item) {
+                $scope.setViewableDate(item);
+
+                //Couldn't get $filter working, may fix for release 2
+//                $filter('Currency')(item.price);
+                item.class = 'Economy';
+            });
+
             $scope.resultsGridOptions = {
-                data: $rootScope.searchResults.data,
-                selectedItems: $rootScope.selectedItems,
+                data: 'searchResults.data',
+                selectedItems: [],
+                enableRowSelection: true,
                 columnDefs: [
+                    {
+                        field: 'viewableDate',
+                        displayName: 'Date'
+                    },
                     {
                         field: 'startingCity',
                         displayName: 'Starting City'
@@ -172,10 +225,10 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                 ]
             };
 
-            $rootScope.watch('selectedItems', function(newValue, oldValue) {
-                $rootScope.reservations = newValue;
+            $scope.reserve = function() {
+                $rootScope.reservations = $scope.resultsGridOptions.selectedItems;
                 $location.path('/reservationConfirm');
-            });
+            };
         }
     ]
 );
@@ -186,8 +239,13 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
     function ($scope, $http, $location, $rootScope) {
 
         $scope.reservationsGridOptions = {
-            data: $rootScope.reservations,
+            data: 'reservations',
+            enableRowSelection: false,
             columnDefs: [
+                {
+                    field: 'viewableDate',
+                    displayName: 'Date'
+                },
                 {
                     field: 'startingCity',
                     displayName: 'Starting City'
@@ -203,12 +261,47 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                 {
                     field: 'price',
                     displayName: 'Price'
+                },
+                {
+                    field: 'class',
+                    displayName: 'Class',
+                    enableCellEdit: true,
+                    cellTemplate: 'templates/classSelect.html',
+                    editableCellTemplate: 'templates/classSelect.html'
                 }
             ]
         };
 
-        $scope.confirm = function() {
+        function getSeatClass(seatClass) {
+            if (seatClass.toLowerCase().contains('economy')) {
+                return 'Economy';
+            } else if (seatClass.toLowerCase().contains('first')) {
+                return 'FirstClass';
+            } else {
+                return 'unknown class';
+            }
+        }
 
+        $scope.confirm = function() {
+            angular.forEach($scope.reservations, function(reservation) {
+                $http({
+                    url: '/Reservations/api/reservations/create/',
+                    method: 'PUT',
+                    data: {
+                        flightId: reservation.id,
+                        userId: $rootScope.user.id,
+                        seatClass: getSeatClass(reservation.class)
+                    }
+                }).then(function(response) {
+                    if (response.status !== 200) {
+                        $rootScope.errorMessages.push(response);
+                    } else {
+                        $location.path('#/account');
+                    }
+                }).catch(function(response) {
+                    $rootScope.errorMessages = response;
+                });
+            });
         };
 
         $scope.cancel = function() {
@@ -308,16 +401,131 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
 	]
 );
 
-//FLIGHT CONTROLLER
-controllers.controller('flightController', ['$scope', '$location',
-        function ($scope, $location) {
-        }
-    ]
-);
 
-//PASSENGER INFORMATION CONTROLLER
-controllers.controller('passengerController', ['$scope', '$location',
-        function ($scope, $location) {
+//ACCOUNT CONTROLLER
+controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$location',
+        function ($scope, $http, $rootScope, $location) {
+
+            //Redirect to home page if user isn't logged in
+            if (!$rootScope.user) {
+                $location.path('/home');
+            }
+
+            $scope.setViewableDate = function(item) {
+                var originalDate = item.date,
+                    viewableDate = '',
+                    temp,
+                    timeOfDay = 'AM';
+
+                //Month
+                viewableDate += originalDate[4];
+                viewableDate += originalDate[5];
+                viewableDate += '/';
+                //Day
+                viewableDate += originalDate[6];
+                viewableDate += originalDate[7];
+                viewableDate += '/';
+                //Year
+                viewableDate += originalDate[0];
+                viewableDate += originalDate[1];
+                viewableDate += originalDate[2];
+                viewableDate += originalDate[3];
+                viewableDate += ' ';
+
+                //Hour
+                temp = originalDate[8] + originalDate[9];
+                if (temp > 12) {
+                    temp -= 12;
+                    timeOfDay = 'PM';
+                }
+                viewableDate += temp;
+                viewableDate += ':';
+
+                //Minute
+                viewableDate += originalDate[10];
+                viewableDate += originalDate[11];
+                viewableDate += timeOfDay;
+
+                item.viewableDate = viewableDate;
+            };
+
+            //Get the reservations for the user that's logged in
+            $http({
+                url: '/Reservations/api/reservations',
+                method: 'GET',
+                params: { uid: $rootScope.user.id }
+            }).then(function(results) {
+
+                //The request was successful
+                if (results.status === 200) {
+                    $scope.userReservations = results.data;
+
+                    //Get the flight for each reservation
+                    angular.forEach($scope.userReservations, function(item) {
+                        $http({
+                            url: 'Reservations/api/reservations/flight',
+                            method: 'GET',
+                            params: { flightId: item.flightId }
+                        }).then(function(result) {
+                            item.flight = result.data;
+                            $scope.setViewableDate(item);
+                        });
+                    });
+                } else {
+                    $rootScope.errorMessages.push(results);
+                }
+            }).catch(function(error) {
+                $rootScope.errorMessages.push(error);
+            });
+
+            $scope.accountGridOptions = {
+                data: 'userReservations',
+                enableRowSelection: false,
+                columnDefs: [
+                    {
+                        field: 'viewableDate',
+                        displayName: 'Date',
+                        width: '**'
+                    },
+                    {
+                        field: 'flight.startingCity',
+                        displayName: 'Starting City'
+                    },
+                    {
+                        field: 'flight.destination',
+                        displayName: 'Destination'
+                    },
+                    {
+                        field: 'flight.airline',
+                        displayName: 'Airline'
+                    },
+                    {
+                        field: 'flightClass',
+                        displayName: 'Seat Class'
+                    },
+                    {
+                        field: 'flight.distance',
+                        displayName: 'Distance (Mi)'
+                    },
+                    {
+                        field: 'delete',
+                        displayName: 'Remove Reservation',
+                        cellTemplate: 'templates/removeReservation.html',
+                        width: '**'
+                    }
+                ]
+            };
+
+            $scope.deleteReservation = function(reservation) {
+                $http({
+                    url: '/Reservations/api/reservations',
+                    method: 'DELETE',
+                    params: {
+                        uid: $rootScope.user.id,
+                        resId: reservation.id
+                    }
+                });
+            };
         }
     ]
 );

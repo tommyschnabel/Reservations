@@ -1,4 +1,12 @@
 <div class="container">
+
+    <!-- <i>Excellent</i> error messaging :)-->
+    <div ng-show="$root.errorMessages">
+        <div>There was an error, please try again</div>
+        <div>{{$root.errorMessages}}</div>
+        <button ng-click="$root.errorMessages = undefined">Clear Error Messages</button>
+    </div>
+
     <div>
         <h4 class="reserve-message">You are about to reserve seats on the following flights:</h4>
         <div class="confirm-res-buttons">

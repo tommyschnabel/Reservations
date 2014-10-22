@@ -38,7 +38,7 @@ private Connection connection;
 			reservations.add(new Reservation(rs.getInt("id"),
                                              rs.getInt("customer"),
                                              rs.getInt("flight"),
-                                             Reservation.SeatClass.valueOf(rs.getString("class"))));
+                                             SeatClass.valueOf(rs.getString("class"))));
 		}
 		statement.close();
 		return reservations;
@@ -60,7 +60,7 @@ private Connection connection;
 		Reservation resultReservation = new Reservation(reservationId,
                                                         rs.getInt("customer"),
                                                         rs.getInt("flight"),
-                                                        Reservation.SeatClass.valueOf(rs.getString("class")));
+                                                        SeatClass.valueOf(rs.getString("class")));
 		statement.close();
 		return resultReservation;
 	}
@@ -81,7 +81,7 @@ private Connection connection;
 		Reservation resultReservation = new Reservation(rs.getInt(1),
                                                         rs.getInt(2),
                                                         rs.getInt(3),
-                                                        Reservation.SeatClass.valueOf(rs.getString(4)));
+                                                        SeatClass.valueOf(rs.getString(4)));
 		
 		String seatClass;
 		int seats;

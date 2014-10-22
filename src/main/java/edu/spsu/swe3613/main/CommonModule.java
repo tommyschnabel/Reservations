@@ -11,7 +11,7 @@ public class CommonModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		try {
-			bind(Connection.class).toInstance(DriverManager.getConnection("jdbc:sqlite:WebReserve.db"));
+			bind(Connection.class).toInstance(DriverManager.getConnection("jdbc:sqlite:Demo.db"));
 		} catch (SQLException e) {
 			System.out.println("Couldn't get a DB connection, proceeding to break everything");
 			System.out.println(e.getMessage());

@@ -2,16 +2,12 @@ package edu.spsu.swe3613.reservations;
 
 public class Reservation {
 
-    public enum SeatClass {
-        economy, firstClass
-    }
-
 	private int id;
-	private Integer userId;
+	private int userId;
 	private int flightId;
 	private SeatClass flightClass;
 	
-	public Reservation(int id, Integer userId, int flightId, SeatClass flightClass){
+	public Reservation(int id, int userId, int flightId, SeatClass flightClass){
 		this.id = id;
 		this.userId = userId;
 		this.flightId = flightId;
@@ -26,11 +22,11 @@ public class Reservation {
 		return id;
 	}
 	
-	public Integer getUserId(){
+	public int getUserId(){
 		return userId;
 	}
 	
-	public void setUserId(Integer userId){
+	public void setUserId(int userId){
 		this.userId = userId;
 	}
 	
