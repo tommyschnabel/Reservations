@@ -179,8 +179,9 @@ ul{
     margin-top: 5px;
 }
 
-.removeReservation {
-    text-decoration: underline;
+.remove-reservation-button {
+    float: right;
+    margin-top: 3px;
 }
 
 #flightsearch .radio{

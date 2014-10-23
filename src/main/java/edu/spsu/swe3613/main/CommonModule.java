@@ -18,5 +18,4 @@ public class CommonModule extends AbstractModule {
 			throw new RuntimeException("Couldn't make a connection to the Database");
 		}
 	}
-
 }

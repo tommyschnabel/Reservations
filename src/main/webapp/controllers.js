@@ -449,41 +449,46 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
                 item.viewableDate = viewableDate;
             };
 
-            //Get the reservations for the user that's logged in
-            $http({
-                url: '/Reservations/api/reservations',
-                method: 'GET',
-                params: { uid: $rootScope.user.id }
-            }).then(function(results) {
+            $scope.loadReservations = function() {
+                //Get the reservations for the user that's logged in
+                $http({
+                    url: '/Reservations/api/reservations',
+                    method: 'GET',
+                    params: { uid: $rootScope.user.id }
+                }).then(function (results) {
 
-                //The request was successful
-                if (results.status === 200) {
-                    $scope.userReservations = results.data;
+                    //The request was successful
+                    if (results.status === 200) {
+                        $scope.userReservations = results.data;
 
-                    //Get the flight for each reservation
-                    angular.forEach($scope.userReservations, function(item) {
-                        $http({
-                            url: 'Reservations/api/reservations/flight',
-                            method: 'GET',
-                            params: { flightId: item.flightId }
-                        }).then(function(result) {
-                            item.flight = result.data;
-                            $scope.setViewableDate(item);
+                        //Get the flight for each reservation
+                        angular.forEach($scope.userReservations, function (item) {
+                            $http({
+                                url: 'api/reservations/flight',
+                                method: 'GET',
+                                params: { flightId: item.flightId }
+                            }).then(function (result) {
+                                item.flight = result.data;
+                                $scope.setViewableDate(item.flight);
+                            }).catch(function (error) {
+                                $rootScope.errorMessages.push(error);
+                            });
                         });
-                    });
-                } else {
-                    $rootScope.errorMessages.push(results);
-                }
-            }).catch(function(error) {
-                $rootScope.errorMessages.push(error);
-            });
+                    } else {
+                        $rootScope.errorMessages.push(results);
+                    }
+                }).catch(function (error) {
+                    $rootScope.errorMessages.push(error);
+                });
+            };
+            $scope.loadReservations();
 
             $scope.accountGridOptions = {
                 data: 'userReservations',
-                enableRowSelection: false,
+                selectedItems: [],
                 columnDefs: [
                     {
-                        field: 'viewableDate',
+                        field: 'flight.viewableDate',
                         displayName: 'Date',
                         width: '**'
                     },
@@ -506,24 +511,25 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
                     {
                         field: 'flight.distance',
                         displayName: 'Distance (Mi)'
-                    },
-                    {
-                        field: 'delete',
-                        displayName: 'Remove Reservation',
-                        cellTemplate: 'templates/removeReservation.html',
-                        width: '**'
                     }
                 ]
             };
 
-            $scope.deleteReservation = function(reservation) {
-                $http({
-                    url: '/Reservations/api/reservations',
-                    method: 'DELETE',
-                    params: {
-                        uid: $rootScope.user.id,
-                        resId: reservation.id
-                    }
+            $scope.deleteReservations = function() {
+                angular.forEach($scope.accountGridOptions.selectedItems, function(reservation) {
+                    $http({
+                        url: '/Reservations/api/reservations/delete',
+                        method: 'DELETE',
+                        params: {
+                            uid: $rootScope.user.id,
+                            resId: reservation.id
+                        }
+                    }).then(function(result) {
+                        $rootScope.errorMessages.push(result);
+                        $scope.loadReservations();
+                    }).catch(function(error) {
+                        $rootScope.errorMessages.push(error);
+                    });
                 });
             };
         }

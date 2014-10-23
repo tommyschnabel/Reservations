@@ -1,4 +1,4 @@
-<!-- <i>Excellent</i> error handling :)-->
+<!-- <i>Excellent</i> error messaging :)-->
 <div ng-show="$root.errorMessages">
     <div>There was an error, please try again</div>
     <div>{{$root.errorMessages}}</div>
@@ -6,7 +6,13 @@
 </div>
 
 <div class="container">
-    <div>Name: {{user.fname}} {{user.lname}}</div>
+    <div>Name: {{user.fname}} {{user.lname}}
+        <div ng-disabled="accountGridOptions.selectedItems.length < 1"
+             class="btn btn-danger remove-reservation-button"
+             ng-click="deleteReservations()"
+             style="float: right; margin-top: 3px">Remove Reservations</div>
+    </div>
     <div>Email: {{user.email}}</div>
+
     <div ng-grid="accountGridOptions"></div>
 </div>

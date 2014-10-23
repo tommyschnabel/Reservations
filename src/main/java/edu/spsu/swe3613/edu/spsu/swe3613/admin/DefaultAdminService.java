@@ -52,7 +52,7 @@ public class DefaultAdminService implements AdminService {
     public Response.Status updateAirlineAdmin(AirlineAdmin admin) {
         try {
             adminDao.updateAirlineAdmin(admin);
-            return Response.Status.ACCEPTED;
+            return Response.Status.OK;
         } catch (SQLException e) {
             System.out.println("Something went wrong updating the admin");
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class DefaultAdminService implements AdminService {
     public Response.Status deleteAirlineAdmin(AirlineAdmin admin) {
         try {
             adminDao.deleteAirlineAdmin(admin);
-            return Response.Status.ACCEPTED;
+            return Response.Status.OK;
         } catch (SQLException e) {
             System.out.println("Something went wrong while deleting admin");
             System.out.println("Admin was not deleted");

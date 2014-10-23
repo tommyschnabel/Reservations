@@ -174,24 +174,16 @@ public class DefaultReservationsService implements ReservationsService {
 	public Response.Status deleteReservation(int id, int userId) {
 		
 		try {
-			allReservations = dao.getAllReservations();
-
-            for(int i=0; i < allReservations.size(); i++ ) {
-                if(allReservations.get(i).getUserId() == userId)
-                {
-                    if(allReservations.get(i).getFlightId() == id)
-                    {
-                        dao.deleteReservation(dao.getAllReservations().get(i));
-                        return Response.Status.ACCEPTED;
-                    }
-                }
+			if (dao.getReservationById(id).getUserId() == userId) {
+                dao.deleteReservation(id);
+                System.out.println("User " + userId + " is deleted reservation " + id);
+                return Response.Status.OK;
             }
         } catch (SQLException e) {
             System.out.println("something went wrong while deleting the reservation");
             System.out.println(e.getMessage());
-        } finally {
-            return Response.Status.CONFLICT;
         }
+        return Response.Status.CONFLICT;
 	}
 	
 	@Override
@@ -221,7 +213,6 @@ public class DefaultReservationsService implements ReservationsService {
         try {
             return dao.getFlightById(flightId);
         } catch (SQLException|ParseException e) {
-            System.out.println("something went wrong while getting the flight id = " + flightId);
             System.out.println(e.getMessage());
         }
         return null;

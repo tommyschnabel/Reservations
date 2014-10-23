@@ -116,9 +116,9 @@ private Connection connection;
 	}
 
 	@Override
-	public void deleteReservation(Reservation reservation) throws SQLException {
+	public void deleteReservation(int reservationId) throws SQLException {
 		String query = 	"DELETE FROM Reservation WHERE"
-				+ 		" ID="	+	reservation.getId();
+				+ 		" ID="	+	reservationId;
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
