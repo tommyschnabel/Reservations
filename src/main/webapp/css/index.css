@@ -70,6 +70,7 @@ ul{
 /*nav*/
 .nav{
 	width:100%;
+    margin: auto;
 	background-color:white;
 	height:40px;
 	border-bottom-style:solid;
@@ -160,10 +161,26 @@ ul{
     float: right;
     margin-bottom: 10px;
     margin-top: 10px;
+    margin-right: 45px;
 }
+
+.reserve-button {
+    float: right;
+    margin-top: 0;
+    margin-right: 45px;
+}
+
 .reserve-message {
     margin-top: 15px;
     float: left;
+}
+
+.flight-class-select {
+    margin-top: 5px;
+}
+
+.removeReservation {
+    text-decoration: underline;
 }
 
 #flightsearch .radio{

@@ -1,0 +1,12 @@
+<div class="container removeReservation">
+    <div ng-show="!remove" ng-click="remove = true">
+        Remove
+    </div>
+    <div ng-show="remove">
+        <div>Are you sure?</div>
+        <div>
+            <div ng-click="remove(row.entity.id)">Yes</div>
+            <div style="float: right" ng-click="remove = false">No</div>
+        </div>
+    </div>
+</div>

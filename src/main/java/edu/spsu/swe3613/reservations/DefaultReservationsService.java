@@ -34,8 +34,8 @@ public class DefaultReservationsService implements ReservationsService {
         List<Flight> flights;
         List<Flight> searchResults = new ArrayList<Flight>();
 
-        Integer startDate = Integer.valueOf(searchParams.getStartDate());
-        Integer endDate = Integer.valueOf(searchParams.getEndDate());
+        Long startDate = Long.valueOf(searchParams.getStartDate());
+        Long endDate = Long.valueOf(searchParams.getEndDate());
         try {
             flights = dao.getAllFlights();
         } catch (Exception e) {
@@ -45,14 +45,13 @@ public class DefaultReservationsService implements ReservationsService {
         }
 
         for (Flight f : flights) {
-            Integer flightDate = Integer.valueOf(f.getDate());
+            Long flightDate = Long.valueOf(f.getDate());
 
-            if (flightDate < startDate || flightDate > endDate) {
-                searchResults.add(f);
-            }
+            if (flightDate >= startDate
+                && flightDate <= endDate
+                && f.getStartingCity().toString().equals(searchParams.getStartCity().toString())
+                && f.getDestination().toString().equals(searchParams.getEndCity().toString())) {
 
-            if (f.getStartingCity().toString() != searchParams.getStartCity().toString()
-                    || f.getDestination().toString() != searchParams.getEndCity().toString()) {
                 searchResults.add(f);
             }
         }
@@ -156,7 +155,7 @@ public class DefaultReservationsService implements ReservationsService {
 	
 	//Create a new flight and add it to the list of flights.
 	@Override
-    public Response.Status createReservation(int flightId, int userId, Reservation.SeatClass seatClass) {
+    public Response.Status createReservation(int flightId, int userId, SeatClass seatClass) {
 
         try {
             int newReservationId = dao.getAllReservations().size();
@@ -195,8 +194,39 @@ public class DefaultReservationsService implements ReservationsService {
         }
 	}
 	
+	@Override
+    public List<Reservation> getReservationsForUser(int userId) {
+        List<Reservation> reservations;
+        List<Reservation> reservationsForUser = new ArrayList<Reservation>();
+
+        try {
+            reservations = dao.getAllReservations();
+        } catch (SQLException e) {
+            System.out.println("something went wrong while getting the reservations for user " + userId);
+            System.out.println(e.getMessage());
+            return reservationsForUser;
+        }
+
+        for (Reservation r : reservations) {
+            if (r.getUserId() == userId) {
+                reservationsForUser.add(r);
+            }
+        }
+
+        return reservationsForUser;
+    }
+
+    @Override
+    public Flight getFlightById(int flightId) {
+        try {
+            return dao.getFlightById(flightId);
+        } catch (SQLException|ParseException e) {
+            System.out.println("something went wrong while getting the flight id = " + flightId);
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 	
-	
-	}
+}
 
 

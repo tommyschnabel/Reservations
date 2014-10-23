@@ -12,17 +12,13 @@ import java.util.List;
 
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminDao;
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.SqLiteAdminDao;
+import edu.spsu.swe3613.reservations.*;
 import jersey.repackaged.com.google.common.base.Objects;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.spsu.swe3613.reservations.Airline;
 import edu.spsu.swe3613.edu.spsu.swe3613.admin.AirlineAdmin;
-import edu.spsu.swe3613.reservations.City;
-import edu.spsu.swe3613.reservations.Flight;
-import edu.spsu.swe3613.reservations.Reservation;
-import edu.spsu.swe3613.reservations.SQLiteReservationsDao;
 import edu.spsu.swe3613.user.SqLiteUserDao;
 import edu.spsu.swe3613.user.UserDao;
 
@@ -42,7 +38,7 @@ public class ReservationsDaoTest {
 	public void setUpBefore() throws Exception{
 
         flight = new Flight(1,"10/01/14 9:00 AM",Airline.Delta,City.Atlanta,City.Dallas, 5f,10,10,45.00f);
-        reservation = new Reservation(1,1,1, Reservation.SeatClass.firstClass);
+        reservation = new Reservation(1,1,1, SeatClass.FirstClass);
 		
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
 		testDao = new SQLiteReservationsDao(connection);
@@ -92,7 +88,7 @@ public class ReservationsDaoTest {
 			}
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
@@ -113,7 +109,7 @@ public class ReservationsDaoTest {
             }
 		}
 		catch (SQLException|ParseException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
@@ -129,7 +125,7 @@ public class ReservationsDaoTest {
             }
 		}
 		catch (SQLException|ParseException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
@@ -155,7 +151,7 @@ public class ReservationsDaoTest {
             }
 		}
 		catch (SQLException|ParseException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
@@ -169,7 +165,7 @@ public class ReservationsDaoTest {
 				fail();
 		}
 		catch (SQLException|ParseException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 		
@@ -186,7 +182,7 @@ public class ReservationsDaoTest {
 				fail();
 		}
 		catch(SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
@@ -206,7 +202,7 @@ public class ReservationsDaoTest {
             }
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 		
@@ -220,6 +216,7 @@ public class ReservationsDaoTest {
 				fail("Reservation ID error");
 		}
 		catch (SQLException e){
+            fail(e.getMessage());
 		}
 	}
 	
@@ -230,14 +227,14 @@ public class ReservationsDaoTest {
 			testDao.addReservation(reservation);
 			reservation.setFlightId(2);
 			reservation.setUserId(2);
-			reservation.setFlightClass(Reservation.SeatClass.economy);
+			reservation.setFlightClass(SeatClass.Economy);
 			testDao.updateReservation(reservation);
 			Reservation testReservation = testDao.getReservationById(reservation.getId());
 			if(!reservation.equals(testReservation))
 				fail();		
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
@@ -255,7 +252,7 @@ public class ReservationsDaoTest {
 				fail();
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
@@ -267,7 +264,7 @@ public class ReservationsDaoTest {
 				fail();
 		}
 		catch(SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
@@ -285,7 +282,7 @@ public class ReservationsDaoTest {
 					fail("List contains incorrect data");
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
@@ -298,7 +295,7 @@ public class ReservationsDaoTest {
 				fail("Admin ID error");
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
@@ -314,7 +311,7 @@ public class ReservationsDaoTest {
 				fail();	
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
@@ -331,7 +328,7 @@ public class ReservationsDaoTest {
 				fail();
 		}
 		catch (SQLException e){
-			fail();
+			fail(e.getMessage());
 		}
 	}
 

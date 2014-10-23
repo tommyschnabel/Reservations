@@ -1,0 +1,12 @@
+<!-- <i>Excellent</i> error handling :)-->
+<div ng-show="$root.errorMessages">
+    <div>There was an error, please try again</div>
+    <div>{{$root.errorMessages}}</div>
+    <button ng-click="$root.errorMessages = undefined">Clear Error Messages</button>
+</div>
+
+<div class="container">
+    <div>Name: {{user.fname}} {{user.lname}}</div>
+    <div>Email: {{user.email}}</div>
+    <div ng-grid="accountGridOptions"></div>
+</div>

@@ -11,18 +11,15 @@ angular.module('reservationsApp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'reserva
                 }).when('/register', {
                     templateUrl: 'templates/register.html',
                     controller: 'registerController'
-                }).when('/flight', {
-                    templateUrl: 'templates/flight.html',
-                    controller: 'flightController'
                 }).when('/searchResults', {
                     templateUrl: 'templates/results.html',
                     controller: 'searchResultsController'
+                }).when('/account', {
+                    templateUrl: 'templates/account.html',
+                    controller: 'accountController'
                 }).when('/reservationConfirm', {
                     templateUrl: 'templates/reservation.html',
                     controller: 'reservationConfirmController'
-                }).when('/passenger', {
-                    templateUrl: 'templates/passengerinformation.html',
-                    controller: 'passengerController'
                 }).when('/test', {
                     templateUrl: 'templates/test.html',
                     controller: 'testController'
