@@ -1,7 +1,5 @@
 package edu.spsu.swe3613.reservations;
 
-import edu.spsu.swe3613.edu.spsu.swe3613.admin.AirlineAdmin;
-
 import java.text.ParseException;
 import java.util.List;
 import java.sql.SQLException;
@@ -15,7 +13,7 @@ public interface ReservationsDao {
 	public Reservation getReservationById(int reservationId) throws SQLException;
 	public Reservation addReservation(Reservation reservation) throws SQLException;
 	public void updateReservation(Reservation reservation) throws SQLException;
-	public void deleteReservation(Reservation reservation) throws SQLException;
+	public void deleteReservation(int reservationId) throws SQLException;
 
 	//Methods for Flight
 	public List<Flight> getAllFlights() throws SQLException, ParseException;

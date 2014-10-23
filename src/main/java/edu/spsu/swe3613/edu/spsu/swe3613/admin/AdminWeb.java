@@ -27,7 +27,7 @@ public class AdminWeb {
     @Path("add/")
     public Response.Status addAirlineAdmin(AirlineAdmin admin) {
         adminService.addAirlineAdmin(admin);
-        return Response.Status.ACCEPTED;
+        return Response.Status.OK;
     }
 
     @POST
