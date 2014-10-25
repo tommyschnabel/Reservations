@@ -30,13 +30,13 @@
     <div ng-controller="headerController">
       <header>
         <div class="logo">
-	        <a href="#/home" id="logo"><img src="image/logo.png" width="180" height="40" alt="1" /></a>
+	        <a href="#/home" id="logo"><img src="image/logo.png" width="180" height="40" alt="logo" /></a>
         </div>
         <div class="top_nav">
           <ul>
 		    <li ng-hide="$root.user"><a href="#/register">Register</a></li>
 	        <li ng-hide="$root.user"><a href="#/login">Login</a></li>
-            <li ng-show="$root.user">Welcome {{$root.user.fname}} {{$root.user.lname}} <button ng-click="logout()">Logout</button></li>
+            <li ng-show="$root.user">Welcome {{$root.user.fname}} {{$root.user.lname}} <button ng-click="logout()" class="logoutBtn">Logout</button></li>
 		  </ul>
 	    </div>
 	   </header>

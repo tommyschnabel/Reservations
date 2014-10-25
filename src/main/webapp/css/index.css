@@ -33,11 +33,9 @@ header{
 
 .top_nav {
 	float:right;
-	padding-top:10px;
+	padding-top:20px;
 	padding-right:30px;
 	height:50px;
-	width:200px;
-
 	}
 	
 .top_nav li {
@@ -66,6 +64,23 @@ ul{
 	color:white;
 	background-color:#b18475;
 	}
+
+.logoutBtn{
+       color:white;
+       background:#4c5677;
+        font-weight:700;
+        cursorointer; 
+        height:30px;
+        width:80px; 
+       border:0 none; 
+      margin-left:10px;
+       }
+
+.ng-binding{
+       color:white;
+       margin-left:50px;
+       }
+
 
 /*nav*/
 .nav{
