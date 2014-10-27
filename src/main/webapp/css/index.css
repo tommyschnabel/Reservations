@@ -80,6 +80,14 @@ ul{
        margin-left:50px;
        }
 
+.flight-to {
+    display:inline-block;
+    min-height:290px;
+}
+.flight-from {
+    display:inline-block;
+    min-height:290px;
+}
 
 /*nav*/
 .nav{
@@ -137,7 +145,7 @@ ul{
 
 .title{
 	position:absolute;
-	top:80px;
+	top:50px;
 	left:200px;
 	color:#FFF;
 	font-weight:bold;
@@ -155,7 +163,7 @@ ul{
 
 #flightsearch{
 	position:absolute;
-	top:138px;
+	top:108px;
 	left:180px;
 	width:700px;
 	height:auto;

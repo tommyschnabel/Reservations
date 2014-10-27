@@ -5,9 +5,6 @@
 				<form id="searchform" action="#" ng-submit="search()" method="post">
 
                     <!--Coming in release 2!-->
-					<!--<div class="radio"><input type="radio" name="name1" />-->
-  					    <!--<span>Round trip</span>-->
-          			<!--</div>-->
 					<!--<div class="radio"><input type="radio" name="name1">-->
   					    <!--<span>One way</span>-->
            			<!--</div>-->
@@ -35,26 +32,31 @@
                             <option>San Francisco</option>
                         </select>
                     </div>
-		    		<div class="field half">
-						<label for="flight-depart">From:</label>
-                		<input type="text"
-                               id="flight-depart"
-                               name="csserdate"
-                               class="input-text input-cal"
-                               placeholder="09/15/2014"
-                               autocomplete="off"
-                               ng-model="flightDepart">
-            		</div>
-					<div class="field half even">
-						<label for="flight-return">To:</label>
-                		<input type="text"
-                               id="flight-return"
-                               name="csserdate"
-                               class="input-text input-cal"
-                               placeholder="09/15/2014"
-                               autocomplete="off"
-                               ng-model="flightReturn">
-            		</div>
+
+                    <div class="flight-from">
+                        <label>From:</label>
+                        <datepicker ng-model="flightDepart"
+                                    show-weeks="false"
+                                    class="well well-sm"
+                                    format-day="dd"
+                                    format-month="MM"
+                                    format-year="yyyy">
+                        </datepicker>
+                    </div>
+                    <div class="flight-to">
+                        <label>To:</label>
+                        <datepicker ng-model="flightReturn"
+                                    show-weeks="false"
+                                    class="well well-sm"
+                                    format-day="dd"
+                                    format-month="MM"
+                                    format-year="yyyy">
+                        </datepicker>
+                    </div>
+
+                    <div class="radio"><input type="checkbox" id="roundTrip" ng-model="roundTrip" />
+                        <span>Round trip</span>
+                    </div>
 
 <!--<div class="field">
 <div class="radio"><input type="radio" name="name2" checked>Economy cabin</div>

@@ -57,42 +57,39 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 //Validate cities aren't the same
                 if ($scope.flightFrom === $scope.flightTo) {
                     $rootScope.errorMessages.push('You cannot fly to the same city you are departing from');
-
-                    return;
                 }
 
                 //Validate dates are entered
                 if ($scope.flightDepart === '' || $scope.flightReturn === ''
                     || $scope.flightDepart === undefined || $scope.flightReturn === undefined) {
                     $rootScope.errorMessages.push('One of the date fields in search was empty');
-                    return;
                 }
 
-                //Validate dates are in right format
-                if ($scope.flightDepart.length !== 10 || $scope.flightReturn.length !== 10
-                    || $scope.flightDepart[2] != '/' || $scope.flightDepart[5] != '/'
-                    || $scope.flightReturn[2] != '/' || $scope.flightReturn[5] != '/') {
-                    $rootScope.errorMessages.push('One of the date fields is not in the format "MM/dd/yyyy"');
-                    return;
-                }
+                //Starting date
+                startDate += $scope.flightDepart.getFullYear();
 
-                //Year
-                for (var i = 6; i < 10; i++) {
-                    startDate += $scope.flightDepart[i];
-                    endDate += $scope.flightReturn[i];
+                if ($scope.flightDepart.getMonth() < 10) {
+                    startDate += '0';
                 }
+                startDate += $scope.flightDepart.getMonth();
 
-                //Month
-                for (var i = 0; i < 2; i++) {
-                    startDate += $scope.flightDepart[i];
-                    endDate += $scope.flightReturn[i];
+                if ($scope.flightDepart.getDate() < 10) {
+                    startDate += '0';
                 }
+                startDate += $scope.flightDepart.getDate();
 
-                //Day
-                for (var i = 3; i < 5; i++) {
-                    startDate += $scope.flightDepart[i];
-                    endDate += $scope.flightReturn[i];
+                //Ending date
+                endDate += $scope.flightReturn.getFullYear();
+
+                if ($scope.flightReturn.getMonth() < 10) {
+                    endDate += '0';
                 }
+                endDate += $scope.flightReturn.getMonth();
+
+                if ($scope.flightReturn.getDate() < 10) {
+                    endDate += '0';
+                }
+                endDate += $scope.flightReturn.getDate();
 
                 //Add Hours and Minutes
                 startDate += '0000'; //Search from start of the first day
@@ -101,6 +98,9 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 //Validate the start date isn't after the end date
                 if (startDate > endDate) {
                     $rootScope.errorMessages.push('The starting date was after the ending date in the search');
+                }
+
+                if ($rootScope.errorMessages.length > 0) {
                     $location.path('/searchResults');
                 }
 
