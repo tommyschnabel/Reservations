@@ -37,7 +37,7 @@ public class ReservationsDaoTest {
 	@Before
 	public void setUpBefore() throws Exception{
 
-        flight = new Flight(1,"10/01/14 9:00 AM",Airline.Delta,City.Atlanta,City.Dallas, 5f,10,10,45.00f);
+        flight = new Flight(1,"201410010900",Airline.Delta,City.Atlanta,City.Dallas, 5f,10,10,45.00f);
         reservation = new Reservation(1,1,1, SeatClass.FirstClass);
 		
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
@@ -61,7 +61,7 @@ public class ReservationsDaoTest {
 		statement.executeUpdate("drop table if exists Price");
 		statement.executeUpdate("create table Price (Time text primary key, PriceRate numeric)");
 		statement.executeUpdate("insert into Price values"
-				+ 				" ('9:00 AM',1.15),('1:00 PM',1.5),('5:00 PM',1),('8:00 PM',.85)");
+				+ 				" ('0900',1.15),('1300',1.5),('1700',1),('2000',.85)");
 		//Reservation
 		statement.executeUpdate("drop table if exists Reservation");
 		statement.executeUpdate("create table Reservation (ID integer primary key, CustomerID integer, FlightID integer, FlightClass text)");
@@ -76,7 +76,7 @@ public class ReservationsDaoTest {
 	}
 		
 	@Test
-	public void testAddFlight(){
+	public void testAddFlight() throws Exception{
 		try{
 			Flight testFlight = testDao.addFlight(flight);
 			if(!flight.getDate().equals(testFlight.getDate())
@@ -133,8 +133,8 @@ public class ReservationsDaoTest {
 	public void testUpdateFlight() {
 		try{
 			testDao.addFlight(flight);
-			String date = "12/12/12 1:00 PM";
-			String time = date.substring(9);
+			String date = "201212121300";
+			String time = date.substring(8);
 			flight.setDate(date);
 			flight.setAirline(Airline.Southwest);
             flight.setStartingCity(City.SanFrancisco);
@@ -246,7 +246,7 @@ public class ReservationsDaoTest {
 			List<Reservation> testList = testDao.getAllReservations();
 			if(!testList.contains(testReservation))
 				fail();
-			testDao.deleteReservation(testReservation);
+			testDao.deleteReservation(testReservation.getId());
 			List<Reservation> resultList = testDao.getAllReservations();
 			if(resultList.contains(testReservation))
 				fail();
