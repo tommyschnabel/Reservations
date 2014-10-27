@@ -69,14 +69,13 @@ ul{
        color:white;
        background:#4c5677;
         font-weight:700;
-        cursorointer; 
         height:30px;
         width:80px; 
        border:0 none; 
       margin-left:10px;
        }
 
-.ng-binding{
+.welcomeTag{
        color:white;
        margin-left:50px;
        }

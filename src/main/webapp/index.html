@@ -36,7 +36,9 @@
           <ul>
 		    <li ng-hide="$root.user"><a href="#/register">Register</a></li>
 	        <li ng-hide="$root.user"><a href="#/login">Login</a></li>
-            <li ng-show="$root.user">Welcome {{$root.user.fname}} {{$root.user.lname}} <button ng-click="logout()" class="logoutBtn">Logout</button></li>
+            <li class="welcomeTag" ng-show="$root.user">Welcome {{$root.user.fname}} {{$root.user.lname}}
+                <button ng-click="logout()" class="logoutBtn">Logout</button>
+            </li>
 		  </ul>
 	    </div>
 	   </header>
