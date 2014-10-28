@@ -141,14 +141,14 @@ public class DemoDatabaseBuilder {
 			Random rand = new Random();
 			int count = 1;
 			
-			for(int k=10;k<13;k++)//months
-				for(int i=1;i<29;i++)//days
+			for(int k=10;k<17;k++)//months
+				for(int i=1;i<31;i++)//days
 					for(int j=0;j<17;j++)//flights per day
 					{
-						if(k<10){
+						if((k%12)<10){
 							if(i<10){
 								Flight testFlight = new Flight(count,
-										"20140"+k+"0"+i+times.get((j/3)%4),
+										"20140"+(k%12)+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -159,7 +159,7 @@ public class DemoDatabaseBuilder {
 								}
 								else{
 									Flight testFlight = new Flight(count,
-											"20140"+k+i+times.get((j/3)%4),
+											"20140"+(k%12)+i+times.get((j/3)%4),
 											airline.get(j%3), locations.get(rand.nextInt(5)), 
 											locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 									if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -173,7 +173,7 @@ public class DemoDatabaseBuilder {
 						else{
 							if(i<10){
 								Flight testFlight = new Flight(count,
-										"2014"+k+"0"+i+times.get((j/3)%4),
+										"2014"+(k%12)+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -184,7 +184,7 @@ public class DemoDatabaseBuilder {
 							}
 							else{
 								Flight testFlight = new Flight(count,
-										"2014"+k+i+times.get((j/3)%4),
+										"2014"+(k%12)+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
