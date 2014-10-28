@@ -129,7 +129,7 @@ public class DemoDatabaseBuilder {
 	@Test
 	public void generateFlights() throws Exception{
 		
-//		try{
+		try{
 			
 			List<Flight> flights = new ArrayList<Flight>();
 			List<City> locations=new ArrayList<City>(
@@ -145,10 +145,10 @@ public class DemoDatabaseBuilder {
 				for(int i=1;i<31;i++)//days
 					for(int j=0;j<17;j++)//flights per day
 					{
-						if((k%12)<10){
+						if((k%13)<10 && (k%13)!=0){
 							if(i<10){
 								Flight testFlight = new Flight(count,
-										"20140"+(k%12)+"0"+i+times.get((j/3)%4),
+										"20150"+(k%13)+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -159,7 +159,7 @@ public class DemoDatabaseBuilder {
 								}
 								else{
 									Flight testFlight = new Flight(count,
-											"20140"+(k%12)+i+times.get((j/3)%4),
+											"20150"+(k%12)+i+times.get((j/3)%4),
 											airline.get(j%3), locations.get(rand.nextInt(5)), 
 											locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 									if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -170,10 +170,10 @@ public class DemoDatabaseBuilder {
 									
 								}
 						}
-						else{
+						else if((k%13) !=0){
 							if(i<10){
 								Flight testFlight = new Flight(count,
-										"2014"+(k%12)+"0"+i+times.get((j/3)%4),
+										"2014"+(k%13)+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -184,7 +184,7 @@ public class DemoDatabaseBuilder {
 							}
 							else{
 								Flight testFlight = new Flight(count,
-										"2014"+(k%12)+i+times.get((j/3)%4),
+										"2014"+(k%13)+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
 										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
@@ -212,10 +212,10 @@ public class DemoDatabaseBuilder {
 								   	   resultFlight.getSeatsInFirstClass()+" "+
 								   	   resultFlight.getSeatsInEconomy());
 				}
-//		}
-//		catch (SQLException|ParseException e){
-//			fail();
-//		}
+		}
+		catch (SQLException|ParseException e){
+			fail();
+		}
 	}
 }
 
