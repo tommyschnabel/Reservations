@@ -71,7 +71,7 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 if ($scope.flightDepart.getMonth() < 10) {
                     startDate += '0';
                 }
-                startDate += $scope.flightDepart.getMonth();
+                startDate += $scope.flightDepart.getMonth() + 1;
 
                 if ($scope.flightDepart.getDate() < 10) {
                     startDate += '0';
@@ -84,7 +84,7 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 if ($scope.flightReturn.getMonth() < 10) {
                     endDate += '0';
                 }
-                endDate += $scope.flightReturn.getMonth();
+                endDate += $scope.flightReturn.getMonth() + 1;
 
                 if ($scope.flightReturn.getDate() < 10) {
                     endDate += '0';
