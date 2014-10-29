@@ -207,8 +207,9 @@ ul{
 }
 
 #flightsearch .radio{
-	width:220px;
-	float:left}
+margin-top:20px;
+color:#ccc;
+	float:left;}
 	
 #flightsearch .input-cal{ 
 	background:#fff url(../image/date1.png) no-repeat 97% 1px; }
