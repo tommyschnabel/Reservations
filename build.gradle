@@ -27,6 +27,10 @@ dependencies {
   testCompile 'junit:junit:4.11'
 }
 
+jettyRun {
+  httpPort = 8080
+}
+
 eclipse.classpath.file {
     beforeMerged { classpath ->
         classpath.entries.removeAll { entry -> entry.kind == 'lib' || entry.kind == 'var' }
