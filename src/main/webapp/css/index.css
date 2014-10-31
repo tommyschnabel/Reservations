@@ -92,7 +92,7 @@ ul{
 /*nav*/
 .nav{
 	width:100%;
-    margin: auto;
+   	margin: auto;
 	background-color:white;
 	height:40px;
 	border-bottom-style:solid;
@@ -268,31 +268,37 @@ label{
 #LoginForm{
 	position:relative;
 	background-color:#FFF;
-    border:solid;
+    	border:solid;
 	border-width:1px;
 	border-color:#CFD7EB;
 	border-radius:5px;
 	width:860px;
 	height:300px;
 	left:100px;
-	padding-left:2em;
+	padding-left:30px;
+        padding-top:20px;
 	}	
 	
 #LoginForm .username{
+        display:block;
 	width:300px;
-	height:30px;
+	height:36px;
+	border-radius:5px;
+	border-width:1px;
 	}
 
 #LoginForm .password{
+	display:block;
 	width:300px;
-	height:30px;
+	height:36px;
+	border-radius:5px;
+	border-width:1px;
 	}
 
 #LoginForm .Loginlabel{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:10px;
-	color:#333;
-	padding-top:20px;
+	color:#666;
 	}
 
 #LoginForm .secondary {
@@ -303,7 +309,7 @@ label{
 	
 #LoginForm a{
 	color: #3c445e;
-    margin: 0;
+    	margin: 0;
 	text-decoration:none;
 	}
 
@@ -322,7 +328,7 @@ label{
 	height:40px;
 	width:170px; 
 	border:0 none; 
-	margin-top:60px;
+	margin-top:30px;
 	}
 	
 .button:hover{
@@ -347,7 +353,8 @@ label{
 	width:860px;
 	height:500px;
 	left:100px;
-	padding-left:2em;
+	padding-left:30px;
+	padding-top:20px;
 	border:solid;
 	border-width:1px;
 	border-color:#CFD7EB;
@@ -357,29 +364,40 @@ label{
 
 #RegisterForm .firstname{
 	width:300px;
-	height:30px;
+	height:36px;
+	border-radius:5px;
+	border-width:1px;
+	display:block;
 	}
 
 #RegisterForm .lastname{
 	width:300px;
-	height:30px;
+	height:36px;
+	border-radius:5px;
+	border-width:1px;
+	display:block;
 	}
 
 #RegisterForm .email{
 	width:300px;
-	height:30px;
+	height:36px;
+	border-radius:5px;
+	border-width:1px;
+	display:block;
 	}
 
 #RegisterForm .password{
 	width:300px;
-	height:30px;
+	height:36px;
+	border-radius:5px;
+	border-width:1px;
+	display:block;
 	}		
 
 #RegisterForm .Registerlabel{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:10px;
-	color:#333;
-	padding-top:20px;
+	color:#666;
 }
 
 
