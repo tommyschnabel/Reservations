@@ -141,7 +141,7 @@ ul{
 	left:15%;
 	top:20px;
 	width: 900px;
-	height: 480px;
+	height:500px;
 	}
 
 .title{
@@ -775,22 +775,7 @@ td{
 .flightsummary_table_title{
 	display:block;}
 
-
-.button{ 
-	background:#3c445e; 
-	color:#fff; 
-	font-weight:700;
-	cursor:pointer; 
-	border-radius:5px;
-	height:40px;
-	width:170px; 
-	border:0 none; 
-	margin-top:60px;
-	margin-left:20px;
-	}
 	
-.button:hover{
-	background:#F59738;}	
 
 .clear{
 	margin:0px;
@@ -823,12 +808,18 @@ td{
 	margin-left:20px;}	
 		
 	
-/*#footer { 
+footer { 
+    display:block;
+    margin-top:10px;
 	height:30px; 
 	background:#ffffff;
+	text-align:center;
 	}
-*/	
-
+	
+.footerlabel{
+	color:#ccc;
+	font-size:10px;
+}
 
 
 
