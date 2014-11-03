@@ -113,8 +113,8 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                     method: 'POST',
                     data: {
                         searchType: 'Date',
-                        startCity: $scope.flightFrom,
-                        endCity: $scope.flightTo,
+                        startCity: $scope.flightFrom.replace(' ', ''),
+                        endCity: $scope.flightTo.replace(' ', ''),
                         startDate: startDate,
                         endDate: endDate
                     },
@@ -297,9 +297,11 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                         seatClass: $scope.getSeatClass(reservation.class)
                     }
                 }).then(function(response) {
-                    if (response.status < 200 && response.status > 299) {
+                    if (response.status < 200 || response.status > 299) {
                         $rootScope.errorMessages.push(response);
                     } else {
+                        $rootScope.searchResults = [];
+
                         switch($scope.destination) {
                             case 'Atlanta':
                                 $location.path('/atlanta');
@@ -471,8 +473,7 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
                 columnDefs: [
                     {
                         field: 'flight.viewableDate',
-                        displayName: 'Date',
-                        width: '**'
+                        displayName: 'Date'
                     },
                     {
                         field: 'flight.startingCity',
