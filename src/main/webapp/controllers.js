@@ -185,12 +185,17 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                 item.viewableDate = viewableDate;
             };
 
+            $rootScope.setViewablePrice = function(item) {
+                item.viewablePrice = $filter('currency')(item.economyPrice);
+                item.viewablePrice += ' / ';
+                item.viewablePrice = $filter('currency')(item.firstClassPrice);
+            };
+
             angular.forEach($scope.searchResults.data, function(item) {
                 $scope.setViewableDate(item);
+                $scope.setViewablePrice(item);
 
                 item.class = 'Economy';
-
-                item.viewablePrice = $filter('currency')(item.price);
             });
 
             $scope.resultsGridOptions = {
@@ -216,15 +221,16 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                     },
                     {
                         field: 'viewablePrice',
-                        displayName: 'Price'
-                    },
-                    {
-                        field: 'seatsInFirstClass',
-                        displayName: 'Seats In First Class'
+                        displayName: 'Price (Economy/First Class)',
+                        width: '**'
                     },
                     {
                         field: 'seatsInEconomy',
-                        displayName: 'Seats In Economy'
+                        displayName: 'Seats (Economy)'
+                    },
+                    {
+                        field: 'seatsInFirstClass',
+                        displayName: 'Seats (First Class)'
                     }
                 ]
             };
@@ -263,7 +269,7 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                     displayName: 'Airline'
                 },
                 {
-                    field: 'viewablePrice',
+                    field: 'price',
                     displayName: 'Price'
                 },
                 {
@@ -275,6 +281,18 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                 }
             ]
         };
+
+        angular.forEach($scope.reservations, function(reservation) {
+            //Set the initial price
+            reservation.price = reservation.class.toLowerCase().search('economy') ? reservation.economyPrice : reservation.firstClassPrice;
+
+            //Set a listener to watch for change in the seat class
+            $scope.$watch(reservation.class, function() {
+
+                //Update the price to reflect the correct price for that seat class
+                reservation.price = reservation.class.toLowerCase().search('economy') ? reservation.economyPrice : reservation.firstClassPrice;
+            });
+        });
 
         $scope.getSeatClass = function(seatClass) {
             if (seatClass.toLowerCase().search('economy')) {
