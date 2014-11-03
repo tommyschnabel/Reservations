@@ -628,16 +628,7 @@ h4{
 	width:10px;
 	color:#666;
 	}	
-	
-.suggestion{
-	position:absolute;
-	border-style:dashed;
-	border-color:#CCC;
-	width:154px;
-	height:348px;
-	left: 1074px;
-	top: 280px;
-}	
+		
 
 /*passengerinformation*/	
 .wrap5{
@@ -822,4 +813,94 @@ footer {
 }
 
 
+/*Suggestions: */
+.wrap9{
+	width:100%;
+	height:1200px;
+	}
+	
+.suggestion{
+	display:block;
+	width:100%;
+	}
+	
+.SuggestionTitle1{
+	padding-left:100px;
+	padding-top:10px;
+	padding-bottom:20px;
+	font:Verdana, Geneva, sans-serif;
+	color: #3c445e;
+	font-size:20px;
+	font-weight:bolder;}	
+	
+.SuggestionTitle2{
+	padding-left:100px;
+	font:Verdana, Geneva, sans-serif;
+	color:#949BA7;
+	font-size:20px;
+	font-weight:bolder;}
+	
+.suggestionInner{
+	margin:0 auto;
+	padding-top:20px;
+	padding-left:120px;
+	text-align:center;
+	width:100%;
+	height:320px;
+	}	
+	
+.HotelInfo{
+	background-color:#FFF;
+	display:inline-block;
+	width:260px;
+	height:280px;
+	float:left;
+	margin-right:30px;
+	margin-bottom:40px;
+	overflow:hidden;
+	text-align:left;
+	}	
 
+.namewrap{
+	background-color:#999966;
+	height:30px;
+	font-size:16px;
+	font-weight:bold;
+	color:#FFF;
+	text-align:center;
+	padding-top:10px;}
+	
+
+.img{
+	text-align:center;
+	width:260px;
+	height:200px;
+	}
+
+.price{
+	width:260px;
+	height:40px;}
+
+.rate{
+	background:#F3F3F3;
+	padding-left:10px;
+	float:left;}
+	 
+.price_title{
+	float:left;
+	background-color:#F3F3F3;
+	width:160px;
+	height:30px;
+	padding-top:10px;
+	padding-left:10px;}
+	
+.price_title a{
+	color: #3c445e;
+    margin: 0;
+	text-decoration:none;}
+	
+.price_title a:hover{
+	color:#6C84C1;
+    margin: 0;
+	text-decoration:underline;
+	}	
