@@ -146,7 +146,8 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                 $scope.searchResults = { data: [] };
             }
 
-            $scope.setViewableDate = function(item) {
+            //Put it in $rootScope so we can reuse it
+            $rootScope.setViewableDate = function(item) {
                 var originalDate = item.date,
                     viewableDate = '',
                     temp,
@@ -187,9 +188,9 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
             angular.forEach($scope.searchResults.data, function(item) {
                 $scope.setViewableDate(item);
 
-                //Couldn't get $filter working, may fix for release 2
-//                $filter('Currency')(item.price);
                 item.class = 'Economy';
+
+                item.viewablePrice = $filter('currency')(item.price);
             });
 
             $scope.resultsGridOptions = {
@@ -214,7 +215,7 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                         displayName: 'Airline'
                     },
                     {
-                        field: 'price',
+                        field: 'viewablePrice',
                         displayName: 'Price'
                     },
                     {
@@ -262,7 +263,7 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                     displayName: 'Airline'
                 },
                 {
-                    field: 'price',
+                    field: 'viewablePrice',
                     displayName: 'Price'
                 },
                 {
@@ -275,15 +276,15 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
             ]
         };
 
-        function getSeatClass(seatClass) {
-            if (seatClass.toLowerCase().contains('economy')) {
+        $scope.getSeatClass = function(seatClass) {
+            if (seatClass.toLowerCase().search('economy')) {
                 return 'Economy';
-            } else if (seatClass.toLowerCase().contains('first')) {
+            } else if (seatClass.toLowerCase().search('first')) {
                 return 'FirstClass';
             } else {
                 return 'unknown class';
             }
-        }
+        };
 
         $scope.confirm = function() {
             angular.forEach($scope.reservations, function(reservation) {
@@ -293,7 +294,7 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                     data: {
                         flightId: reservation.id,
                         userId: $rootScope.user.id,
-                        seatClass: getSeatClass(reservation.class)
+                        seatClass: $scope.getSeatClass(reservation.class)
                     }
                 }).then(function(response) {
                     if (response.status < 200 && response.status > 299) {
@@ -429,44 +430,6 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
             if (!$rootScope.user) {
                 $location.path('/home');
             }
-
-            $scope.setViewableDate = function(item) {
-                var originalDate = item.date,
-                    viewableDate = '',
-                    temp,
-                    timeOfDay = 'AM';
-
-                //Month
-                viewableDate += originalDate[4];
-                viewableDate += originalDate[5];
-                viewableDate += '/';
-                //Day
-                viewableDate += originalDate[6];
-                viewableDate += originalDate[7];
-                viewableDate += '/';
-                //Year
-                viewableDate += originalDate[0];
-                viewableDate += originalDate[1];
-                viewableDate += originalDate[2];
-                viewableDate += originalDate[3];
-                viewableDate += ' ';
-
-                //Hour
-                temp = originalDate[8] + originalDate[9];
-                if (temp > 12) {
-                    temp -= 12;
-                    timeOfDay = 'PM';
-                }
-                viewableDate += temp;
-                viewableDate += ':';
-
-                //Minute
-                viewableDate += originalDate[10];
-                viewableDate += originalDate[11];
-                viewableDate += timeOfDay;
-
-                item.viewableDate = viewableDate;
-            };
 
             $scope.loadReservations = function() {
                 //Get the reservations for the user that's logged in
