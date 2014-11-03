@@ -276,15 +276,15 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
             ]
         };
 
-        function getSeatClass(seatClass) {
-            if (seatClass.toLowerCase().contains('economy')) {
+        $scope.getSeatClass = function(seatClass) {
+            if (seatClass.toLowerCase().search('economy')) {
                 return 'Economy';
-            } else if (seatClass.toLowerCase().contains('first')) {
+            } else if (seatClass.toLowerCase().search('first')) {
                 return 'FirstClass';
             } else {
                 return 'unknown class';
             }
-        }
+        };
 
         $scope.confirm = function() {
             angular.forEach($scope.reservations, function(reservation) {
@@ -294,7 +294,7 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                     data: {
                         flightId: reservation.id,
                         userId: $rootScope.user.id,
-                        seatClass: getSeatClass(reservation.class)
+                        seatClass: $scope.getSeatClass(reservation.class)
                     }
                 }).then(function(response) {
                     if (response.status < 200 && response.status > 299) {
