@@ -150,7 +150,7 @@ public class DemoDatabaseBuilder {
 								Flight testFlight = new Flight(count,
 										"20150"+(k%13)+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
-										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
+										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
 								{
 									flights.add(testFlight);
@@ -161,7 +161,7 @@ public class DemoDatabaseBuilder {
 									Flight testFlight = new Flight(count,
 											"20150"+(k%12)+i+times.get((j/3)%4),
 											airline.get(j%3), locations.get(rand.nextInt(5)), 
-											locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
+											locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
 									if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
 									{
 										flights.add(testFlight);
@@ -175,7 +175,7 @@ public class DemoDatabaseBuilder {
 								Flight testFlight = new Flight(count,
 										"2014"+(k%13)+"0"+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
-										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
+										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
 								{
 									flights.add(testFlight);
@@ -186,7 +186,7 @@ public class DemoDatabaseBuilder {
 								Flight testFlight = new Flight(count,
 										"2014"+(k%13)+i+times.get((j/3)%4),
 										airline.get(j%3), locations.get(rand.nextInt(5)), 
-										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f);
+										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
 								{
 									flights.add(testFlight);
@@ -208,7 +208,8 @@ public class DemoDatabaseBuilder {
 								   	   resultFlight.getStartingCity()+" "+
 								   	   resultFlight.getDestination()+" "+
 								   	   resultFlight.getDistance()+" "+
-								   	   resultFlight.getPrice()+" "+
+								   	   resultFlight.getEconomyPrice()+" "+
+								   	   resultFlight.getFirstClassPrice()+" "+
 								   	   resultFlight.getSeatsInFirstClass()+" "+
 								   	   resultFlight.getSeatsInEconomy());
 				}
