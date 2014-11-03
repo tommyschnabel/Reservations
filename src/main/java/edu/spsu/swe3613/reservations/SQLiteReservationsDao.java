@@ -124,27 +124,21 @@ private Connection connection;
 		statement.executeUpdate(query);
 		statement.close();		
 	}
-
-	/*
-	I don't know if anybody needs the GregorianCalendar type in particular. To be safe, these methods
-	for Flight are implemented in such a way that a Flight object contains the date and time as
-	GregorianCalendar, and the DB field contains a String in the format of "01/02/03 01:00 PM".
-	If having access to the String type is more convenient, I can easily change it.
-	*/
+	
 	@Override
 	public List<Flight> getAllFlights() throws SQLException, ParseException {
 		List<Flight> flights = new ArrayList<Flight>();
 		String query = 	"SELECT"
-				+		"	Flight.ID				id,"
-				+ 		"	Flight.Date				date,"
-				+		"	Flight.AirlineName		airline,"
-				+		"	Flight.StartLocation	start,"
-				+ 		"	Flight.Destination		end,"
-				+ 		"	Flight.Mileage			distance,"
+				+		"	Flight.ID					id,"
+				+ 		"	Flight.Date					date,"
+				+		"	Flight.AirlineName			airline,"
+				+		"	Flight.StartLocation		start,"
+				+ 		"	Flight.Destination			end,"
+				+ 		"	Flight.Mileage				distance,"
 				+ 		"	Flight.RemainingFirstClass	firstClass,"
-				+ 		"	Flight.RemainingEconomy	economy,"
-				+ 		"	Flight.Price			price"
-				
+				+ 		"	Flight.RemainingEconomy		economy,"
+				+ 		"	Flight.EconomyPrice			economyPrice,"
+				+ 		"	Flight.FirstClassPrice		firstClassPrice"
 				+		"  FROM Flight";
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query);
@@ -160,7 +154,8 @@ private Connection connection;
                                    rs.getFloat("distance"),
                                    rs.getInt("firstClass"),
 					               rs.getInt("economy"),
-                                   rs.getFloat("price")));
+					               rs.getFloat("economyPrice"),
+                                   rs.getFloat("firstClassPrice")));
 		}
 		statement.close();
 		return flights;		
@@ -170,15 +165,16 @@ private Connection connection;
 	public Flight getFlightById(int flightId) throws SQLException, ParseException {
 		
 		String query =  "SELECT"
-				+		"	Flight.ID				id,"
-				+ 		"	Flight.Date				date,"
-				+		"	Flight.AirlineName		airline,"
-				+		"	Flight.StartLocation	start,"
-				+ 		"	Flight.Destination		end,"
-				+ 		"	Flight.Mileage			distance,"
+				+		"	Flight.ID					id,"
+				+ 		"	Flight.Date					date,"
+				+		"	Flight.AirlineName			airline,"
+				+		"	Flight.StartLocation		start,"
+				+ 		"	Flight.Destination			end,"
+				+ 		"	Flight.Mileage				distance,"
 				+ 		"	Flight.RemainingFirstClass	firstClass,"
-				+ 		"	Flight.RemainingEconomy	economy,"
-				+ 		"	Flight.Price			price"
+				+ 		"	Flight.RemainingEconomy		economy,"
+				+ 		"	Flight.EconomyPrice			economyPrice,"
+				+ 		"	Flight.FirstClassPrice		firstClassPrice"
 				
 				+		"  FROM Flight"
 				+	    " WHERE ID = "+flightId;
@@ -188,14 +184,15 @@ private Connection connection;
 		ResultSet rs = statement.executeQuery(query);
 		
 		Flight resultFlight = new Flight(rs.getInt("id"),
-                                         rs.getString("date"),
-                                         Airline.valueOf(rs.getString("airline")),
-                                         City.valueOf(rs.getString("start").replace(" ", "")),
+										 rs.getString("date"),
+										 Airline.valueOf(rs.getString("airline")),
+										 City.valueOf(rs.getString("start").replace(" ", "")),
 										 City.valueOf(rs.getString("end").replace(" ", "")),
-                                         rs.getFloat("distance"),
-                                         rs.getInt("firstClass"),
+										 rs.getFloat("distance"),
+										 rs.getInt("firstClass"),
 										 rs.getInt("economy"),
-                                         rs.getFloat("price"));
+										 rs.getFloat("economyPrice"),
+										 rs.getFloat("firstClassPrice"));
 		statement.close();
 		return resultFlight;
 	}
@@ -214,18 +211,19 @@ private Connection connection;
 		float distance =getDistance(flight.getStartingCity().toString(),flight.getDestination().toString());
 		flight.setDistance(distance);
 		float pricetotal = getPrice(time)*distance;
-		flight.setPrice(pricetotal);		
+		flight.setEconomyPrice(pricetotal);
+		flight.setFirstClassPrice(pricetotal*1.3f);
 			
 		String query = 	"INSERT	INTO Flight "
-				+		"(Date, AirlineName, StartLocation, Destination, Mileage, Price)" 
+				+		"(Date, AirlineName, StartLocation, Destination, Mileage, EconomyPrice, FirstClassPrice)" 
 				+		" VALUES("
 				+	"'"+flight.getDate()+"'"		+	"," 
 				+	"'"+flight.getAirline()+"'"		+	","
 				+	"'"+flight.getStartingCity()+"'"+	","
 				+	"'"+flight.getDestination()+"'" +	","
-
 				+	    flight.getDistance()    	+	","
-				+	    flight.getPrice()   		+	")";
+				+	    flight.getEconomyPrice()   	+	","
+				+		flight.getFirstClassPrice() +	")";
 		String query2 = " SELECT * FROM Flight WHERE "
 				+ 		" (Date='"+flight.getDate()+"' AND AirlineName='"+flight.getAirline()+"' AND "
 						+ "StartLocation='"+flight.getStartingCity()+"' AND Destination='"+flight.getDestination()+"')";
@@ -240,7 +238,8 @@ private Connection connection;
                                          rs.getFloat(6),
                                          rs.getInt(7),
 				                         rs.getInt(8),
-                                         rs.getFloat(9));
+                                         rs.getFloat(9),
+                                         rs.getFloat(10));
 		statement.close();
 		return resultFlight;
 	}
@@ -249,12 +248,13 @@ private Connection connection;
 	public void updateFlight(Flight flight) throws SQLException {
 		String query = 	"UPDATE Flight"
 				+		" SET"
-						+ 	" Date="		+	"'"+flight.getDate()+"'"		+	","
-						+ 	" AirlineName="	+	"'"+flight.getAirline()+"'"		+	","
-						+	" StartLocation=" +	"'"+flight.getStartingCity()+"'"+	","
-						+ 	" Destination="	+	"'"+flight.getDestination()+"'"	+	","
-						+	" Mileage="		+	"'"+flight.getDistance()+"'"	+	","
-						+	" Price="		+	"'"+flight.getPrice()+"'"		
+						+" Date="			+	"'"+flight.getDate()+"'"		+	","
+						+" AirlineName="	+	"'"+flight.getAirline()+"'"		+	","
+						+" StartLocation=" 	+	"'"+flight.getStartingCity()+"'"+	","
+						+" Destination="	+	"'"+flight.getDestination()+"'"	+	","
+						+" Mileage="		+	   	flight.getDistance()		+	","
+						+" EconomyPrice="	+		flight.getEconomyPrice()	+	","
+						+" FirstClassPrice="+		flight.getFirstClassPrice()
 				+	"WHERE ID="	+ 	flight.getId();
 		
 		Statement statement = connection.createStatement();

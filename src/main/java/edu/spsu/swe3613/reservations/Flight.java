@@ -4,7 +4,8 @@ public class Flight {
 	private int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
 	private String date; //Format YYYYMMddHHmm
 	
-	private float price;
+	private float economyPrice;
+	private float firstClassPrice;
     private float distance;
 	private City destination;
 	private City startingCity;
@@ -17,13 +18,15 @@ public class Flight {
                   Airline airline,
                   City start,
                   City end,
-                  Float distance,
+                  float distance,
                   int seatsInFirstClass,
                   int seatsInEconomy,
-                  float price) {
+                  float economyPrice,
+                  float firstClassPrice) {
 		this.id = id;
 		this.date = date; //Date and time are now saved together.
-		this.price = price;
+		this.setEconomyPrice(economyPrice);
+		this.setFirstClassPrice(firstClassPrice);
 		this.destination = end;
 		this.startingCity = start;
         this.distance = distance;
@@ -44,15 +47,23 @@ public class Flight {
         this.date = date;
     }
 
-    public float getPrice() {
-        return price;
-    }
+    public float getEconomyPrice() {
+		return economyPrice;
+	}
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
+	public void setEconomyPrice(float economyPrice) {
+		this.economyPrice = economyPrice;
+	}
 
-    public float getDistance() {
+	public float getFirstClassPrice() {
+		return firstClassPrice;
+	}
+
+	public void setFirstClassPrice(float firstClassPrice) {
+		this.firstClassPrice = firstClassPrice;
+	}
+
+	public float getDistance() {
         return distance;
     }
 

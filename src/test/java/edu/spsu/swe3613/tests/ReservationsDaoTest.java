@@ -37,7 +37,7 @@ public class ReservationsDaoTest {
 	@Before
 	public void setUpBefore() throws Exception{
 
-        flight = new Flight(1,"201410010900",Airline.Delta,City.Atlanta,City.Dallas, 5f,10,10,45.00f);
+        flight = new Flight(1,"201410010900",Airline.Delta,City.Atlanta,City.Dallas, 5f,10,10,45.00f, 58.5f);
         reservation = new Reservation(1,1,1, SeatClass.FirstClass);
 		
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
@@ -48,27 +48,56 @@ public class ReservationsDaoTest {
 		//Flight
 		statement.executeUpdate("drop table if exists Flight");
 		statement.executeUpdate("create table Flight"
-				+ "(ID integer primary key,Date text,AirlineName text,StartLocation text,Destination text,Mileage numeric default 0, "
-				+ "RemainingFirstClass integer default 30,RemainingEconomy integer default 70, Price numeric default 0)");
+														+ "(ID integer primary key,"
+														+ "Date text,"
+														+ "AirlineName text,"
+														+ "StartLocation text,"
+														+ "Destination text,"
+														+ "Mileage numeric default 0,"
+														+ "RemainingFirstClass integer default 30,"
+														+ "RemainingEconomy integer default 70, "
+														+ "EconomyPrice numeric default 0,"
+														+ "FirstClassPrice numeric default 0)");
 		//Mileage
 		statement.executeUpdate("drop table if exists Mileage");
 		statement.executeUpdate("create table Mileage"
-				+ "(ID integer primary key, LocationA text, LocationB text, Distance numeric)");
-		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance) values ('Atlanta','Chicago',586),('Atlanta','Dallas',721),('Atlanta','NewYork',746),"
-				+ "('Atlanta','SanFrancisco',2140),('Chicago','Dallas',802),('Chicago','NewYork',714),('Chicago','SanFrancisco',1858),"
-				+ "('Dallas','NewYork',1373),('Dallas','SanFrancisco',1483),('NewYork','SanFrancisco',2572)");
+														+ "(ID integer primary key, "
+														+ "LocationA text, "
+														+ "LocationB text, "
+														+ "Distance numeric)");
+		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance) values "
+														+ "('Atlanta','Chicago',586),"
+														+ "('Atlanta','Dallas',721),"
+														+ "('Atlanta','NewYork',746),"
+														+ "('Atlanta','SanFrancisco',2140),"
+														+ "('Chicago','Dallas',802),"
+														+ "('Chicago','NewYork',714),"
+														+ "('Chicago','SanFrancisco',1858),"
+														+ "('Dallas','NewYork',1373),"
+														+ "('Dallas','SanFrancisco',1483),"
+														+ "('NewYork','SanFrancisco',2572)");
 		//Price
 		statement.executeUpdate("drop table if exists Price");
 		statement.executeUpdate("create table Price (Time text primary key, PriceRate numeric)");
 		statement.executeUpdate("insert into Price values"
-				+ 				" ('0900',1.15),('1300',1.5),('1700',1),('2000',.85)");
+														+ "('0900',1.15),"
+														+ "('1300',1.5),"
+														+ "('1700',1),"
+														+ "('2000',.85)");
 		//Reservation
 		statement.executeUpdate("drop table if exists Reservation");
-		statement.executeUpdate("create table Reservation (ID integer primary key, CustomerID integer, FlightID integer, FlightClass text)");
+		statement.executeUpdate("create table Reservation"
+														+ "(ID integer primary key, "
+														+ "CustomerID integer, "
+														+ "FlightID integer, "
+														+ "FlightClass text)");
 		//Airline
 		statement.executeUpdate("drop table if exists Airline");
 		statement.executeUpdate("create table Airline (Name text primary key, Information text)");
-		statement.executeUpdate("insert into Airline values ('Delta','test description'),('Southwest','test description'),('American','test description')");
+		statement.executeUpdate("insert into Airline values "
+														+ "('Delta','test description'),"
+														+ "('Southwest','test description'),"
+														+ "('American','test description')");
 		//AirlineAdmin
 		statement.executeUpdate("drop table if exists AirlineAdmin");
 		statement.executeUpdate("create table AirlineAdmin (ID text primary key, Airline text, Password text)");
@@ -142,7 +171,8 @@ public class ReservationsDaoTest {
 			float distance = testDao.getDistance(City.SanFrancisco.toString(),City.NewYork.toString());
 			float priceRate = testDao.getPrice(time);
             flight.setDistance(distance);
-            flight.setPrice(distance*priceRate);
+            flight.setEconomyPrice(distance*priceRate);
+            flight.setFirstClassPrice(distance*priceRate*1.3f);
 			testDao.updateFlight(flight);
             Flight updatedFlight = testDao.getFlightById(flight.getId());
             if(!Objects.equal(updatedFlight.getId(), flight.getId())
@@ -331,22 +361,4 @@ public class ReservationsDaoTest {
 			fail(e.getMessage());
 		}
 	}
-
-//    Commented out since refactoring of Airline turned it into an enum
-//	@Test
-//	public void testGetAirline(){
-//		try{
-//			Airline testAirline = testAdminDao.getAirline(airline.getName());
-//			if(!airline.getName().equals(testAirline.getName())
-//			|| !airline.getInfo().equals(testAirline.getInfo()))
-//				fail();
-//		}
-//		catch (SQLException e){
-//			fail();
-//		}
-//	}
-	
-
-
-
 }
