@@ -20,6 +20,21 @@ angular.module('reservationsApp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'reserva
                 }).when('/reservationConfirm', {
                     templateUrl: 'templates/reservation.html',
                     controller: 'reservationConfirmController'
+                }).when('/atlanta', {
+                    templateUrl: 'templates/Suggestion_Atlanta.html',
+                    controller: 'suggestionController'
+                }).when('/dallas', {
+                    templateUrl: 'templates/Suggestion_Dallas.html',
+                    controller: 'suggestionController'
+                }).when('/sanFrancisco', {
+                    templateUrl: 'templates/Suggestion_SanFrancisco.html',
+                    controller: 'suggestionController'
+                }).when('/newYork', {
+                    templateUrl: 'templates/Suggestion_NewYork.html',
+                    controller: 'suggestionController'
+                }).when('/chicago', {
+                    templateUrl: 'templates/Suggestion_Chicago.html',
+                    controller: 'suggestionController'
                 }).when('/test', {
                     templateUrl: 'templates/test.html',
                     controller: 'testController'

@@ -54,6 +54,9 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 var startDate = '',
                     endDate = '';
 
+                //We'll use this to decide which suggestions page to show
+                $rootScope.destination = $scope.flightTo;
+
                 //Validate cities aren't the same
                 if ($scope.flightFrom === $scope.flightTo) {
                     $rootScope.errorMessages.push('You cannot fly to the same city you are departing from');
@@ -293,10 +296,26 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                         seatClass: getSeatClass(reservation.class)
                     }
                 }).then(function(response) {
-                    if (response.status !== 200) {
+                    if (response.status < 200 && response.status > 299) {
                         $rootScope.errorMessages.push(response);
                     } else {
-                        $location.path('#/account');
+                        switch($scope.destination) {
+                            case 'Atlanta':
+                                $location.path('/atlanta');
+                                break;
+                            case 'Chicago':
+                                $location.path('/chicago');
+                                break;
+                            case 'Dallas':
+                                $location.path('/dallas');
+                                break;
+                            case 'New York':
+                                $location.path('/newYork');
+                                break;
+                            case 'San Francisco':
+                                $location.path('/sanFrancisco');
+                                break;
+                        }
                     }
                 }).catch(function(response) {
                     $rootScope.errorMessages = response;
@@ -535,6 +554,12 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
         }
     ]
 );
+
+controllers.controller('suggestionController', ['$scope',
+    function ($scope) {
+
+    }
+]);
 
 
 //TEST CONTROLLER
