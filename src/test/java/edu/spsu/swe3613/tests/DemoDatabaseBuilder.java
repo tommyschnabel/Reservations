@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +46,8 @@ public class DemoDatabaseBuilder {
 														+ "Mileage numeric default 0, "
 														+ "RemainingFirstClass integer default 30,"
 														+ "RemainingEconomy integer default 70, "
-														+ "Price numeric default 0)");
+														+ "EconomyPrice numeric default 0,"
+														+ "FirstClassPrice numeric default 0)");
 		//Mileage
 		statement.executeUpdate("drop table if exists Mileage");
 		statement.executeUpdate("create table Mileage"
@@ -71,7 +74,7 @@ public class DemoDatabaseBuilder {
 														+ "('0900',1.15),"
 														+ "('1300',1.5),"
 														+ "('1700',1),"
-														+ "('2000',.85)");
+														+ "('2100',.85)");
 		//Reservation
 		statement.executeUpdate("drop table if exists Reservation");
 		statement.executeUpdate("create table Reservation (ID integer primary key, CustomerID integer, FlightID integer, FlightClass text)");
@@ -127,75 +130,40 @@ public class DemoDatabaseBuilder {
 	}
 		
 	@Test
-	public void generateFlights() throws Exception{
-		
+	public void generateFlights(){
 		try{
-			
 			List<Flight> flights = new ArrayList<Flight>();
 			List<City> locations=new ArrayList<City>(
 					Arrays.asList(City.Atlanta,City.Chicago,City.NewYork,City.Dallas,City.SanFrancisco));
 			List<String> times = new ArrayList<String>(
-					Arrays.asList("0900","1300","1700","2000"));
+					Arrays.asList("0900","1300","1700","2100"));
 			List<Airline> airline = new ArrayList<Airline>(
 					Arrays.asList(Airline.Delta, Airline.Southwest, Airline.American));
 			Random rand = new Random();
 			int count = 1;
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+			String s = "20141001";
+			String e = "20150430";
+			LocalDate start = LocalDate.parse(s,formatter);
+			LocalDate end = LocalDate.parse(e,formatter);
 			
-			for(int k=10;k<17;k++)//months
-				for(int i=1;i<31;i++)//days
-					for(int j=0;j<17;j++)//flights per day
+			while(!start.isAfter(end)){
+				for(int j=0;j<17;j++)//flights per day
 					{
-						if((k%13)<10 && (k%13)!=0){
-							if(i<10){
-								Flight testFlight = new Flight(count,
-										"20150"+(k%13)+"0"+i+times.get((j/3)%4),
-										airline.get(j%3), locations.get(rand.nextInt(5)), 
-										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
+						Flight testFlight = new Flight(count,
+													   start.format(formatter)+times.get((j/3)%4),
+													   airline.get(j%3), 
+													   locations.get(rand.nextInt(5)), 
+													   locations.get((rand.nextInt(4)*j)%5),
+													   0.0f,0,0,0.0f,0.0f);
 								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
 								{
 									flights.add(testFlight);
 									count++;
-								}
-								}
-								else{
-									Flight testFlight = new Flight(count,
-											"20150"+(k%12)+i+times.get((j/3)%4),
-											airline.get(j%3), locations.get(rand.nextInt(5)), 
-											locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
-									if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
-									{
-										flights.add(testFlight);
-										count++;
-									}
-									
-								}
-						}
-						else if((k%13) !=0){
-							if(i<10){
-								Flight testFlight = new Flight(count,
-										"2014"+(k%13)+"0"+i+times.get((j/3)%4),
-										airline.get(j%3), locations.get(rand.nextInt(5)), 
-										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
-								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
-								{
-									flights.add(testFlight);
-									count++;
-								}
-							}
-							else{
-								Flight testFlight = new Flight(count,
-										"2014"+(k%13)+i+times.get((j/3)%4),
-										airline.get(j%3), locations.get(rand.nextInt(5)), 
-										locations.get((rand.nextInt(4)*j)%5),0.0f,0,0,0.0f,0.0f);
-								if (!testFlight.getStartingCity().equals(testFlight.getDestination()))
-								{
-									flights.add(testFlight);
-									count++;
-								}
-								
-							}
-						}
+								}		
 					}
+				start = start.plusDays(1);
+			}
 				for (int i=0;i<flights.size();i++)
 				{
 					testDao.addFlight(flights.get(i));
