@@ -869,6 +869,12 @@ footer {
 	color:#FFF;
 	text-align:center;
 	padding-top:10px;}
+
+#namewrap1{
+	font-size:14px;}
+	
+#namewrap2{
+	font-size:12px;}
 	
 
 .img{
@@ -904,3 +910,21 @@ footer {
     margin: 0;
 	text-decoration:underline;
 	}	
+
+.price_title1{
+	background-color:#F3F3F3;
+	width:260px;
+	height:30px;
+	padding-top:10px;
+	text-align:center;}
+			
+.price_title1 a{
+	color: #3c445e;
+    margin: 0;
+	text-decoration:none;}
+
+.price_title1 a:hover{
+	color:#6C84C1;
+    margin: 0;
+	text-decoration:underline;
+	}
