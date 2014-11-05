@@ -1,6 +1,6 @@
 <div class="priceConfirmColumn">
-  <span ng-bind="reservations[row.rowIndex].economyPrice | currency"
-        ng-show="reservations[row.rowIndex].class != 'First Class'"></span>
-  <span ng-bind="reservations[row.rowIndex].firstClassPrice | currency"
-        ng-show="reservations[row.rowIndex].class != 'Economy'"></span>
+  <span ng-bind="row.entity.economyPrice | currency"
+        ng-show="row.entity.class != 'First Class'"></span>
+  <span ng-bind="row.entity.firstClassPrice | currency"
+        ng-show="row.entity.class != 'Economy'"></span>
 </div>
