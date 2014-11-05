@@ -205,32 +205,38 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                 columnDefs: [
                     {
                         field: 'viewableDate',
-                        displayName: 'Date'
+                        displayName: 'Date',
+                        width: '**'
                     },
                     {
                         field: 'startingCity',
-                        displayName: 'Starting City'
+                        displayName: 'Starting City',
+                        width: '**'
                     },
                     {
                         field: 'destination',
-                        displayName: 'Destination'
+                        displayName: 'Destination',
+                        width: '**'
                     },
                     {
                         field: 'airline',
-                        displayName: 'Airline'
+                        displayName: 'Airline',
+                        width: '*'
                     },
                     {
                         field: 'viewablePrice',
                         displayName: 'Price (Economy/First Class)',
-                        width: '**'
+                        width: '***'
                     },
                     {
                         field: 'seatsInEconomy',
-                        displayName: 'Seats (Economy)'
+                        displayName: 'Seats (Economy)',
+                        width: '**'
                     },
                     {
                         field: 'seatsInFirstClass',
-                        displayName: 'Seats (First Class)'
+                        displayName: 'Seats (First Class)',
+                        width: '**'
                     }
                 ]
             };
