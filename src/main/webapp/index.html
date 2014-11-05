@@ -43,8 +43,8 @@
 	  <div class="nav">
          <ul>
 			<li><a href="#/home">SEARCH</a></li>
-            <li ng-show="$root.searchResults">|</li>
-            <li><a href="#/searchResults" ng-show="$root.searchResults">SEARCH RESULTS</a></li>
+            <li ng-show="$root.searchResults.data">|</li>
+            <li><a href="#/searchResults" ng-show="$root.searchResults.data">SEARCH RESULTS</a></li>
             <li ng-show="$root.user">|</li>
 			<li><a href="#/account" ng-show="$root.user"> MY ACCOUNT</a></li>
 	     </ul>

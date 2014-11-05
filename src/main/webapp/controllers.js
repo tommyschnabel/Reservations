@@ -313,7 +313,7 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                     if (response.status < 200 || response.status > 299) {
                         $rootScope.errorMessages.push(response);
                     } else {
-                        $rootScope.searchResults = [];
+                        $rootScope.searchResults.data = [];
 
                         switch($scope.destination) {
                             case 'Atlanta':
@@ -450,10 +450,10 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
                         $location.path('#/home');
 
                     }).catch(function(error) {
-                        $rootScope.errorMessages = error;
+                        $rootScope.errorMessages.push(error);
                     });
                 }).catch(function(error) {
-                    $rootScope.errorMessages = error;
+                    $rootScope.errorMessages.push(error);
                 });
             };
   		}
