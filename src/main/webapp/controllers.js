@@ -188,7 +188,7 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
             $rootScope.setViewablePrice = function(item) {
                 item.viewablePrice = $filter('currency')(item.economyPrice);
                 item.viewablePrice += ' / ';
-                item.viewablePrice = $filter('currency')(item.firstClassPrice);
+                item.viewablePrice += $filter('currency')(item.firstClassPrice);
             };
 
             angular.forEach($scope.searchResults.data, function(item) {
@@ -270,7 +270,8 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                 },
                 {
                     field: 'price',
-                    displayName: 'Price'
+                    displayName: 'Price',
+                    cellTemplate: 'templates/priceConfirmColumn.html'
                 },
                 {
                     field: 'class',
@@ -281,18 +282,6 @@ controllers.controller('reservationConfirmController', ['$scope', '$http', '$loc
                 }
             ]
         };
-
-        angular.forEach($scope.reservations, function(reservation) {
-            //Set the initial price
-            reservation.price = reservation.class.toLowerCase().search('economy') ? reservation.economyPrice : reservation.firstClassPrice;
-
-            //Set a listener to watch for change in the seat class
-            $scope.$watch(reservation.class, function() {
-
-                //Update the price to reflect the correct price for that seat class
-                reservation.price = reservation.class.toLowerCase().search('economy') ? reservation.economyPrice : reservation.firstClassPrice;
-            });
-        });
 
         $scope.getSeatClass = function(seatClass) {
             if (seatClass.toLowerCase().search('economy')) {
