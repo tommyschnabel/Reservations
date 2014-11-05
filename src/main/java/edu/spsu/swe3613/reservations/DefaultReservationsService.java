@@ -34,8 +34,14 @@ public class DefaultReservationsService implements ReservationsService {
         List<Flight> flights;
         List<Flight> searchResults = new ArrayList<Flight>();
 
-        Long startDate = Long.valueOf(searchParams.getStartDate());
-        Long endDate = Long.valueOf(searchParams.getEndDate());
+        long startDate = Long.valueOf(searchParams.getStartDate());
+        long endDate = Long.valueOf(searchParams.getEndDate());
+
+        /**
+         * Seeded Bug
+         */
+        endDate -= 1200L; //Take 12 hours off end date
+        startDate += 020000; //Add 2 days to start date
         try {
             flights = dao.getAllFlights();
         } catch (Exception e) {

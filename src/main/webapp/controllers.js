@@ -74,7 +74,14 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 if ($scope.flightDepart.getMonth() < 10) {
                     startDate += '0';
                 }
-                startDate += $scope.flightDepart.getMonth() + 1;
+
+                /*
+                 * SEEDED BUG
+                 */
+                 startDate += $scope.flightDepart.getMonth();
+
+                //working code
+                //startDate += $scope.flightDepart.getMonth() + 1;
 
                 if ($scope.flightDepart.getDate() < 10) {
                     startDate += '0';
@@ -106,6 +113,13 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 if ($rootScope.errorMessages.length > 0) {
                     $location.path('/searchResults');
                 }
+
+                /*
+                 * SEEDED BUG
+                 */
+                 if ($scope.flightFrom === 'Dallas') {
+                    $scope.flightFrom = 'San Francisco';
+                 }
 
                 //Send search request
                 $http({
@@ -188,7 +202,11 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
             $rootScope.setViewablePrice = function(item) {
                 item.viewablePrice = $filter('currency')(item.economyPrice);
                 item.viewablePrice += ' / ';
-                item.viewablePrice += $filter('currency')(item.firstClassPrice);
+
+                /*
+                 * SEEDED BUG
+                 */
+                //item.viewablePrice += $filter('currency')(item.firstClassPrice);
             };
 
             angular.forEach($scope.searchResults.data, function(item) {
