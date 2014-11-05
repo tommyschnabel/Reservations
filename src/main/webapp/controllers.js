@@ -351,6 +351,12 @@ controllers.controller('loginController', ['$scope', '$http', '$location', '$roo
   		function ($scope, $http, $location, $rootScope) {
 
             $scope.submit = function() {
+                
+                //Make sure that the email is in the format email@domain.com
+                if ($scope.email.search(/^.+@.+\./) === -1) {
+                    $rootScope.errorMessages.push("Email was not in correct format");
+                }
+                
                 $http({
                     url: '/Reservations/api/user/login/',
                     method: 'POST',
@@ -381,12 +387,30 @@ controllers.controller('loginController', ['$scope', '$http', '$location', '$roo
 controllers.controller('registerController', ['$scope', '$http', '$location', '$rootScope',
   		function ($scope, $http, $location, $rootScope) {
             $scope.submit = function() {
-
-                //make sure the passwords match
-                if ($scope.password === '' || $scope.confirmPassword === '') {
-                    $rootScope.errorMessages.push('Make sure to enter a password and confirm it');
+                
+                //Make sure that the email is in the format email@domain.com
+                if ($scope.email.search(/^.+@.+\./) === -1) {
+                    $rootScope.errorMessages.push("Email was not in correct format");
+                    return;
+                }
+                
+                if ($scope.firstname.length <= 1) {
+                    $rootScope.errorMessages.push("First name must be more than one character long");
+                    return;
+                }
+                
+                if ($scope.lastname.length <= 1) {
+                    $rootScope.errorMessages.push("Last name must be more than one character long");
+                    return;
                 }
 
+                //make sure passwords aren't empty
+                if ($scope.password === '' || $scope.confirmPassword === '') {
+                    $rootScope.errorMessages.push('Make sure to enter a password and confirm it');
+                    return;
+                }
+
+                //Make sure passwords match
                 if ($scope.password !== $scope.confirmPassword) {
                     $rootScope.errorMessages.push("Your passwords don't match");
                     return;
