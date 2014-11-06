@@ -47,8 +47,8 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
 //HOME/SEARCH CONTROLLER
 controllers.controller('homeController', ['$scope', '$location', '$http', '$rootScope',
         function ($scope, $location, $http, $rootScope) {
-            $scope.flightFrom = 'Atlanta';
-            $scope.flightTo = 'Chicago';
+            $scope.flightFrom = 'Chicago';
+            $scope.flightTo = 'Atlanta';
 
             $scope.search = function() {
                 var startDate = '',
@@ -122,13 +122,51 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 }).then(function(results) {
                     //Set results
                     if (results.status === 200) {
-                        $rootScope.searchResults = results;
-                        $scope.searchResults = results;
+                        $rootScope.searchResults = {};
+                        $rootScope.searchResults.data = [];
+                        if ($scope.roundTrip) {
+                            $rootScope.searchResults.data.push({ 
+                                placeholder: true, 
+                                date: 'Flights going ',
+                                startingCity: 'to ',
+                                destination: $scope.flightFrom
+                            });
+                        }
+                        $rootScope.searchResults.data = $rootScope.searchResults.data.concat(results.data);
                     } else if (results.status === 500) {
                         //Do nothing because for some reason some requests are happening twice
                         // and it'll throw this back
                     }
-                    $location.path('/searchResults');
+                    
+                    if ($scope.roundTrip) {
+                        $http({
+                            url: '/Reservations/api/reservations/search/',
+                            method: 'POST',
+                            data: {
+                                searchType: 'Date',
+                                startCity: $scope.flightTo.replace(' ', ''),
+                                endCity: $scope.flightFrom.replace(' ', ''),
+                                startDate: startDate,
+                                endDate: endDate
+                            },
+                            timeout: 2000
+                        }).then(function(results) {
+                            $rootScope.searchResults.data.push({ 
+                                placeholder: true, 
+                                date: 'Flights going ',
+                                startingCity: 'to ',
+                                destination: $scope.flightTo
+                            });
+                            $rootScope.searchResults.data = $rootScope.searchResults.data.concat(results.data);
+                        $location.path('/searchResults');
+                        }).catch(function (error) {
+                            $rootScope.errorMessages.push(error);
+                        });
+                    }
+                    
+                    if (!$scope.roundTrip) {
+                        $location.path('/searchResults');
+                    }
                 }).catch(function(error) {
                     $rootScope.errorMessages.push(error);
                 });
@@ -152,6 +190,11 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                     viewableDate = '',
                     temp,
                     timeOfDay = 'AM';
+                
+                if (item.placeholder) {
+                    item.viewableDate = item.date;
+                    return;
+                }
 
                 //Month
                 viewableDate += originalDate[4];
@@ -186,6 +229,10 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
             };
 
             $rootScope.setViewablePrice = function(item) {
+                if (item.placeholder) {
+                    return;
+                }
+                
                 item.viewablePrice = $filter('currency')(item.economyPrice);
                 item.viewablePrice += ' / ';
                 item.viewablePrice += $filter('currency')(item.firstClassPrice);

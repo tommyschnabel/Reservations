@@ -4,14 +4,6 @@
 			<div id="flightsearch">
 				<form id="searchform" action="#" ng-submit="search()" method="post">
 
-                    <!--Coming in release 2!-->
-					<!--<div class="radio"><input type="radio" name="name1">-->
-  					    <!--<span>One way</span>-->
-           			<!--</div>-->
-					<!--<div class="radio"><input type="radio" name="name1">-->
-  					    <!--<span>Multiple destinations</span>-->
-           			<!--</div>-->
-
           			<div class="field">
 						<label for="flight-from">Flying from:</label>
                         <select id="flight-from" ng-model="flightFrom">
@@ -58,28 +50,6 @@
                                     format-year="yyyy">
                         </datepicker>
                     </div>
-
-                    
-
-<!--<div class="field">
-<div class="radio"><input type="radio" name="name2" checked>Economy cabin</div>
-<div class="radio end"><input type="radio" name="name2">Business</div>
-</div>-->
-
-		     		<!--<div class="field half">-->
-						<!--<label for="flight-passengers">Passengers:</label>-->
-						<!--<select id="flight-passengers">-->
-							<!--<option>1</option>-->
-							<!--<option>2</option>-->
-							<!--<option>3</option>-->
-							<!--<option>4</option>-->
-							<!--<option>5</option>-->
-							<!--<option>6</option>-->
-							<!--<option>7</option>-->
-							<!--<option>8</option>-->
-							<!--<option>9</option>-->
-						<!--</select>-->
-					<!--</div>-->
 
 					<button type="button" ng-click="search()" class="search">Search</button>
 
