@@ -400,7 +400,7 @@ controllers.controller('loginController', ['$scope', '$http', '$location', '$roo
             $scope.submit = function() {
                 
                 //Make sure that the email is in the format email@domain.com
-                if ($scope.email.search(/^.+@.+\./) === -1) {
+                if ($scope.email.search(/^.+@.+\..+/) === -1) {
                     $rootScope.errorMessages.push("Email was not in correct format");
                 }
                 
@@ -436,7 +436,7 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
             $scope.submit = function() {
                 
                 //Make sure that the email is in the format email@domain.com
-                if ($scope.email.search(/^.+@.+\./) === -1) {
+                if ($scope.email.search(/^.+@.+\..+/) === -1) {
                     $rootScope.errorMessages.push("Email was not in correct format");
                     return;
                 }
@@ -603,6 +603,64 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
     ]
 );
 
+
+//ADMIN ADD FLIGHT CONTROLLER
+controllers.controller('addFlightController', ['$scope', '$http',
+  		function ($scope, $http) {
+            
+            $scope.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened = true;
+              };
+            
+            $scope.submit = function() {
+                
+                if (!$scope.date) {
+                    $rootScope.errorMessages.push('Date was in the wrong format');
+                    return;
+                }
+                
+                $scope.submitableDate = $scope.date.getFullYear();
+                $scope.submitableDate += $scope.date.getMonth() + 1;
+                $scope.submitableDate += $scope.date.getDate();
+                $scope.submitableDate += $scope.date.getHours();
+                $scope.submitableDate += $scope.date.getMinutes();
+                
+                if (!$scope.airline || !$scope.startingCity || !$scope.destination || !$scope.economyPrice
+                    || !$scope.firstClassPrice || !$scope.seatsInEconomy || !$scope.seatsInFirstClass) {
+                    $rootScope.errorMessages.push('Not all forms were filled in');
+                    return;
+                }
+                
+                $http({
+                    url: '/Reservations/api/flight/create/',
+					method: 'POST', 
+					data: {
+                        date: $scope.submitableDate,
+						airline: $scope.airline,
+                        startingCity: $scope.startingCity,
+                        destination: $scope.destination,
+                        seatsInFirstClass: $scope.seatsInFirstClass,
+                        seatsInEconomy: $scope.seatsInEconomy,
+                        economyPrice: $scope.economyPrice,
+                        firstClassPrice: $scope.firstClassPrice
+					}
+				}).then(function(results) {
+                    
+					$scope.errorMessages = 'None';
+				}).catch(function(error) {
+					$scope.status = 'Fail';
+					$scope.errorMessages = error;
+				});
+            };
+  		}
+	]
+);
+
+
+//SUGGESTION CONTROLER (Dummy because Angular wants a controller for those pages)
 controllers.controller('suggestionController', ['$scope',
     function ($scope) {
 

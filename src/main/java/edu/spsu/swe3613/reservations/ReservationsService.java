@@ -9,4 +9,5 @@ public interface ReservationsService {
     public Response.Status deleteReservation(int id, int userId);
     public List<Reservation> getReservationsForUser(int userId);
     public Flight getFlightById(int flightId);
+    public Response.Status createFlight(Flight flight);
 }

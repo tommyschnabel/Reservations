@@ -124,6 +124,39 @@ public class DefaultReservationsService implements ReservationsService {
         }
         return null;
     }
+
+    @Override
+    public Response.Status createFlight(Flight flight) {
+        int newFlightId;
+        List<Flight> flights;
+
+        try {
+            flights = dao.getAllFlights();
+        } catch (SQLException|ParseException e) {
+            System.out.println(e.getMessage());
+            return Response.Status.CONFLICT;
+        }
+
+        newFlightId = flights.get(flights.size()).getId() + 1;
+        Flight newFlight = new Flight(newFlightId);
+        newFlight.setAirline(flight.getAirline());
+        newFlight.setDate(flight.getDate());
+        newFlight.setDestination(flight.getDestination());
+        newFlight.setStartingCity(flight.getStartingCity());
+        newFlight.setEconomyPrice(flight.getEconomyPrice());
+        newFlight.setFirstClassPrice(flight.getFirstClassPrice());
+        newFlight.setSeatsInEconomy(flight.getSeatsInEconomy());
+        newFlight.setSeatsInFirstClass(flight.getSeatsInFirstClass());
+
+        try{
+            dao.addFlight(newFlight);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return Response.Status.CONFLICT;
+        }
+
+        return Response.Status.ACCEPTED;
+    }
 	
 }
 
