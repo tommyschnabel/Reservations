@@ -4,7 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
-import edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminModule;
+import edu.spsu.swe3613.admin.AdminModule;
 import edu.spsu.swe3613.examples.ExampleModule;
 import edu.spsu.swe3613.reservations.ReservationsModule;
 import edu.spsu.swe3613.user.UserModule;

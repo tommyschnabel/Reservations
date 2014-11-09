@@ -1,4 +1,4 @@
-package edu.spsu.swe3613.edu.spsu.swe3613.admin;
+package edu.spsu.swe3613.admin;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
