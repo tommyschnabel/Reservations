@@ -137,7 +137,7 @@ public class DefaultReservationsService implements ReservationsService {
             return Response.Status.CONFLICT;
         }
 
-        newFlightId = flights.get(flights.size()).getId() + 1;
+        newFlightId = flights.get(flights.size() - 1).getId() + 1;
         Flight newFlight = new Flight(newFlightId);
         newFlight.setAirline(flight.getAirline());
         newFlight.setDate(flight.getDate());
@@ -148,8 +148,9 @@ public class DefaultReservationsService implements ReservationsService {
         newFlight.setSeatsInEconomy(flight.getSeatsInEconomy());
         newFlight.setSeatsInFirstClass(flight.getSeatsInFirstClass());
 
-        try{
+        try {
             dao.addFlight(newFlight);
+        	System.out.println("Created flight on date " + flight.getDate());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return Response.Status.CONFLICT;

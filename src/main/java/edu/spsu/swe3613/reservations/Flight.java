@@ -1,7 +1,7 @@
 package edu.spsu.swe3613.reservations;
 
 public class Flight {
-	private final int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
+	private int id; //changed from String to int CHECK HERE FOR ERRORS 10.9.2014
 	private String date; //Format YYYYMMddHHmm
 	
 	private float economyPrice;
@@ -34,6 +34,8 @@ public class Flight {
         this.seatsInFirstClass = seatsInFirstClass;
         this.airline = airline;
 	}
+	
+	public Flight() {}
 
     public Flight(int id) {
         this.id = id;

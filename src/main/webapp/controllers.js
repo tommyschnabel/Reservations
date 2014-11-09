@@ -605,8 +605,34 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
 
 
 //ADMIN ADD FLIGHT CONTROLLER
-controllers.controller('addFlightController', ['$scope', '$http',
-  		function ($scope, $http) {
+controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', '$location',
+  		function ($scope, $http, $rootScope, $location) {
+            
+            //Uncomment when isadmin is added to the db
+//            if (!user.isAdmin) {
+//                $location.path('/home');
+//            }
+            
+            $scope.times = [
+                {
+                    name: '9:00 AM',
+                    value: '0900'
+                },
+                {
+                    name: '1:00 PM',
+                    value: '1300'
+                },
+                {
+                    name: '5:00 PM',
+                    value: '1700'
+                },
+                {
+                    name: '9:00 PM',
+                    value: '2100'
+                }
+            ];
+            
+            $scope.destination = undefined;
             
             $scope.open = function($event) {
                 $event.preventDefault();
@@ -616,17 +642,26 @@ controllers.controller('addFlightController', ['$scope', '$http',
               };
             
             $scope.submit = function() {
+                var dates = [];
                 
                 if (!$scope.date) {
                     $rootScope.errorMessages.push('Date was in the wrong format');
                     return;
                 }
                 
-                $scope.submitableDate = $scope.date.getFullYear();
-                $scope.submitableDate += $scope.date.getMonth() + 1;
-                $scope.submitableDate += $scope.date.getDate();
-                $scope.submitableDate += $scope.date.getHours();
-                $scope.submitableDate += $scope.date.getMinutes();
+                dates.push($scope.date.getFullYear());
+                dates.push($scope.date.getMonth() + 1);
+                dates.push($scope.date.getDate());
+                dates.push($scope.time.value);
+                
+                angular.forEach(dates, function(date) {
+                    if (date < 10) {
+                        var chars = [ "0", date ];
+                        date = chars.join('');
+                    }
+                });
+                
+                $scope.submitableDate = dates.join('');
                 
                 if (!$scope.airline || !$scope.startingCity || !$scope.destination || !$scope.economyPrice
                     || !$scope.firstClassPrice || !$scope.seatsInEconomy || !$scope.seatsInFirstClass) {
@@ -634,10 +669,15 @@ controllers.controller('addFlightController', ['$scope', '$http',
                     return;
                 }
                 
+                //Get rid of status message before new request
+                $scope.successful = false;
+                $scope.unsuccessful = false;
+                
                 $http({
-                    url: '/Reservations/api/flight/create/',
-					method: 'POST', 
+                    url: 'api/reservations/flight/create/',
+					method: 'POST',
 					data: {
+                        id: 0,
                         date: $scope.submitableDate,
 						airline: $scope.airline,
                         startingCity: $scope.startingCity,
@@ -648,11 +688,18 @@ controllers.controller('addFlightController', ['$scope', '$http',
                         firstClassPrice: $scope.firstClassPrice
 					}
 				}).then(function(results) {
-                    
-					$scope.errorMessages = 'None';
+                    if (results.status >= 200 && results.status <= 299) {
+                        $scope.successful = true;
+                        $scope.economyPrice = '';
+                        $scope.firstClassPrice = '';
+                        $scope.seatsInEconomy = '';
+                        $scope.seatsInFirstClass = '';
+                    } else {
+                        $scope.unsuccessful = true;
+                    }
 				}).catch(function(error) {
-					$scope.status = 'Fail';
-					$scope.errorMessages = error;
+                    $scope.unsuccessful = true;
+                    $rootScope.errorMessages.push(error);
 				});
             };
   		}
