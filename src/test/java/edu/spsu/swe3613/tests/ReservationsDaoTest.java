@@ -10,15 +10,15 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.spsu.swe3613.edu.spsu.swe3613.admin.AdminDao;
-import edu.spsu.swe3613.edu.spsu.swe3613.admin.SqLiteAdminDao;
+import edu.spsu.swe3613.admin.AdminDao;
+import edu.spsu.swe3613.admin.AirlineAdmin;
+import edu.spsu.swe3613.admin.SqLiteAdminDao;
 import edu.spsu.swe3613.reservations.*;
 import jersey.repackaged.com.google.common.base.Objects;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.spsu.swe3613.edu.spsu.swe3613.admin.AirlineAdmin;
 import edu.spsu.swe3613.user.SqLiteUserDao;
 import edu.spsu.swe3613.user.UserDao;
 

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Inject;
-import edu.spsu.swe3613.edu.spsu.swe3613.admin.AirlineAdmin;
+
+import edu.spsu.swe3613.admin.AirlineAdmin;
 
 public class SQLiteReservationsDao implements ReservationsDao {
 	

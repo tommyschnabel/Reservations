@@ -1,4 +1,4 @@
-package edu.spsu.swe3613.edu.spsu.swe3613.admin;
+package edu.spsu.swe3613.admin;
 
 public class AirlineAdmin {
 	private String id;
