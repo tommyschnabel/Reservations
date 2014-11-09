@@ -639,7 +639,7 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
                 $event.stopPropagation();
 
                 $scope.opened = true;
-              };
+            };
             
             $scope.submit = function() {
                 var dates = [];
@@ -654,12 +654,11 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
                 dates.push($scope.date.getDate());
                 dates.push($scope.time.value);
                 
-                angular.forEach(dates, function(date) {
-                    if (date < 10) {
-                        var chars = [ "0", date ];
-                        date = chars.join('');
+                for (var i = 0; i < dates.length; i++) {
+                    if (dates[i] < 10) {
+                        dates[i] = ('0' + dates[i]).slice(-2);
                     }
-                });
+                }
                 
                 $scope.submitableDate = dates.join('');
                 
