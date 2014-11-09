@@ -3,8 +3,8 @@ package edu.spsu.swe3613.reservations;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+//import java.util.Collections;
+//import java.util.Comparator;
 import java.util.List;
 
 import com.google.inject.Inject;
@@ -14,9 +14,9 @@ import javax.ws.rs.core.Response;
 public class DefaultReservationsService implements ReservationsService {
 	
 	private ReservationsDao dao;
-	private List<Flight> allFlights;
-	private List<Flight> searchFlights;
-	private List<Reservation> allReservations;
+//	private List<Flight> allFlights;
+//	private List<Flight> searchFlights;
+//	private List<Reservation> allReservations;
 	
 	@Inject
 	public DefaultReservationsService(ReservationsDao resDao){

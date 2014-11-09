@@ -22,10 +22,10 @@ create table Price(
 	PriceRate	numeric unique
 	);
 insert into Price values
-	('9:00AM',1.15),
-	('1:00PM',1.5),
-	('5:00PM',1),
-	('8:00PM',.85);
+	('0900',1.15),
+	('1300',1.5),
+	('1700',1),
+	('2100',.85);
 -- Mileage
 drop table if exists Mileage;
 create table Mileage(
@@ -52,14 +52,15 @@ insert into Airline values
 	('Delta'),
 	('Southwest'),
 	('American');
--- Customer
-drop table if exists Customer;
-create table Customer(
+-- User
+drop table if exists User;
+create table User(
 	ID		integer primary key,
 	FirstName	text,
 	LastName	text,
 	Email		text,
-	Password	text
+	Password	text,
+	IsAdmin		integer
 	);
 -- Airline Admin
 drop table if exists AirlineAdmin;
@@ -68,12 +69,7 @@ create table AirlineAdmin(
 	Airline		text,
 	Password	text
 	);
--- Marketing Admin
-drop table if exists MarketingAdmin;
-create table MarketingAdmin(
-	ID		text primary key,
-	Password	text
-	);
+	
 -- Flight
 drop table if exists Flight;
 create table Flight(
@@ -102,19 +98,5 @@ create table Reservation(
 	foreign key (CustomerID) references Customer(ID)
 		on delete cascade on update cascade,
 	foreign key (FlightID) references Flight(ID)
-		on delete cascade on update cascade
-	);
--- Service
-drop table if exists Service;
-create table Service(
-	ID		integer primary key,
-	City		text,
-	AdminID		text,
-	Type		text,
-	Name		text,
-	Description	text,
-	URL		text,
-	
-	foreign key (AdminID) references MarketingAdmin(ID)
 		on delete cascade on update cascade
 	);

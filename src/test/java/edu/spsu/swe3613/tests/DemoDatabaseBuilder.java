@@ -111,20 +111,21 @@ public class DemoDatabaseBuilder {
 														+ "('Southwest'),"
 														+ "('American')");
 		//User
-		statement.executeUpdate("drop table if exists Customer");
-		statement.executeUpdate("create table Customer "
+		statement.executeUpdate("drop table if exists User");
+		statement.executeUpdate("create table User "
 														+ "(ID integer primary key, "
 														+ "FirstName text, "
 														+ "LastName text, "
 														+ "Email text, "
-														+ "Password text)");
-		statement.executeUpdate("insert into Customer values"
-														+ "(1,'Alex','Honeycutt','alex@email.com','password'),"
-														+ "(2,'Kenny','Kingery','kenny@email.com','password'),"
-														+ "(3,'Roger','Oliver','roger@email.com','password'),"
-														+ "(4,'Nathan','Pelt','nathan@email.com','password'),"
-														+ "(5,'Tommy','Schnabel','tommy@email.com','password'),"
-														+ "(6,'Yu','Yang','yu@email.com','password')");
+														+ "Password text,"
+														+ "IsAdmin integer)");
+		statement.executeUpdate("insert into User values"
+														+ "(1,'Alex','Honeycutt','alex@email.com','password',1),"
+														+ "(2,'Kenny','Kingery','kenny@email.com','password',1),"
+														+ "(3,'Roger','Oliver','roger@email.com','password',1),"
+														+ "(4,'Nathan','Pelt','nathan@email.com','password',1),"
+														+ "(5,'Tommy','Schnabel','tommy@email.com','password',1),"
+														+ "(6,'Yu','Yang','yu@email.com','password',1)");
 	
 	
 	}
