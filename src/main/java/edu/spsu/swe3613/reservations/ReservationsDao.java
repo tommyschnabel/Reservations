@@ -20,7 +20,7 @@ public interface ReservationsDao {
 	public Flight getFlightById(int flightId) throws SQLException, ParseException;
 	public Flight addFlight(Flight flight) throws SQLException;
 	public void updateFlight(Flight flight) throws SQLException;
-	public void deleteFlight(Flight flight) throws SQLException;
+	public void deleteFlight(int flightId) throws SQLException;
 		
 	// The data stored in the Airline, Price, and Mileage isn't going to change for
 	// release 1, so probably don't need CRUD but just gets that return objects...I think

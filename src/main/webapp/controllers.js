@@ -177,8 +177,8 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
 
 
 //SEARCH RESULTS CONTROLLER
-controllers.controller('searchResultsController', ['$scope', '$rootScope', '$location', '$filter',
-        function($scope, $rootScope, $location, $filter) {
+controllers.controller('searchResultsController', ['$scope', '$rootScope', '$location', '$filter', '$http',
+        function($scope, $rootScope, $location, $filter, $http) {
 
             if ($scope.searchResults === undefined) {
                 $scope.searchResults = { data: [] };
@@ -286,6 +286,24 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                         width: '**'
                     }
                 ]
+            };
+            
+            $scope.$watch('resultsGridOptions.selectedItems.length', function() {
+                $scope.hasClicked = false;
+            });
+            
+            $scope.delete = function() {
+                $scope.hasClicked = false;
+                
+                angular.forEach($scope.resultsGridOptions.selectedItems, function(flight) {
+                    $http({
+                        url: 'api/admin/flight/delete/',
+                        method: 'DELETE',
+                        params: {
+                            flightId: flight.id
+                        }
+                    });
+                });
             };
 
             $scope.reserve = function() {
@@ -673,7 +691,7 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
                 $scope.unsuccessful = false;
                 
                 $http({
-                    url: 'api/reservations/flight/create/',
+                    url: 'api/admin/flight/create/',
 					method: 'POST',
 					data: {
                         id: 0,

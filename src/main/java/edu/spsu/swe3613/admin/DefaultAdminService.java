@@ -2,17 +2,25 @@ package edu.spsu.swe3613.admin;
 
 import com.google.inject.Inject;
 
+import edu.spsu.swe3613.reservations.Flight;
+import edu.spsu.swe3613.reservations.ReservationsDao;
+
 import javax.ws.rs.core.Response;
+
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 public class DefaultAdminService implements AdminService {
 
     private AdminDao adminDao;
+    private ReservationsDao reservationsDao;
 
     @Inject
-    public DefaultAdminService(AdminDao adminDao) {
+    public DefaultAdminService(AdminDao adminDao, 
+    						   ReservationsDao reservationsDao) {
         this.adminDao = adminDao;
+        this.reservationsDao = reservationsDao;
     }
 
     @Override
@@ -71,5 +79,61 @@ public class DefaultAdminService implements AdminService {
             e.printStackTrace();
         }
         return Response.Status.CONFLICT;
+    }
+    
+    @Override
+    public Response.Status createFlight(Flight flight) {
+        int newFlightId;
+        List<Flight> flights;
+
+        try {
+            flights = reservationsDao.getAllFlights();
+        } catch (SQLException|ParseException e) {
+            System.out.println(e.getMessage());
+            return Response.Status.CONFLICT;
+        }
+
+        newFlightId = flights.get(flights.size() - 1).getId() + 1;
+        Flight newFlight = new Flight(newFlightId);
+        newFlight.setAirline(flight.getAirline());
+        newFlight.setDate(flight.getDate());
+        newFlight.setDestination(flight.getDestination());
+        newFlight.setStartingCity(flight.getStartingCity());
+        newFlight.setEconomyPrice(flight.getEconomyPrice());
+        newFlight.setFirstClassPrice(flight.getFirstClassPrice());
+        newFlight.setSeatsInEconomy(flight.getSeatsInEconomy());
+        newFlight.setSeatsInFirstClass(flight.getSeatsInFirstClass());
+
+        try {
+            reservationsDao.addFlight(newFlight);
+        	System.out.println("Created flight on date " + flight.getDate());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return Response.Status.CONFLICT;
+        }
+
+        return Response.Status.ACCEPTED;
+    }
+    
+    public Response.Status deleteFlight(int flightId) {
+    	try {
+    		reservationsDao.deleteFlight(flightId);
+    	} catch (SQLException e) {
+    		System.out.println(e.getMessage());
+    		return Response.Status.CONFLICT;
+    	}
+    	
+    	return Response.Status.ACCEPTED;
+    }
+    
+
+    public Response.Status deleteReservation(int reservationId) {
+    	try {
+    		reservationsDao.deleteReservation(reservationId);
+    	} catch (SQLException e) {
+    		System.out.println(e.getMessage());
+    		return Response.Status.CONFLICT;
+    	}
+    	return Response.Status.ACCEPTED;
     }
 }

@@ -263,9 +263,9 @@ private Connection connection;
 	}
 
 	@Override
-	public void deleteFlight(Flight flight) throws SQLException{
+	public void deleteFlight(int flightId) throws SQLException{
 		String query = 	"DELETE FROM Flight WHERE"
-				+ 		" ID="	+	flight.getId();
+				+ 		" ID="	+	flightId;
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);

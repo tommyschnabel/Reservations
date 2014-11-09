@@ -186,7 +186,7 @@ public class ReservationsDaoTest {
 	public void testDeleteFlight(){
 		try{
             testDao.addFlight(flight);
-			testDao.deleteFlight(flight);
+			testDao.deleteFlight(flight.getId());
 			List<Flight> resultList = testDao.getAllFlights();
 			if(resultList.contains(flight))
 				fail();

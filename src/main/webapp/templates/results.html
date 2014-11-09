@@ -10,10 +10,17 @@
     </div>
 
     <div>
-        <div>Viewing {{$root.searchResults.data.length || 0}} results
+        <div>Viewing {{searchResults.data.length || 0}} results
             <div class="btn btn-primary reserve-button"
                  ng-disabled="resultsGridOptions.selectedItems.length < 1 || !$root.user"
                  ng-click="reserve()">Reserve Flights</div>
+            <div class="btn btn-danger reserve-button"
+                 ng-show="hasClicked"
+                 ng-click="delete()">Confirm Delete</div>
+            <div class="btn btn-danger reserve-button"
+                 ng-disabled="resultsGridOptions.selectedItems.length < 1 || !$root.user"
+                 ng-show="!hasClicked"
+                 ng-click="hasClicked = true">Delete Flights</div>
         </div>
         <div ng-show="$root.user">You can make a reservation by selecting a flight</div>
         <div ng-hide="$root.user">You can't make a reservation until you are logged in</div>
