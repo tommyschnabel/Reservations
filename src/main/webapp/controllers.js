@@ -400,7 +400,7 @@ controllers.controller('loginController', ['$scope', '$http', '$location', '$roo
             $scope.submit = function() {
                 
                 //Make sure that the email is in the format email@domain.com
-                if ($scope.email.search(/^.+@.+\./) === -1) {
+                if ($scope.email.search(/^.+@.+\..+/) === -1) {
                     $rootScope.errorMessages.push("Email was not in correct format");
                 }
                 
@@ -436,7 +436,7 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
             $scope.submit = function() {
                 
                 //Make sure that the email is in the format email@domain.com
-                if ($scope.email.search(/^.+@.+\./) === -1) {
+                if ($scope.email.search(/^.+@.+\..+/) === -1) {
                     $rootScope.errorMessages.push("Email was not in correct format");
                     return;
                 }
@@ -603,6 +603,111 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
     ]
 );
 
+
+//ADMIN ADD FLIGHT CONTROLLER
+controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', '$location',
+  		function ($scope, $http, $rootScope, $location) {
+            
+            //Uncomment when isadmin is added to the db
+//            if (!user.isAdmin) {
+//                $location.path('/home');
+//            }
+            
+            $scope.times = [
+                {
+                    name: '9:00 AM',
+                    value: '0900'
+                },
+                {
+                    name: '1:00 PM',
+                    value: '1300'
+                },
+                {
+                    name: '5:00 PM',
+                    value: '1700'
+                },
+                {
+                    name: '9:00 PM',
+                    value: '2100'
+                }
+            ];
+            
+            $scope.destination = undefined;
+            
+            $scope.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened = true;
+              };
+            
+            $scope.submit = function() {
+                var dates = [];
+                
+                if (!$scope.date) {
+                    $rootScope.errorMessages.push('Date was in the wrong format');
+                    return;
+                }
+                
+                dates.push($scope.date.getFullYear());
+                dates.push($scope.date.getMonth() + 1);
+                dates.push($scope.date.getDate());
+                dates.push($scope.time.value);
+                
+                angular.forEach(dates, function(date) {
+                    if (date < 10) {
+                        var chars = [ "0", date ];
+                        date = chars.join('');
+                    }
+                });
+                
+                $scope.submitableDate = dates.join('');
+                
+                if (!$scope.airline || !$scope.startingCity || !$scope.destination || !$scope.economyPrice
+                    || !$scope.firstClassPrice || !$scope.seatsInEconomy || !$scope.seatsInFirstClass) {
+                    $rootScope.errorMessages.push('Not all forms were filled in');
+                    return;
+                }
+                
+                //Get rid of status message before new request
+                $scope.successful = false;
+                $scope.unsuccessful = false;
+                
+                $http({
+                    url: 'api/reservations/flight/create/',
+					method: 'POST',
+					data: {
+                        id: 0,
+                        date: $scope.submitableDate,
+						airline: $scope.airline,
+                        startingCity: $scope.startingCity,
+                        destination: $scope.destination,
+                        seatsInFirstClass: $scope.seatsInFirstClass,
+                        seatsInEconomy: $scope.seatsInEconomy,
+                        economyPrice: $scope.economyPrice,
+                        firstClassPrice: $scope.firstClassPrice
+					}
+				}).then(function(results) {
+                    if (results.status >= 200 && results.status <= 299) {
+                        $scope.successful = true;
+                        $scope.economyPrice = '';
+                        $scope.firstClassPrice = '';
+                        $scope.seatsInEconomy = '';
+                        $scope.seatsInFirstClass = '';
+                    } else {
+                        $scope.unsuccessful = true;
+                    }
+				}).catch(function(error) {
+                    $scope.unsuccessful = true;
+                    $rootScope.errorMessages.push(error);
+				});
+            };
+  		}
+	]
+);
+
+
+//SUGGESTION CONTROLER (Dummy because Angular wants a controller for those pages)
 controllers.controller('suggestionController', ['$scope',
     function ($scope) {
 

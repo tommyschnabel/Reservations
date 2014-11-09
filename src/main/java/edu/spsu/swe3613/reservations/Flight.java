@@ -34,6 +34,12 @@ public class Flight {
         this.seatsInFirstClass = seatsInFirstClass;
         this.airline = airline;
 	}
+	
+	public Flight() {}
+
+    public Flight(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

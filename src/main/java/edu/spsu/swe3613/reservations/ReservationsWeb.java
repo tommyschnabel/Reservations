@@ -48,5 +48,12 @@ public class ReservationsWeb {
     public Flight getFlightById(@QueryParam("flightId") int flightId) {
         return reservationService.getFlightById(flightId);
     }
+
+    @POST
+    @Path("flight/create/")
+    public Response.Status createFlight(Flight flight) {
+    	System.out.println("Creating flight on date " + flight.getDate());
+        return reservationService.createFlight(flight);
+    }
 	
 }

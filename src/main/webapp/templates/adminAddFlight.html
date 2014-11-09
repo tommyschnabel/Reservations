@@ -1,0 +1,82 @@
+<!-- <i>Excellent</i> error messaging :)-->
+<div ng-show="errorMessages">
+    <div>There was an error, please try again</div>
+    <div ng-bind="errorMessages"></div>
+    <button ng-click="$root.errorMessages = undefined">Clear Error Messages</button>
+</div>
+
+<form class="container adminFlightAdd">
+    
+    <div class="alert alert-success" ng-show="successful" ng-click="successful = false;" style="float: right;">
+        Save was successful
+    </div>
+    <div class="alert alert-danger" ng-show="unsuccessful" ng-click="unsuccessful = false;" style="float: right;">
+        Save was unsuccessful
+    </div>
+    
+    <div class="row">
+        <h4 class="col-md-2">Create A Flight</h4>
+    </div>
+    <div class="row">
+        <label class="col-md-2">Date</label>
+        <input type="text" 
+               datepicker-popup="MM-dd-yyyy" 
+               ng-model="date" 
+               is-open="focus"
+               ng-focus="focus=true"
+               ng-required="true"
+               close-text="Close"
+               placeholder="12-25-2014"/>
+    </div>
+    <div class="row">
+        <label class="col-md-2" for="time">Time</label>
+        <select ng-model="time" ng-options="timeSelect.name for timeSelect in times"></select>
+    </div>
+    <div class="row">
+        <label class="col-md-2" for="startingCity">Starting City</label>
+        <select if="startingCity" ng-model="startingCity">
+            <option>Atlanta</option>
+            <option>Chicago</option>
+            <option>Dallas</option>
+            <option>New York</option>
+            <option>San Francisco</option>
+        </select>
+    </div>
+    <div class="row">
+        <label class="col-md-2" for="destination">Destination</label>
+        <select if="destination" ng-model="destination">
+            <option>Atlanta</option>
+            <option>Chicago</option>
+            <option>Dallas</option>
+            <option>New York</option>
+            <option>San Francisco</option>
+        </select>
+    </div>
+    <div class="row">
+        <label class="col-md-2">Airline</label>
+        <select ng-model="airline">
+            <option>Delta</option>
+            <option>Southwest</option>
+            <option>American</option>
+        </select>
+    </div>
+    <div class="row">
+        <label class="col-md-2">Economy Price</label>
+        <input type="text" ng-model="economyPrice"/>
+    </div>
+    <div class="row">
+        <label class="col-md-2">First Class Price</label>
+        <input type="text" ng-model="firstClassPrice"/>
+    </div>
+    <div class="row">
+        <label class="col-md-2">Seats in Economy</label>
+        <input type="text" ng-model="seatsInEconomy"/>
+    </div>
+    <div class="row">
+        <label class="col-md-2">Seats in First Class</label>
+        <input type="text" ng-model="seatsInFirstClass"/>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="button"  ng-click="submit()">Submit</button>
+    </div>
+</form>

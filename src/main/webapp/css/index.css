@@ -176,6 +176,22 @@ ul{
     display: block;
 }
 
+.adminFlightAdd label {
+    color: #333;
+}
+
+.adminFlightAdd {
+    margin-top: 10px;
+}
+
+.row {
+    margin-top: 5px;
+}
+
+.well-sm {
+    width: 275px;
+}
+
 .priceConfirmColumn {
     margin-top: 5px;
 }
