@@ -57,6 +57,60 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
                     $modal.dismiss();
                 };
             };
+
+            //Put it in $rootScope so we can reuse it
+            $rootScope.setViewableDate = function(item) {
+                var originalDate = item.date,
+                    viewableDate = '',
+                    temp,
+                    timeOfDay = 'AM';
+                
+                if (item.placeholder) {
+                    item.viewableDate = item.date;
+                    return;
+                }
+
+                //Month
+                viewableDate += originalDate[4];
+                viewableDate += originalDate[5];
+                viewableDate += '/';
+                //Day
+                viewableDate += originalDate[6];
+                viewableDate += originalDate[7];
+                viewableDate += '/';
+                //Year
+                viewableDate += originalDate[0];
+                viewableDate += originalDate[1];
+                viewableDate += originalDate[2];
+                viewableDate += originalDate[3];
+                viewableDate += ' ';
+
+                //Hour
+                temp = originalDate[8] + originalDate[9];
+                if (temp > 12) {
+                    temp -= 12;
+                    timeOfDay = 'PM';
+                }
+                viewableDate += temp;
+                viewableDate += ':';
+
+                //Minute
+                viewableDate += originalDate[10];
+                viewableDate += originalDate[11];
+                viewableDate += timeOfDay;
+
+                item.viewableDate = viewableDate;
+            };
+
+            $rootScope.setViewablePrice = function(item) {
+                if (item.placeholder) {
+                    return;
+                }
+                
+                item.viewablePrice = $filter('currency')(item.economyPrice);
+                item.viewablePrice += ' / ';
+                item.viewablePrice += $filter('currency')(item.firstClassPrice);
+            };
   		}
 	]
 );
@@ -218,60 +272,6 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
             if ($scope.searchResults === undefined) {
                 $scope.searchResults = { data: [] };
             }
-
-            //Put it in $rootScope so we can reuse it
-            $rootScope.setViewableDate = function(item) {
-                var originalDate = item.date,
-                    viewableDate = '',
-                    temp,
-                    timeOfDay = 'AM';
-                
-                if (item.placeholder) {
-                    item.viewableDate = item.date;
-                    return;
-                }
-
-                //Month
-                viewableDate += originalDate[4];
-                viewableDate += originalDate[5];
-                viewableDate += '/';
-                //Day
-                viewableDate += originalDate[6];
-                viewableDate += originalDate[7];
-                viewableDate += '/';
-                //Year
-                viewableDate += originalDate[0];
-                viewableDate += originalDate[1];
-                viewableDate += originalDate[2];
-                viewableDate += originalDate[3];
-                viewableDate += ' ';
-
-                //Hour
-                temp = originalDate[8] + originalDate[9];
-                if (temp > 12) {
-                    temp -= 12;
-                    timeOfDay = 'PM';
-                }
-                viewableDate += temp;
-                viewableDate += ':';
-
-                //Minute
-                viewableDate += originalDate[10];
-                viewableDate += originalDate[11];
-                viewableDate += timeOfDay;
-
-                item.viewableDate = viewableDate;
-            };
-
-            $rootScope.setViewablePrice = function(item) {
-                if (item.placeholder) {
-                    return;
-                }
-                
-                item.viewablePrice = $filter('currency')(item.economyPrice);
-                item.viewablePrice += ' / ';
-                item.viewablePrice += $filter('currency')(item.firstClassPrice);
-            };
 
             angular.forEach($scope.searchResults.data, function(item) {
                 $scope.setViewableDate(item);
@@ -780,11 +780,29 @@ controllers.controller('adminReservationsController', ['$scope', '$rootScope', '
             
             $scope.load = function() {
                 $http({
-                    url: '/api/admin/reservations',
+                    url: 'api/admin/reservations',
 					method: 'GET'
                 }).then(function(results) {
-                    if ($scope.results.status >= 200 && $scope.results.status <= 299) {
+                    if (results.status >= 200 && results.status <= 299) {
                         $scope.adminReservations = results.data;
+                        
+                        //Get the flight for each reservation
+                        angular.forEach($scope.adminReservations, function (reservation) {
+                            $http({
+                                url: 'api/reservations/flight',
+                                method: 'GET',
+                                params: { flightId: reservation.flightId }
+                            }).then(function (result) {
+                                if (results.status >= 200 && results.status <= 299) {
+                                    reservation.flight = result.data;
+                                    $scope.setViewableDate(reservation.flight);
+                                } else {
+                                    $rootScope.errorMessages.push(result);
+                                }
+                            }).catch(function (error) {
+                                $rootScope.errorMessages.push(error);
+                            });
+                        });
                     } else {
                         $rootScope.errorMessages.push(results);
                     }
@@ -835,13 +853,22 @@ controllers.controller('adminReservationsController', ['$scope', '$rootScope', '
                 
                 angular.forEach($scope.reservationsGridOptions.selectedItems, function(reservation) {
                     $http({
-                        url: 'api/admin/reservations/delete/',
+                        url: 'api/admin/reservation/delete/',
                         method: 'DELETE',
                         params: {
                             reservationId: reservation.id
                         }
+                    }).then(function(result) {
+                        if (result.status < 200 || result.status > 299) {
+                            $rootScope.errorMessages.push(result);
+                        }
+                    }).catch(function(error) {
+                        $rootScope.errorMessages.push(error);
                     });
                 });
+                
+                //Reload the grid to make sure everything is up to date
+                $scope.load();
             };
         }
     ]

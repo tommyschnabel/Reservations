@@ -61,13 +61,15 @@ public class AdminWeb {
     
     @DELETE
     @Path("reservation/delete/")
-    public Response.Status deleteReservation(@QueryParam("reservaionId") int reservationId) {
+    public Response.Status deleteReservation(@QueryParam("reservationId") int reservationId) {
     	return adminService.deleteReservation(reservationId);
     }
     
     @GET
     @Path("reservations/")
     public List<Reservation> getAllReservations() {
-    	return adminService.getAllReservations();
+    	List<Reservation> reservations = adminService.getAllReservations();
+    	System.out.println("Returning " + reservations.size() + " reservations");
+    	return reservations;
     }
 }
