@@ -3,6 +3,41 @@ var controllers = angular.module('reservationsControllers', []);
 //HEADER CONTROLLER
 controllers.controller('headerController', ['$scope', '$location', '$rootScope',
   		function ($scope, $location, $rootScope) {
+            $scope.margin = '40%';
+            
+            $scope.$watch('user', function() {
+                if (!$scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '40%' });
+                $scope.margin = '40%';
+                } else if (!$scope.user && $scope.searchResults
+                          || $scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '35%' });
+                    $scope.margin = '35%';
+                } else if ($scope.user && $scope.searchResults && $scope.user.isAdmin) {
+                    $('ul#navbar').css({ 'margin-left': '30%' });
+                    $scope.margin = '30%';
+                } else if ($scope.user.isAdmin && $scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '25%' });
+                    $scope.margin = '25%';
+                }
+            });
+            
+            $scope.$watch('searchResults', function() {
+                if (!$scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '40%' });
+                $scope.margin = '40%';
+                } else if (!$scope.user && $scope.searchResults
+                          || $scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '35%' });
+                    $scope.margin = '35%';
+                } else if ($scope.user && $scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '30%' });
+                    $scope.margin = '30%';
+                } else if ($scope.user.isAdmin && $scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '25%' });
+                    $scope.margin = '25%';
+                }
+            });
 
             $rootScope.errorMessages = [];
 
