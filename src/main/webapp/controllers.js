@@ -1,24 +1,24 @@
 var controllers = angular.module('reservationsControllers', []);
 
 //HEADER CONTROLLER
-controllers.controller('headerController', ['$scope', '$location', '$rootScope',
-  		function ($scope, $location, $rootScope) {
+controllers.controller('headerController', ['$scope', '$location', '$rootScope', '$filter',
+  		function ($scope, $location, $rootScope, $filter) {
             $scope.margin = '40%';
             
             $scope.$watch('user', function() {
                 if (!$scope.user && !$scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '40%' });
-                $scope.margin = '40%';
+                    $('ul#navbar').css({ 'margin-left': '45%' });
+                $scope.margin = '45%';
                 } else if (!$scope.user && $scope.searchResults
                           || $scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '40%' });
+                    $scope.margin = '40%';
+                } else if ($scope.user && $scope.searchResults && $scope.user.admin) {
                     $('ul#navbar').css({ 'margin-left': '35%' });
                     $scope.margin = '35%';
-                } else if ($scope.user && $scope.searchResults && $scope.user.isAdmin) {
+                } else if ($scope.user.admin && $scope.searchResults) {
                     $('ul#navbar').css({ 'margin-left': '30%' });
                     $scope.margin = '30%';
-                } else if ($scope.user.isAdmin && $scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '25%' });
-                    $scope.margin = '25%';
                 }
             });
             
@@ -33,7 +33,7 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
                 } else if ($scope.user && $scope.searchResults) {
                     $('ul#navbar').css({ 'margin-left': '30%' });
                     $scope.margin = '30%';
-                } else if ($scope.user.isAdmin && $scope.searchResults) {
+                } else if ($scope.user.admin && $scope.searchResults) {
                     $('ul#navbar').css({ 'margin-left': '25%' });
                     $scope.margin = '25%';
                 }
@@ -676,10 +676,9 @@ controllers.controller('accountController', ['$scope', '$http', '$rootScope', '$
 controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', '$location',
   		function ($scope, $http, $rootScope, $location) {
             
-            //Uncomment when isadmin is added to the db
-//            if (!user.isAdmin) {
-//                $location.path('/home');
-//            }
+            if (!$scope.user || !$scope.user.admin) {
+                $location.path('/home');
+            }
             
             $scope.times = [
                 {
@@ -778,6 +777,10 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
 controllers.controller('adminReservationsController', ['$scope', '$rootScope', '$location', '$filter', '$http',
         function($scope, $rootScope, $location, $filter, $http) {
             
+            if (!$scope.user || !$scope.user.admin) {
+                $location.path('/home');
+            }
+            
             $scope.load = function() {
                 $http({
                     url: 'api/admin/reservations',
@@ -798,17 +801,25 @@ controllers.controller('adminReservationsController', ['$scope', '$rootScope', '
                                     $scope.setViewableDate(reservation.flight);
                                 } else {
                                     $rootScope.errorMessages.push(result);
+                                    $scope.unsuccessful = true;
                                 }
                             }).catch(function (error) {
                                 $rootScope.errorMessages.push(error);
+                                $scope.unsuccessful = true;
                             });
                         });
                     } else {
                         $rootScope.errorMessages.push(results);
+                    $scope.unsuccessful = true;
                     }
                 }).catch(function(error) {
 					$scope.errorMessages.push(error);
+                    $scope.unsuccessful = true;
 				});
+                
+                if (!$scope.unsuccessful) {
+                    $scope.successful = true;
+                }
             };
            
             $scope.load();

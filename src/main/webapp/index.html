@@ -47,10 +47,10 @@
             <li><a href="#/searchResults" ng-show="$root.searchResults.data">SEARCH RESULTS</a></li>
             <li ng-show="$root.user">|</li>
 			<li><a href="#/account" ng-show="$root.user">MY ACCOUNT</a></li>
-            <li ng-show="$root.user">|</li>
-			<li><a href="#/adminAddFlight" ng-show="$root.user">CREATE FLIGHT</a></li>
-            <li ng-show="$root.user">|</li>
-			<li><a href="#/adminReservations" ng-show="$root.user">REVIEW RESERVATIONS</a></li>
+            <li ng-show="$root.user.admin">|</li>
+			<li><a href="#/adminAddFlight" ng-show="$root.user.admin">CREATE FLIGHT</a></li>
+            <li ng-show="$root.user.admin">|</li>
+			<li><a href="#/adminReservations" ng-show="$root.user.admin">REVIEW RESERVATIONS</a></li>
 	     </ul>
       </div>
     </div>
