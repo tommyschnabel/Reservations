@@ -3,6 +3,41 @@ var controllers = angular.module('reservationsControllers', []);
 //HEADER CONTROLLER
 controllers.controller('headerController', ['$scope', '$location', '$rootScope',
   		function ($scope, $location, $rootScope) {
+            $scope.margin = '40%';
+            
+            $scope.$watch('user', function() {
+                if (!$scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '40%' });
+                $scope.margin = '40%';
+                } else if (!$scope.user && $scope.searchResults
+                          || $scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '35%' });
+                    $scope.margin = '35%';
+                } else if ($scope.user && $scope.searchResults && $scope.user.isAdmin) {
+                    $('ul#navbar').css({ 'margin-left': '30%' });
+                    $scope.margin = '30%';
+                } else if ($scope.user.isAdmin && $scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '25%' });
+                    $scope.margin = '25%';
+                }
+            });
+            
+            $scope.$watch('searchResults', function() {
+                if (!$scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '40%' });
+                $scope.margin = '40%';
+                } else if (!$scope.user && $scope.searchResults
+                          || $scope.user && !$scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '35%' });
+                    $scope.margin = '35%';
+                } else if ($scope.user && $scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '30%' });
+                    $scope.margin = '30%';
+                } else if ($scope.user.isAdmin && $scope.searchResults) {
+                    $('ul#navbar').css({ 'margin-left': '25%' });
+                    $scope.margin = '25%';
+                }
+            });
 
             $rootScope.errorMessages = [];
 
@@ -21,6 +56,60 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
                 $scope.close = function() {
                     $modal.dismiss();
                 };
+            };
+
+            //Put it in $rootScope so we can reuse it
+            $rootScope.setViewableDate = function(item) {
+                var originalDate = item.date,
+                    viewableDate = '',
+                    temp,
+                    timeOfDay = 'AM';
+                
+                if (item.placeholder) {
+                    item.viewableDate = item.date;
+                    return;
+                }
+
+                //Month
+                viewableDate += originalDate[4];
+                viewableDate += originalDate[5];
+                viewableDate += '/';
+                //Day
+                viewableDate += originalDate[6];
+                viewableDate += originalDate[7];
+                viewableDate += '/';
+                //Year
+                viewableDate += originalDate[0];
+                viewableDate += originalDate[1];
+                viewableDate += originalDate[2];
+                viewableDate += originalDate[3];
+                viewableDate += ' ';
+
+                //Hour
+                temp = originalDate[8] + originalDate[9];
+                if (temp > 12) {
+                    temp -= 12;
+                    timeOfDay = 'PM';
+                }
+                viewableDate += temp;
+                viewableDate += ':';
+
+                //Minute
+                viewableDate += originalDate[10];
+                viewableDate += originalDate[11];
+                viewableDate += timeOfDay;
+
+                item.viewableDate = viewableDate;
+            };
+
+            $rootScope.setViewablePrice = function(item) {
+                if (item.placeholder) {
+                    return;
+                }
+                
+                item.viewablePrice = $filter('currency')(item.economyPrice);
+                item.viewablePrice += ' / ';
+                item.viewablePrice += $filter('currency')(item.firstClassPrice);
             };
   		}
 	]
@@ -177,66 +266,12 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
 
 
 //SEARCH RESULTS CONTROLLER
-controllers.controller('searchResultsController', ['$scope', '$rootScope', '$location', '$filter',
-        function($scope, $rootScope, $location, $filter) {
+controllers.controller('searchResultsController', ['$scope', '$rootScope', '$location', '$filter', '$http',
+        function($scope, $rootScope, $location, $filter, $http) {
 
             if ($scope.searchResults === undefined) {
                 $scope.searchResults = { data: [] };
             }
-
-            //Put it in $rootScope so we can reuse it
-            $rootScope.setViewableDate = function(item) {
-                var originalDate = item.date,
-                    viewableDate = '',
-                    temp,
-                    timeOfDay = 'AM';
-                
-                if (item.placeholder) {
-                    item.viewableDate = item.date;
-                    return;
-                }
-
-                //Month
-                viewableDate += originalDate[4];
-                viewableDate += originalDate[5];
-                viewableDate += '/';
-                //Day
-                viewableDate += originalDate[6];
-                viewableDate += originalDate[7];
-                viewableDate += '/';
-                //Year
-                viewableDate += originalDate[0];
-                viewableDate += originalDate[1];
-                viewableDate += originalDate[2];
-                viewableDate += originalDate[3];
-                viewableDate += ' ';
-
-                //Hour
-                temp = originalDate[8] + originalDate[9];
-                if (temp > 12) {
-                    temp -= 12;
-                    timeOfDay = 'PM';
-                }
-                viewableDate += temp;
-                viewableDate += ':';
-
-                //Minute
-                viewableDate += originalDate[10];
-                viewableDate += originalDate[11];
-                viewableDate += timeOfDay;
-
-                item.viewableDate = viewableDate;
-            };
-
-            $rootScope.setViewablePrice = function(item) {
-                if (item.placeholder) {
-                    return;
-                }
-                
-                item.viewablePrice = $filter('currency')(item.economyPrice);
-                item.viewablePrice += ' / ';
-                item.viewablePrice += $filter('currency')(item.firstClassPrice);
-            };
 
             angular.forEach($scope.searchResults.data, function(item) {
                 $scope.setViewableDate(item);
@@ -286,6 +321,39 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                         width: '**'
                     }
                 ]
+            };
+            
+            $scope.$watch('resultsGridOptions.selectedItems.length', function() {
+                $scope.hasClicked = false;
+            });
+            
+            $scope.delete = function() {
+                $scope.hasClicked = false;
+                
+                //Make the message go away before deleting again
+                //Status messages don't work properly right now, but it's good enough for now
+                $scope.successful = false;
+                $scope.unsuccessful = false;
+                
+                angular.forEach($scope.resultsGridOptions.selectedItems, function(flight, index) {
+                    $http({
+                        url: 'api/admin/flight/delete/',
+                        method: 'DELETE',
+                        params: {
+                            flightId: flight.id
+                        }
+                    }).then(function(result) {
+                        if (result.status >= 200 && result.status <= 299) {
+                            $scope.successful = true;
+                            $scope.searchResults.data.splice(index, 1);
+                        } else {
+                            $scope.unsuccessful = true;
+                        }
+                    }).catch(function(error) {
+                        $scope.unsuccessful = true;
+                        $rootScope.errorMessages.push(error);
+                    });
+                });
             };
 
             $scope.reserve = function() {
@@ -673,7 +741,7 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
                 $scope.unsuccessful = false;
                 
                 $http({
-                    url: 'api/reservations/flight/create/',
+                    url: 'api/admin/flight/create/',
 					method: 'POST',
 					data: {
                         id: 0,
@@ -703,6 +771,107 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
             };
   		}
 	]
+);
+
+
+//ADMIN RESERVATIONS CONTROLLER
+controllers.controller('adminReservationsController', ['$scope', '$rootScope', '$location', '$filter', '$http',
+        function($scope, $rootScope, $location, $filter, $http) {
+            
+            $scope.load = function() {
+                $http({
+                    url: 'api/admin/reservations',
+					method: 'GET'
+                }).then(function(results) {
+                    if (results.status >= 200 && results.status <= 299) {
+                        $scope.adminReservations = results.data;
+                        
+                        //Get the flight for each reservation
+                        angular.forEach($scope.adminReservations, function (reservation) {
+                            $http({
+                                url: 'api/reservations/flight',
+                                method: 'GET',
+                                params: { flightId: reservation.flightId }
+                            }).then(function (result) {
+                                if (results.status >= 200 && results.status <= 299) {
+                                    reservation.flight = result.data;
+                                    $scope.setViewableDate(reservation.flight);
+                                } else {
+                                    $rootScope.errorMessages.push(result);
+                                }
+                            }).catch(function (error) {
+                                $rootScope.errorMessages.push(error);
+                            });
+                        });
+                    } else {
+                        $rootScope.errorMessages.push(results);
+                    }
+                }).catch(function(error) {
+					$scope.errorMessages.push(error);
+				});
+            };
+           
+            $scope.load();
+
+            $scope.reservationsGridOptions = {
+                data: 'adminReservations',
+                selectedItems: [],
+                columnDefs: [
+                    {
+                        field: 'flight.viewableDate',
+                        displayName: 'Date'
+                    },
+                    {
+                        field: 'flight.startingCity',
+                        displayName: 'Starting City'
+                    },
+                    {
+                        field: 'flight.destination',
+                        displayName: 'Destination'
+                    },
+                    {
+                        field: 'flight.airline',
+                        displayName: 'Airline'
+                    },
+                    {
+                        field: 'flightClass',
+                        displayName: 'Seat Class'
+                    },
+                    {
+                        field: 'flight.distance',
+                        displayName: 'Distance (Mi)'
+                    }
+                ]
+            };
+            
+            $scope.$watch('reservationsGridOptions.selectedItems.length', function() {
+                $scope.hasClicked = false;
+            });
+            
+            $scope.delete = function() {
+                $scope.hasClicked = false;
+                
+                angular.forEach($scope.reservationsGridOptions.selectedItems, function(reservation) {
+                    $http({
+                        url: 'api/admin/reservation/delete/',
+                        method: 'DELETE',
+                        params: {
+                            reservationId: reservation.id
+                        }
+                    }).then(function(result) {
+                        if (result.status < 200 || result.status > 299) {
+                            $rootScope.errorMessages.push(result);
+                        }
+                    }).catch(function(error) {
+                        $rootScope.errorMessages.push(error);
+                    });
+                });
+                
+                //Reload the grid to make sure everything is up to date
+                $scope.load();
+            };
+        }
+    ]
 );
 
 

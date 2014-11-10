@@ -3,8 +3,6 @@ package edu.spsu.swe3613.reservations;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-//import java.util.Collections;
-//import java.util.Comparator;
 import java.util.List;
 
 import com.google.inject.Inject;
@@ -14,13 +12,9 @@ import javax.ws.rs.core.Response;
 public class DefaultReservationsService implements ReservationsService {
 	
 	private ReservationsDao dao;
-//	private List<Flight> allFlights;
-//	private List<Flight> searchFlights;
-//	private List<Reservation> allReservations;
 	
 	@Inject
 	public DefaultReservationsService(ReservationsDao resDao){
-
         this.dao = resDao;
     }
 	
@@ -123,40 +117,6 @@ public class DefaultReservationsService implements ReservationsService {
             System.out.println(e.getMessage());
         }
         return null;
-    }
-
-    @Override
-    public Response.Status createFlight(Flight flight) {
-        int newFlightId;
-        List<Flight> flights;
-
-        try {
-            flights = dao.getAllFlights();
-        } catch (SQLException|ParseException e) {
-            System.out.println(e.getMessage());
-            return Response.Status.CONFLICT;
-        }
-
-        newFlightId = flights.get(flights.size() - 1).getId() + 1;
-        Flight newFlight = new Flight(newFlightId);
-        newFlight.setAirline(flight.getAirline());
-        newFlight.setDate(flight.getDate());
-        newFlight.setDestination(flight.getDestination());
-        newFlight.setStartingCity(flight.getStartingCity());
-        newFlight.setEconomyPrice(flight.getEconomyPrice());
-        newFlight.setFirstClassPrice(flight.getFirstClassPrice());
-        newFlight.setSeatsInEconomy(flight.getSeatsInEconomy());
-        newFlight.setSeatsInFirstClass(flight.getSeatsInFirstClass());
-
-        try {
-            dao.addFlight(newFlight);
-        	System.out.println("Created flight on date " + flight.getDate());
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return Response.Status.CONFLICT;
-        }
-
-        return Response.Status.ACCEPTED;
     }
 	
 }

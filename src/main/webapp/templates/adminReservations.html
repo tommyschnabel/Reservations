@@ -1,0 +1,23 @@
+<div class="container">
+
+    <h3>Reservations</h3>
+
+    <!-- <i>Excellent</i> error messaging :)-->
+    <div ng-show="$root.errorMessages">
+        <div>There was an error, please try again</div>
+        <div>{{$root.errorMessages}}</div>
+        <button ng-click="$root.errorMessages = undefined">Clear Error Messages</button>
+    </div>
+
+    <div>
+        <div class="btn btn-danger reserve-button"
+             ng-show="hasClicked"
+             ng-click="delete()">Confirm Delete</div>
+        <div class="btn btn-danger reserve-button"
+             ng-disabled="reservationsGridOptions.selectedItems.length < 1 || !$root.user"
+             ng-show="!hasClicked"
+             ng-click="hasClicked = true">Delete Reservations</div>
+    </div>
+
+    <div class="gridStyle" ng-grid="reservationsGridOptions"></div>
+</div>

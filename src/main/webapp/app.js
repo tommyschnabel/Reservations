@@ -23,6 +23,9 @@ angular.module('reservationsApp', ['ngRoute', 'ngGrid', 'ui.bootstrap', 'reserva
                 }).when('/adminAddFlight', {
                     templateUrl: 'templates/adminAddFlight.html',
                     controller: 'addFlightController'
+                }).when('/adminReservations', {
+                    templateUrl: 'templates/adminReservations.html',
+                    controller: 'adminReservationsController'
                 }).when('/atlanta', {
                     templateUrl: 'templates/Suggestion_Atlanta.html',
                     controller: 'suggestionController'
