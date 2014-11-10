@@ -295,13 +295,28 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
             $scope.delete = function() {
                 $scope.hasClicked = false;
                 
-                angular.forEach($scope.resultsGridOptions.selectedItems, function(flight) {
+                //Make the message go away before deleting again
+                //Status messages don't work properly right now, but it's good enough for now
+                $scope.successful = false;
+                $scope.unsuccessful = false;
+                
+                angular.forEach($scope.resultsGridOptions.selectedItems, function(flight, index) {
                     $http({
                         url: 'api/admin/flight/delete/',
                         method: 'DELETE',
                         params: {
                             flightId: flight.id
                         }
+                    }).then(function(result) {
+                        if (result.status >= 200 && result.status <= 299) {
+                            $scope.successful = true;
+                            $scope.searchResults.data.splice(index, 1);
+                        } else {
+                            $scope.unsuccessful = true;
+                        }
+                    }).catch(function(error) {
+                        $scope.unsuccessful = true;
+                        $rootScope.errorMessages.push(error);
                     });
                 });
             };
@@ -721,6 +736,80 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
             };
   		}
 	]
+);
+
+
+//ADMIN RESERVATIONS CONTROLLER
+controllers.controller('adminReservationsController', ['$scope', '$rootScope', '$location', '$filter', '$http',
+        function($scope, $rootScope, $location, $filter, $http) {
+            
+            $scope.load = function() {
+                $http({
+                    url: '/api/admin/reservations',
+					method: 'GET'
+                }).then(function(results) {
+                    if ($scope.results.status >= 200 && $scope.results.status <= 299) {
+                        $scope.adminReservations = results.data;
+                    } else {
+                        $rootScope.errorMessages.push(results);
+                    }
+                }).catch(function(error) {
+					$scope.errorMessages.push(error);
+				});
+            };
+           
+            $scope.load();
+
+            $scope.reservationsGridOptions = {
+                data: 'adminReservations',
+                selectedItems: [],
+                columnDefs: [
+                    {
+                        field: 'flight.viewableDate',
+                        displayName: 'Date'
+                    },
+                    {
+                        field: 'flight.startingCity',
+                        displayName: 'Starting City'
+                    },
+                    {
+                        field: 'flight.destination',
+                        displayName: 'Destination'
+                    },
+                    {
+                        field: 'flight.airline',
+                        displayName: 'Airline'
+                    },
+                    {
+                        field: 'flightClass',
+                        displayName: 'Seat Class'
+                    },
+                    {
+                        field: 'flight.distance',
+                        displayName: 'Distance (Mi)'
+                    }
+                ]
+            };
+            
+            $scope.$watch('reservationsGridOptions.selectedItems.length', function() {
+                $scope.hasClicked = false;
+            });
+            
+            $scope.delete = function() {
+                $scope.hasClicked = false;
+                
+                angular.forEach($scope.reservationsGridOptions.selectedItems, function(reservation) {
+                    $http({
+                        url: 'api/admin/reservations/delete/',
+                        method: 'DELETE',
+                        params: {
+                            reservationId: reservation.id
+                        }
+                    });
+                });
+            };
+        }
+    ]
 );
 
 

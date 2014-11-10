@@ -3,6 +3,7 @@ package edu.spsu.swe3613.admin;
 import com.google.inject.Inject;
 
 import edu.spsu.swe3613.reservations.Flight;
+import edu.spsu.swe3613.reservations.Reservation;
 import edu.spsu.swe3613.reservations.ReservationsDao;
 
 import javax.ws.rs.core.Response;
@@ -135,5 +136,14 @@ public class DefaultAdminService implements AdminService {
     		return Response.Status.CONFLICT;
     	}
     	return Response.Status.ACCEPTED;
+    }
+    
+    public List<Reservation> getAllReservations() {
+    	try {
+			return reservationsDao.getAllReservations();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+    	return null;
     }
 }

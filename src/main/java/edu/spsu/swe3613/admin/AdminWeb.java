@@ -9,6 +9,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import edu.spsu.swe3613.reservations.Flight;
+import edu.spsu.swe3613.reservations.Reservation;
 
 import java.util.List;
 
@@ -62,5 +63,11 @@ public class AdminWeb {
     @Path("reservation/delete/")
     public Response.Status deleteReservation(@QueryParam("reservaionId") int reservationId) {
     	return adminService.deleteReservation(reservationId);
+    }
+    
+    @GET
+    @Path("reservations/")
+    public List<Reservation> getAllReservations() {
+    	return adminService.getAllReservations();
     }
 }
