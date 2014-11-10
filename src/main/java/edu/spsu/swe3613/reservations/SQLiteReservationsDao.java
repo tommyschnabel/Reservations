@@ -205,8 +205,14 @@ private Connection connection;
 	*/
 	@Override
 	public Flight addFlight(Flight flight) throws SQLException {
+		String date = flight.getDate();
+		String time = date.substring(8);
 		float distance =getDistance(flight.getStartingCity().toString(),flight.getDestination().toString());
 		flight.setDistance(distance);
+		float pricetotal = getPrice(time)*distance;
+		flight.setEconomyPrice(pricetotal);
+		flight.setFirstClassPrice(pricetotal*1.3f);
+		
 			
 		String query = 	"INSERT	INTO Flight "
 				+		"(Date, AirlineName, StartLocation, Destination, Mileage, EconomyPrice, FirstClassPrice)" 

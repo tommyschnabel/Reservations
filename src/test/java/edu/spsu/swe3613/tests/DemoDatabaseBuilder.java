@@ -7,10 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -142,17 +142,17 @@ public class DemoDatabaseBuilder {
 					Arrays.asList(Airline.Delta, Airline.Southwest, Airline.American));
 			Random rand = new Random();
 			int count = 1;
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-			String s = "20141001";
-			String e = "20150430";
-			LocalDate start = LocalDate.parse(s,formatter);
-			LocalDate end = LocalDate.parse(e,formatter);
-			
-			while(!start.isAfter(end)){
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			Calendar startDate = Calendar.getInstance();
+			Calendar endDate = Calendar.getInstance();
+			startDate.setTime(format.parse("20141001"));
+			endDate.setTime(format.parse("20150430"));
+						
+			while(Integer.valueOf(format.format(startDate.getTime())) < Integer.valueOf(format.format(endDate.getTime()))){
 				for(int j=0;j<17;j++)//flights per day
 					{
 						Flight testFlight = new Flight(count,
-													   start.format(formatter)+times.get((j/3)%4),
+													   format.format(startDate.getTime())+times.get((j/3)%4),
 													   airline.get(j%3), 
 													   locations.get(rand.nextInt(5)), 
 													   locations.get((rand.nextInt(4)*j)%5),
@@ -163,7 +163,7 @@ public class DemoDatabaseBuilder {
 									count++;
 								}		
 					}
-				start = start.plusDays(1);
+				startDate.add(Calendar.DATE,1);
 			}
 				for (int i=0;i<flights.size();i++)
 				{
