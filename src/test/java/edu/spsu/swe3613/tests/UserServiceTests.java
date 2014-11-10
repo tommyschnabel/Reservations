@@ -37,10 +37,10 @@ public class UserServiceTests {
 		try {
 		Statement statement;
 		statement = connection.createStatement();
-		statement.executeUpdate("drop table if exists Customer");
-		statement.executeUpdate("create table Customer(ID text primary key, FirstName text, LastName text,"
-				+ 				"Email text, Password text)");
-			statement.executeUpdate("insert into Customer values('testID','testFName','testLName','test@test.com','1234')");
+		statement.executeUpdate("drop table if exists User");
+		statement.executeUpdate("create table User(ID integer primary key, FirstName text, LastName text,"
+				+ 				"Email text, Password text, IsAdmin integer)");
+			statement.executeUpdate("insert into User values(1,'testFName','testLName','test@test.com','1234',0)");
 		} catch (SQLException e) {
 			fail();
 		}

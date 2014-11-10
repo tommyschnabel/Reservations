@@ -30,19 +30,22 @@ public class SqLiteUserDao implements UserDao {
 	public List<User> getAllUsers() throws SQLException {
 		List<User> users = new ArrayList<User>();
 		String query = 	"SELECT"
-				+		"	Customer.ID				id,"
-				+	 	"	Customer.FirstName		fname,"
-				+ 		"	Customer.LastName		lname,"
-				+ 		"	Customer.Email			email,"
-				+ 		"	Customer.Password		password"
+				+		"	User.ID				id,"
+				+	 	"	User.FirstName		fname,"
+				+ 		"	User.LastName		lname,"
+				+ 		"	User.Email			email,"
+				+ 		"	User.Password		password,"
+				+		"	User.IsAdmin		isAdmin"	
 				
-				+ 		" FROM Customer";
+				+ 		" FROM User";
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query);
 		
 		while(rs.next())
 		{
-			users.add(new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("email"), rs.getString("password")));
+			User resultUser = new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("email"), rs.getString("password"));
+			resultUser.setAdmin((rs.getInt("isAdmin")==1)? true :false );
+			users.add(resultUser);
 		}
 		statement.close();
 		return users;
@@ -51,12 +54,13 @@ public class SqLiteUserDao implements UserDao {
 	@Override
 	public User getUserById(Integer userId) throws SQLException {
 		String query =  "SELECT" //Here we make our query
-				+ 		"	Customer.FirstName		fname,"
-				+		"	Customer.LastName		lname,"
-				+		"	Customer.Email			email,"
-				+		"	Customer.Password		password"
+				+ 		"	User.FirstName		fname,"
+				+		"	User.LastName		lname,"
+				+		"	User.Email			email,"
+				+		"	User.Password		password,"
+				+		"	User.IsAdmin		isAdmin"
 				
-				+		"  FROM Customer"
+				+		"  FROM User"
 				+	    " WHERE ID = "+"'"+userId+"'";
 		//String.format(query, customerId); //Here we replace '%s with the userId that was passed in
 		
@@ -65,6 +69,7 @@ public class SqLiteUserDao implements UserDao {
 		
 		//Now we make our Customer and then return it
 		User resultCustomer = new User(userId, rs.getString("fname"), rs.getString("lname"), rs.getString("email"), rs.getString("password"));
+		resultCustomer.setAdmin(rs.getInt("isAdmin")==1?true:false);
 		statement.close();
 		return resultCustomer;
 		
@@ -72,14 +77,14 @@ public class SqLiteUserDao implements UserDao {
 
 	@Override
 	public void addUser(User user) throws SQLException {
-		String query = 	"INSERT"
-				+ 		" INTO Customer Values("
-				+ 			user.getId()		+	","
-				+		"'"+user.getFName()+"'"	+	"," 
-				+		"'"+user.getLName()+"'"	+	","
-				+		"'"+user.getEmail()+"'"	+	","
-				+		"'"+user.getPassword()+"'"	+	")";
-		
+		String query = 	"INSERT INTO User "
+							+ "Values("
+										+user.getId()+",'"
+										+user.getFName()+"','" 
+										+user.getLName()+"','"
+										+user.getEmail()+"','"
+										+user.getPassword()+"',"
+										+((user.isAdmin())? 1:0)+")";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
 		statement.close();
@@ -87,13 +92,14 @@ public class SqLiteUserDao implements UserDao {
 
 	@Override
 	public void updateUser(User user) throws SQLException {
-		String query = 	"UPDATE "
-				+		"Customer SET "
-				+ 			" FirstName="	+"'"+user.getFName()+"'"		+	","
-				+ 			" LastName="	+"'"+user.getLName()+"'"		+	","
-				+ 			" Email="		+"'"+user.getEmail()+"'"		+	","
-				+ 			" Password="	+"'"+user.getPassword()+"'"
-				+			" WHERE Id="	+	user.getId();
+		String query = 	"UPDATE User "
+							+ "SET "
+										+"FirstName='"	+user.getFName()+	"',"
+										+"LastName='" 	+user.getLName()+	"',"
+										+"Email='"	   	+user.getEmail()+	"',"
+										+"Password='"	+user.getPassword()+"',"
+										+"IsAdmin="		+((user.isAdmin())? 1:0)	
+							+"WHERE Id="	+user.getId();
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);
@@ -102,8 +108,8 @@ public class SqLiteUserDao implements UserDao {
 
 	@Override
 	public void deleteUser(User user) throws SQLException {
-		String query = 	"DELETE FROM Customer WHERE"
-				+ 		" Id="	+	user.getId();
+		String query = 	"DELETE FROM User "
+					  + "WHERE Id="		+user.getId();
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);

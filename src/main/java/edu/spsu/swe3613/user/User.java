@@ -7,6 +7,7 @@ public class User {
 	private String lName;
 	private String email;
 	private String password;
+	private boolean isAdmin; 
 	
 	public User(Integer id, String fName, String lName, String email, String password) {
 		this.id = id;
@@ -14,6 +15,7 @@ public class User {
 		this.lName = lName;
 		this.email = email;
 		this.password = password;
+		this.isAdmin = false;
 	}
 	
 	public User() {
@@ -60,6 +62,14 @@ public class User {
 		this.password = password;
 	}
 
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		User that;
@@ -78,7 +88,8 @@ public class User {
 				&& this.getEmail() == that.getEmail()
 				&& this.getPassword() == that.getPassword()
 				&& this.getFName() == that.getFName()
-				&& this.getLName() == that.getLName()) {
+				&& this.getLName() == that.getLName()
+				&& this.isAdmin() == that.isAdmin()) {
 			return true;
 		}
 		

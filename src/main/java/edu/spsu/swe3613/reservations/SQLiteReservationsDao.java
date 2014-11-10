@@ -10,8 +10,6 @@ import java.util.List;
 
 import com.google.inject.Inject;
 
-import edu.spsu.swe3613.admin.AirlineAdmin;
-
 public class SQLiteReservationsDao implements ReservationsDao {
 	
 private Connection connection;
@@ -251,7 +249,7 @@ private Connection connection;
 						+" Mileage="		+	   	flight.getDistance()		+	","
 						+" EconomyPrice="	+		flight.getEconomyPrice()	+	","
 						+" FirstClassPrice="+		flight.getFirstClassPrice()
-				+	"WHERE ID="	+ 	flight.getId();
+				+	" WHERE ID="	+ 	flight.getId();
 		
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);

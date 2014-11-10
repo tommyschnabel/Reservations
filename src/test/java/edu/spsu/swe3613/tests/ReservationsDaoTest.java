@@ -19,9 +19,6 @@ import jersey.repackaged.com.google.common.base.Objects;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.spsu.swe3613.user.SqLiteUserDao;
-import edu.spsu.swe3613.user.UserDao;
-
 public class ReservationsDaoTest {
 	
 	private static SQLiteReservationsDao testDao;
