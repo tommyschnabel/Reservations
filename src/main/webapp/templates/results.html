@@ -15,11 +15,11 @@
                  ng-disabled="resultsGridOptions.selectedItems.length < 1 || !$root.user"
                  ng-click="reserve()">Reserve Flights</div>
             <div class="btn btn-danger reserve-button"
-                 ng-show="hasClicked"
+                 ng-show="$root.user.isAdmin && hasClicked"
                  ng-click="delete()">Confirm Delete</div>
             <div class="btn btn-danger reserve-button"
                  ng-disabled="resultsGridOptions.selectedItems.length < 1 || !$root.user"
-                 ng-show="!hasClicked"
+                 ng-show="$root.user.isAdmin && !hasClicked"
                  ng-click="hasClicked = true">Delete Flights</div>
             <div class="alert alert-success reserve-button" ng-show="successful" ng-click="successful = false;">
                 Delete was successful
