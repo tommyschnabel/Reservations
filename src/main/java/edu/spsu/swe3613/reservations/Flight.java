@@ -12,6 +12,7 @@ public class Flight {
     private int seatsInFirstClass;
     private int seatsInEconomy;
     private Airline airline;
+    private String duration;
 
 	public Flight(int id,
                   String date,
@@ -116,4 +117,12 @@ public class Flight {
     public void setAirline(Airline airline) {
         this.airline = airline;
     }
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
 }
