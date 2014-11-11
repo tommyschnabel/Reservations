@@ -137,24 +137,26 @@ private Connection connection;
 				+ 		"	Flight.RemainingFirstClass	firstClass,"
 				+ 		"	Flight.RemainingEconomy		economy,"
 				+ 		"	Flight.EconomyPrice			economyPrice,"
-				+ 		"	Flight.FirstClassPrice		firstClassPrice"
+				+ 		"	Flight.FirstClassPrice		firstClassPrice,"
+				+ 		"	Flight.Duration				duration"
 				+		"  FROM Flight";
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query);
 		
 		while(rs.next())	//For each row in the DB
 		{
-			
-			flights.add(new Flight(rs.getInt("id"),
-                                   rs.getString("date"),
-                                   Airline.valueOf(rs.getString("airline")),
-                                   City.valueOf(rs.getString("start").replace(" ", "")),
-					               City.valueOf(rs.getString("end").replace(" ", "")),
-                                   rs.getFloat("distance"),
-                                   rs.getInt("firstClass"),
-					               rs.getInt("economy"),
-					               rs.getFloat("economyPrice"),
-                                   rs.getFloat("firstClassPrice")));
+			Flight resultFlight = new Flight(rs.getInt("id"),
+                    				  rs.getString("date"),
+                    				  Airline.valueOf(rs.getString("airline")),
+                    				  City.valueOf(rs.getString("start").replace(" ", "")),
+                    				  City.valueOf(rs.getString("end").replace(" ", "")),
+                    				  rs.getFloat("distance"),
+                    				  rs.getInt("firstClass"),
+                    				  rs.getInt("economy"),
+                    				  rs.getFloat("economyPrice"),
+                    				  rs.getFloat("firstClassPrice"));
+			resultFlight.setDuration(rs.getString("duration"));
+			flights.add(resultFlight);
 		}
 		statement.close();
 		return flights;		
@@ -173,8 +175,8 @@ private Connection connection;
 				+ 		"	Flight.RemainingFirstClass	firstClass,"
 				+ 		"	Flight.RemainingEconomy		economy,"
 				+ 		"	Flight.EconomyPrice			economyPrice,"
-				+ 		"	Flight.FirstClassPrice		firstClassPrice"
-				
+				+ 		"	Flight.FirstClassPrice		firstClassPrice,"
+				+ 		"	Flight.Duration				duration"
 				+		"  FROM Flight"
 				+	    " WHERE ID = "+flightId;
 		//String.format(query, flightId); 
@@ -192,6 +194,7 @@ private Connection connection;
 										 rs.getInt("economy"),
 										 rs.getFloat("economyPrice"),
 										 rs.getFloat("firstClassPrice"));
+		resultFlight.setDuration(rs.getString("duration"));
 		statement.close();
 		return resultFlight;
 	}
@@ -212,10 +215,11 @@ private Connection connection;
 		float pricetotal = getPrice(time)*distance;
 		flight.setEconomyPrice(pricetotal);
 		flight.setFirstClassPrice(pricetotal*1.3f);
+		flight.setDuration(getDuration(flight.getStartingCity().toString(),flight.getDestination().toString()));
 		
 			
 		String query = 	"INSERT	INTO Flight "
-				+		"(Date, AirlineName, StartLocation, Destination, Mileage, EconomyPrice, FirstClassPrice)" 
+				+		"(Date, AirlineName, StartLocation, Destination, Mileage, EconomyPrice, FirstClassPrice, Duration)" 
 				+		" VALUES("
 				+	"'"+flight.getDate()+"'"		+	"," 
 				+	"'"+flight.getAirline()+"'"		+	","
@@ -223,7 +227,8 @@ private Connection connection;
 				+	"'"+flight.getDestination()+"'" +	","
 				+	    flight.getDistance()    	+	","
 				+	    flight.getEconomyPrice()   	+	","
-				+		flight.getFirstClassPrice() +	")";
+				+		flight.getFirstClassPrice() +	","
+				+	"'"+flight.getDuration()+"'"	+	")";
 		String query2 = " SELECT * FROM Flight WHERE "
 				+ 		" (Date='"+flight.getDate()+"' AND AirlineName='"+flight.getAirline()+"' AND "
 						+ "StartLocation='"+flight.getStartingCity()+"' AND Destination='"+flight.getDestination()+"')";
@@ -240,6 +245,7 @@ private Connection connection;
 				                         rs.getInt(8),
                                          rs.getFloat(9),
                                          rs.getFloat(10));
+		resultFlight.setDuration(rs.getString(11));
 		statement.close();
 		return resultFlight;
 	}
@@ -254,7 +260,8 @@ private Connection connection;
 						+" Destination="	+	"'"+flight.getDestination()+"'"	+	","
 						+" Mileage="		+	   	flight.getDistance()		+	","
 						+" EconomyPrice="	+		flight.getEconomyPrice()	+	","
-						+" FirstClassPrice="+		flight.getFirstClassPrice()
+						+" FirstClassPrice="+		flight.getFirstClassPrice()	+	","
+						+" Duration="		+	"'"+flight.getDuration()+"'"
 				+	" WHERE ID="	+ 	flight.getId();
 		
 		Statement statement = connection.createStatement();
@@ -306,7 +313,7 @@ private Connection connection;
 	@Override
 	public float getDistance(String start, String destination) throws SQLException {
 		String query = "SELECT "
-				+ 	"Distance 		distance "
+				+ 	"Distance 		distance "	
 				+ 	"FROM Mileage "
 				+ 	"WHERE "
 				+ 		"LocationA="+"'"+start+"'"+" and LocationB="+"'"+destination+"'"
@@ -318,4 +325,22 @@ private Connection connection;
 		return resultDistance;
 	}
 
+	@Override
+	public String getDuration(String start, String destination) throws SQLException {
+		String query = "SELECT "
+				+ 	"Duration 		duration "	
+				+ 	"FROM Mileage "
+				+ 	"WHERE "
+				+ 		"LocationA="+"'"+start+"'"+" and LocationB="+"'"+destination+"'"
+				+ 		" or LocationB="+"'"+start+"'"+" and LocationA="+"'"+destination+"'";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(query);
+		String resultDuration = rs.getString("duration");
+		statement.close();
+		return resultDuration;
+	
+	}
+	
+
 }
+

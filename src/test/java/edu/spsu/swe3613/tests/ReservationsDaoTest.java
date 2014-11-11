@@ -35,6 +35,7 @@ public class ReservationsDaoTest {
 	public void setUpBefore() throws Exception{
 
         flight = new Flight(1,"201410010900",Airline.Delta,City.Atlanta,City.Dallas, 5f,10,10,45.00f, 58.5f);
+        flight.setDuration("1H 0M");
         reservation = new Reservation(1,1,1, SeatClass.FirstClass);
 		
 		connection = DriverManager.getConnection("jdbc:sqlite:Test.db");
@@ -54,25 +55,27 @@ public class ReservationsDaoTest {
 														+ "RemainingFirstClass integer default 30,"
 														+ "RemainingEconomy integer default 70, "
 														+ "EconomyPrice numeric default 0,"
-														+ "FirstClassPrice numeric default 0)");
+														+ "FirstClassPrice numeric default 0,"
+														+ "Duration text)");
 		//Mileage
 		statement.executeUpdate("drop table if exists Mileage");
 		statement.executeUpdate("create table Mileage"
 														+ "(ID integer primary key, "
 														+ "LocationA text, "
 														+ "LocationB text, "
-														+ "Distance numeric)");
-		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance) values "
-														+ "('Atlanta','Chicago',586),"
-														+ "('Atlanta','Dallas',721),"
-														+ "('Atlanta','NewYork',746),"
-														+ "('Atlanta','SanFrancisco',2140),"
-														+ "('Chicago','Dallas',802),"
-														+ "('Chicago','NewYork',714),"
-														+ "('Chicago','SanFrancisco',1858),"
-														+ "('Dallas','NewYork',1373),"
-														+ "('Dallas','SanFrancisco',1483),"
-														+ "('NewYork','SanFrancisco',2572)");
+														+ "Distance numeric,"
+														+ "Duration)");
+		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance,Duration) values "
+														+ "('Atlanta','Chicago',586,'1H 28M'),"
+														+ "('Atlanta','Dallas',721,'1H 48M'),"
+														+ "('Atlanta','NewYork',746,'1H 41M'),"
+														+ "('Atlanta','SanFrancisco',2140,'4H 41M'),"
+														+ "('Chicago','Dallas',802,'1H 56M'),"
+														+ "('Chicago','NewYork',714,'1H 36M'),"
+														+ "('Chicago','SanFrancisco',1858,'4H 13M'),"
+														+ "('Dallas','NewYork',1373,'2H 53M'),"
+														+ "('Dallas','SanFrancisco',1483,'3H 22M'),"
+														+ "('NewYork','SanFrancisco',2572,'5H 43M')");
 		//Price
 		statement.executeUpdate("drop table if exists Price");
 		statement.executeUpdate("create table Price (Time text primary key, PriceRate numeric)");
@@ -119,7 +122,7 @@ public class ReservationsDaoTest {
 	}
 
 	@Test
-	public void testGetAllFlights(){
+	public void testGetAllFlights() throws SQLException{
 		try{
 			testDao.addFlight(flight);
 			List<Flight> resultList = testDao.getAllFlights();
@@ -158,18 +161,21 @@ public class ReservationsDaoTest {
 	@Test
 	public void testUpdateFlight() {
 		try{
-			testDao.addFlight(flight);
 			String date = "201212121300";
 			String time = date.substring(8);
+			String startCity = City.SanFrancisco.toString();
+			String destination = City.NewYork.toString();
+			float distance = testDao.getDistance(startCity,destination);
+			float priceRate = testDao.getPrice(time);
+			testDao.addFlight(flight);
 			flight.setDate(date);
 			flight.setAirline(Airline.Southwest);
             flight.setStartingCity(City.SanFrancisco);
             flight.setDestination(City.NewYork);
-			float distance = testDao.getDistance(City.SanFrancisco.toString(),City.NewYork.toString());
-			float priceRate = testDao.getPrice(time);
-            flight.setDistance(distance);
+			flight.setDistance(distance);
             flight.setEconomyPrice(distance*priceRate);
             flight.setFirstClassPrice(distance*priceRate*1.3f);
+            flight.setDuration(testDao.getDuration(startCity,destination));
 			testDao.updateFlight(flight);
             Flight updatedFlight = testDao.getFlightById(flight.getId());
             if(!Objects.equal(updatedFlight.getId(), flight.getId())

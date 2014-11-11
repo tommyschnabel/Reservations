@@ -47,26 +47,28 @@ public class DemoDatabaseBuilder {
 														+ "RemainingFirstClass integer default 30,"
 														+ "RemainingEconomy integer default 70, "
 														+ "EconomyPrice numeric default 0,"
-														+ "FirstClassPrice numeric default 0)");
+														+ "FirstClassPrice numeric default 0,"
+														+ "Duration text)");
 		//Mileage
 		statement.executeUpdate("drop table if exists Mileage");
 		statement.executeUpdate("create table Mileage"
 														+ "(ID integer primary key,"
 														+ "LocationA text,"
 														+ "LocationB text,"
-														+ "Distance numeric)");
+														+ "Distance numeric,"
+														+ "Duration text)");
 		
-		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance) values "
-														+ "('Atlanta','Chicago',586),"
-														+ "('Atlanta','Dallas',721),"
-														+ "('Atlanta','NewYork',746),"
-														+ "('Atlanta','SanFrancisco',2140),"
-														+ "('Chicago','Dallas',802),"
-														+ "('Chicago','NewYork',714),"
-														+ "('Chicago','SanFrancisco',1858),"
-														+ "('Dallas','NewYork',1373),"
-														+ "('Dallas','SanFrancisco',1483),"
-														+ "('NewYork','SanFrancisco',2572)");
+		statement.executeUpdate("insert into Mileage (LocationA,LocationB,Distance,Duration) values "
+														+ "('Atlanta','Chicago',586,'1H 28M'),"
+														+ "('Atlanta','Dallas',721,'1H 48M'),"
+														+ "('Atlanta','NewYork',746,'1H 41M'),"
+														+ "('Atlanta','SanFrancisco',2140,'4H 41M'),"
+														+ "('Chicago','Dallas',802,'1H 56M'),"
+														+ "('Chicago','NewYork',714,'1H 36M'),"
+														+ "('Chicago','SanFrancisco',1858,'4H 13M'),"
+														+ "('Dallas','NewYork',1373,'2H 53M'),"
+														+ "('Dallas','SanFrancisco',1483,'3H 22M'),"
+														+ "('NewYork','SanFrancisco',2572,'5H 43M')");
 		//Price
 		statement.executeUpdate("drop table if exists Price");
 		statement.executeUpdate("create table Price (Time text primary key, PriceRate numeric)");
