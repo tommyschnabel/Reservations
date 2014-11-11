@@ -6,37 +6,56 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
             $scope.margin = '40%';
             
             $scope.$watch('user', function() {
-                if (!$scope.user && !$scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '45%' });
-                $scope.margin = '45%';
-                } else if (!$scope.user && $scope.searchResults
-                          || $scope.user && !$scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '40%' });
-                    $scope.margin = '40%';
-                } else if ($scope.user && $scope.searchResults && $scope.user.admin) {
-                    $('ul#navbar').css({ 'margin-left': '35%' });
-                    $scope.margin = '35%';
-                } else if ($scope.user.admin && $scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '30%' });
-                    $scope.margin = '30%';
+
+                if ($scope.user) {
+                    if ($scope.searchResults) {
+                        if ($scope.user.admin) {
+                            $scope.margin = '20%';
+                        } else {
+                            $scope.margin = '30%';
+                        }
+                    } else {
+                        if ($scope.user.admin) {
+                            $scope.margin = '30%';
+                        } else {
+                            $scope.margin = '40%';
+                        }
+                    }
+                } else {
+                    if ($scope.searchResults) {
+                        $scope.margin = '38%';
+                    } else {
+                        $scope.margin = '40%';
+                    }
                 }
+                $('ul#navbar').css({ 'margin-left': $scope.margin });
             });
-            
+
             $scope.$watch('searchResults', function() {
-                if (!$scope.user && !$scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '40%' });
-                $scope.margin = '40%';
-                } else if (!$scope.user && $scope.searchResults
-                          || $scope.user && !$scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '35%' });
-                    $scope.margin = '35%';
-                } else if ($scope.user && $scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '30%' });
-                    $scope.margin = '30%';
-                } else if ($scope.user.admin && $scope.searchResults) {
-                    $('ul#navbar').css({ 'margin-left': '25%' });
-                    $scope.margin = '25%';
+
+                if ($scope.user) {
+                    if ($scope.searchResults) {
+                        if ($scope.user.admin) {
+                            $scope.margin = '20%';
+                        } else {
+                            $scope.margin = '30%';
+                        }
+                    } else {
+                        if ($scope.user.admin) {
+                            $scope.margin = '30%';
+                        } else {
+                            $scope.margin = '40%';
+                        }
+                    }
+                } else {
+                    if ($scope.searchResults) {
+                        $scope.margin = '38%';
+                    } else {
+                        $scope.margin = '40%';
+                    }
                 }
+                $('ul#navbar').css({ 'margin-left': $scope.margin });
+
             });
 
             $rootScope.errorMessages = [];
@@ -288,37 +307,42 @@ controllers.controller('searchResultsController', ['$scope', '$rootScope', '$loc
                     {
                         field: 'viewableDate',
                         displayName: 'Date',
-                        width: '**'
+                        width: '****'
                     },
                     {
                         field: 'startingCity',
                         displayName: 'Starting City',
-                        width: '**'
+                        width: '***'
                     },
                     {
                         field: 'destination',
                         displayName: 'Destination',
+                        width: '***'
+                    },
+                    {
+                        field: 'duration',
+                        displayName: 'Duration',
                         width: '**'
                     },
                     {
                         field: 'airline',
                         displayName: 'Airline',
-                        width: '*'
+                        width: '***'
                     },
                     {
                         field: 'viewablePrice',
                         displayName: 'Price (Economy/First Class)',
-                        width: '***'
+                        width: '******'
                     },
                     {
                         field: 'seatsInEconomy',
                         displayName: 'Seats (Economy)',
-                        width: '**'
+                        width: '****'
                     },
                     {
                         field: 'seatsInFirstClass',
                         displayName: 'Seats (First Class)',
-                        width: '**'
+                        width: '****'
                     }
                 ]
             };
@@ -801,25 +825,17 @@ controllers.controller('adminReservationsController', ['$scope', '$rootScope', '
                                     $scope.setViewableDate(reservation.flight);
                                 } else {
                                     $rootScope.errorMessages.push(result);
-                                    $scope.unsuccessful = true;
                                 }
                             }).catch(function (error) {
                                 $rootScope.errorMessages.push(error);
-                                $scope.unsuccessful = true;
                             });
                         });
                     } else {
                         $rootScope.errorMessages.push(results);
-                    $scope.unsuccessful = true;
                     }
                 }).catch(function(error) {
 					$scope.errorMessages.push(error);
-                    $scope.unsuccessful = true;
 				});
-                
-                if (!$scope.unsuccessful) {
-                    $scope.successful = true;
-                }
             };
            
             $scope.load();
@@ -860,6 +876,7 @@ controllers.controller('adminReservationsController', ['$scope', '$rootScope', '
             });
             
             $scope.delete = function() {
+                var success = true;
                 $scope.hasClicked = false;
                 
                 angular.forEach($scope.reservationsGridOptions.selectedItems, function(reservation) {
@@ -872,10 +889,16 @@ controllers.controller('adminReservationsController', ['$scope', '$rootScope', '
                     }).then(function(result) {
                         if (result.status < 200 || result.status > 299) {
                             $rootScope.errorMessages.push(result);
+                        } else {
+                            success = false;
                         }
                     }).catch(function(error) {
                         $rootScope.errorMessages.push(error);
+                        success = false;
                     });
+
+                    $scope.successful = success;
+                    $scope.unsuccessful = !success;
                 });
                 
                 //Reload the grid to make sure everything is up to date
