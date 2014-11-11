@@ -313,7 +313,7 @@ private Connection connection;
 	@Override
 	public float getDistance(String start, String destination) throws SQLException {
 		String query = "SELECT "
-				+ 	"Distance 		distance "	
+				+ 	"Distance 		distance "
 				+ 	"FROM Mileage "
 				+ 	"WHERE "
 				+ 		"LocationA="+"'"+start+"'"+" and LocationB="+"'"+destination+"'"

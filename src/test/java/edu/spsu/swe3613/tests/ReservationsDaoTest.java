@@ -122,7 +122,7 @@ public class ReservationsDaoTest {
 	}
 
 	@Test
-	public void testGetAllFlights() throws SQLException{
+	public void testGetAllFlights(){
 		try{
 			testDao.addFlight(flight);
 			List<Flight> resultList = testDao.getAllFlights();
