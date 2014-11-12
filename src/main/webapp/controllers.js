@@ -192,7 +192,7 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 //Ending date
                 endDate += $scope.flightReturn.getFullYear();
 
-                if ($scope.flightReturn.getMonth() < 10) {
+                if ($scope.flightReturn.getMonth() + 1 < 10) {
                     endDate += '0';
                 }
                 endDate += $scope.flightReturn.getMonth() + 1;
