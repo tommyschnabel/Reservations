@@ -179,7 +179,7 @@ controllers.controller('homeController', ['$scope', '$location', '$http', '$root
                 //Starting date
                 startDate += $scope.flightDepart.getFullYear();
 
-                if ($scope.flightDepart.getMonth() < 10) {
+                if ($scope.flightDepart.getMonth() + 1 < 10) {
                     startDate += '0';
                 }
                 startDate += $scope.flightDepart.getMonth() + 1;
