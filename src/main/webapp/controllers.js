@@ -3,29 +3,34 @@ var controllers = angular.module('reservationsControllers', []);
 //HEADER CONTROLLER
 controllers.controller('headerController', ['$scope', '$location', '$rootScope', '$filter', '$modal',
   		function ($scope, $location, $rootScope, $filter, $modal) {
-            $scope.margin = '40%';
+            var oneElementMargin = '45%',
+                twoElementMargin = '38%',
+                threeElementMargin = '25%',
+                fourElementMargin = '17%';
+
+            $scope.margin = oneElementMargin;
             
             $scope.$watch('user', function() {
 
                 if ($scope.user) {
                     if ($scope.searchResults) {
                         if ($scope.user.admin) {
-                            $scope.margin = '20%';
+                            $scope.margin = fourElementMargin;
                         } else {
-                            $scope.margin = '30%';
+                            $scope.margin = threeElementMargin;
                         }
                     } else {
                         if ($scope.user.admin) {
-                            $scope.margin = '30%';
+                            $scope.margin = threeElementMargin;
                         } else {
-                            $scope.margin = '40%';
+                            $scope.margin = oneElementMargin;
                         }
                     }
                 } else {
                     if ($scope.searchResults) {
-                        $scope.margin = '38%';
+                        $scope.margin = twoElementMargin;
                     } else {
-                        $scope.margin = '40%';
+                        $scope.margin = oneElementMargin;
                     }
                 }
                 $('ul#navbar').css({ 'margin-left': $scope.margin });
@@ -36,26 +41,25 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
                 if ($scope.user) {
                     if ($scope.searchResults) {
                         if ($scope.user.admin) {
-                            $scope.margin = '20%';
+                            $scope.margin = fourElementMargin;
                         } else {
-                            $scope.margin = '30%';
+                            $scope.margin = threeElementMargin;
                         }
                     } else {
                         if ($scope.user.admin) {
-                            $scope.margin = '30%';
+                            $scope.margin = threeElementMargin;
                         } else {
-                            $scope.margin = '40%';
+                            $scope.margin = oneElementMargin;
                         }
                     }
                 } else {
                     if ($scope.searchResults) {
-                        $scope.margin = '38%';
+                        $scope.margin = twoElementMargin;
                     } else {
-                        $scope.margin = '40%';
+                        $scope.margin = oneElementMargin;
                     }
                 }
                 $('ul#navbar').css({ 'margin-left': $scope.margin });
-
             });
 
             $scope.logout = function() {
@@ -823,6 +827,31 @@ controllers.controller('addFlightController', ['$scope', '$http', '$rootScope', 
                     || !$scope.firstClassPrice || !$scope.seatsInEconomy || !$scope.seatsInFirstClass) {
                     errors.push('Not all forms were filled in');
                     console.log('Not all forms were filled in');
+                }
+
+                if ($scope.startingCity && $scope.destination && $scope.startingCity === $scope.destination) {
+                    errors.push('Starting city and Destination cannot be the same');
+                    console.log('Starting city and Destination cannot be the same');
+                }
+
+                if ($scope.seatsInEconomy && $scope.seatsInEconomy.search(/^\D/) !== -1) {
+                    errors.push('Seats in economy must contain only 0-9');
+                    console.log('Seats in economy must contain only 0-9');
+                }
+
+                if ($scope.seatsInFirstClass && $scope.seatsInFirstClass.search(/^\D/) !== -1) {
+                    errors.push('Seats in first class must contain only 0-9');
+                    console.log('Seats in first class must contain only 0-9');
+                }
+
+                if ($scope.economyPrice && $scope.economyPrice.search(/^\D/) !== -1) {
+                    errors.push('Economy price must contain only 0-9');
+                    console.log('Economy price must contain only 0-9');
+                }
+
+                if ($scope.firstClassPrice && $scope.firstClassPrice.search(/^\D/) !== -1) {
+                    errors.push('First class price class must contain only 0-9');
+                    console.log('First class price must contain only 0-9');
                 }
 
                 if (errors.length > 0) {
