@@ -2,13 +2,6 @@
 
     <h3>Search Results</h3>
 
-    <!-- <i>Excellent</i> error messaging :)-->
-    <div ng-show="$root.errorMessages">
-        <div>There was an error, please try again</div>
-        <div>{{$root.errorMessages}}</div>
-        <button ng-click="$root.errorMessages = undefined">Clear Error Messages</button>
-    </div>
-
     <div>
         <div>Viewing {{searchResults.data.length || 0}} results
             <div class="btn btn-primary reserve-button"
@@ -21,12 +14,6 @@
                  ng-disabled="resultsGridOptions.selectedItems.length < 1 || !$root.user"
                  ng-show="$root.user.isAdmin && !hasClicked"
                  ng-click="hasClicked = true">Delete Flights</div>
-            <div class="alert alert-success reserve-button" ng-show="successful" ng-click="successful = false;">
-                Delete was successful
-            </div>
-            <div class="alert alert-danger reserve-button" ng-show="unsuccessful" ng-click="unsuccessful = false;">
-                Delete was unsuccessful
-            </div>
         </div>
         <div ng-show="$root.user">You can make a reservation by selecting a flight</div>
         <div ng-hide="$root.user">You can't make a reservation until you are logged in</div>
