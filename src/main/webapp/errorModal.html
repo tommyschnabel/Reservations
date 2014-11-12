@@ -1,9 +1,21 @@
 <div>
-    <h3>Error</h3>
-    <div style="overflow-y: scroll" ng-repeat="error in errorMessages">
-        <p>{{errorMessages}}</p>
+    <div class="modal-header">
+        <h3 class="modal-title">An error occurred</h3>
     </div>
-    <div class="btn-default" ng-click="close()">
-        Close
+
+    <!--This is so backwards with the modal-footer and modal-body, but for some reason it'll only work this way-->
+    <!--This would probably be addressed if we had more time on this project-->
+    <div class="modal-footer" style="text-align: left;">
+        <ul>
+            <li ng-repeat="error in errors">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="modal-body">
+        <div style="margin: auto" class="btn btn-primary" ng-click="close()">
+            Ok
+        </div>
     </div>
 </div>
