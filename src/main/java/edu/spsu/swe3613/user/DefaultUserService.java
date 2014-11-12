@@ -52,13 +52,15 @@ public class DefaultUserService implements UserService {
 			Integer newUserId = (allUsers.get(allUsers.size() -1).getId()) + 1;
 			newUser.setId(newUserId);
 			
-			validateUserDoesNotExist(allUsers, newUser);
+			if (!validateUserDoesNotExist(allUsers, newUser)) {
+                return Status.NOT_ACCEPTABLE;
+            }
 			userDao.addUser(newUser);
 			System.out.println("Registered user " + newUser.getFName() + " " + newUser.getLName());
 			return Status.OK;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return Status.CONFLICT;
+			return Status.NOT_ACCEPTABLE;
 		}
 	}
 
@@ -73,14 +75,15 @@ public class DefaultUserService implements UserService {
 		}
 	}
 	
-	private void validateUserDoesNotExist(List<User> allUsers, User newUser) throws Exception {
+	private boolean validateUserDoesNotExist(List<User> allUsers, User newUser) throws Exception {
 		for (User u : allUsers) {
 			//We want to allow users to have same first/last name, or have the same password
 			// so we only check the id and the email of the new user
 			if (u.getId().equals(newUser.getId()) || u.getEmail().equals(newUser.getEmail())) {
-				throw new Exception("The user id or email of the new user already exists");
+				return false;
 			}
 		}
+        return true;
 	}
 
 }

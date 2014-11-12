@@ -542,18 +542,21 @@ controllers.controller('loginController', ['$scope', '$http', '$location', '$roo
                             'password': $scope.password
                         }
                     }).then(function (results) {
-                        if (results.status >= 200 && results.status <= 299) {
+                        if (results.data && results.data !== '' && results.status >= 200 && results.status <= 299) {
                             $rootScope.user = results.data;
 
                             //Navigate back to home page after login
                             $location.path('#/home');
                         } else {
-                            errors.push("Could not log in, reason unknown " + results);
+                            errors.push("Could not log in ");
+                            errors.push(results);
                             console.log(results);
+                            $scope.errorModal(errors);
                         }
                     }).catch(function (error) {
                         errors.push(error);
                         console.log(error);
+                        $scope.errorModal(errors);
                     });
                 }
 
@@ -628,7 +631,7 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
                         }
                     }).then(function(results) {
                         //If the login was successful, set them as logged in
-                        if (results.status >= 200 && results.status <= 299) {
+                        if (results.status >= 200 && results.status <= 299 && results.data !== '') {
                             $rootScope.user = results.data;
 
                             //Then return them to the home page
@@ -636,19 +639,18 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
                         } else {
                             errors.push(results);
                             console.log(results);
+                            $scope.errorModal(errors);
                         }
                     }).catch(function(error) {
                         errors.push(error);
                         console.log(error);
+                        $scope.errorModal(errors);
                     });
                 }).catch(function(error) {
                     errors.push(error);
                     console.log(error);
-                });
-
-                if (errors.length > 0) {
                     $scope.errorModal(errors);
-                }
+                });
             };
   		}
 	]
