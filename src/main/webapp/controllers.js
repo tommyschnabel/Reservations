@@ -119,7 +119,7 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
                 $modal.open({
                     templateUrl: 'errorModal.html',
                     controller: 'errorModalController',
-                    size: 'lg',
+                    size: 'sm',
                     resolve: {
                         errors: function () {
                             return errors;
