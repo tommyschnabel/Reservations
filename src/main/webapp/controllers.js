@@ -119,7 +119,7 @@ controllers.controller('headerController', ['$scope', '$location', '$rootScope',
                 $modal.open({
                     templateUrl: 'errorModal.html',
                     controller: 'errorModalController',
-                    size: 'lg',
+                    size: 'sm',
                     resolve: {
                         errors: function () {
                             return errors;
@@ -573,26 +573,33 @@ controllers.controller('loginController', ['$scope', '$http', '$location', '$roo
 controllers.controller('registerController', ['$scope', '$http', '$location', '$rootScope',
   		function ($scope, $http, $location, $rootScope) {
             $scope.submit = function() {
-                var errors = [];
+                var errors = [],
+                    error = '';
+
+                if (!$scope.email || !$scope.password || !$scope.firstname || !$scope.lastname) {
+                    error = 'One of the fields was not filled in';
+                    errors.push(error);
+                    console.log(error);
+                }
                 
                 //Make sure that the email is in the format email@domain.com
-                if ($scope.email.search(/^.+@.+\..+/) === -1) {
+                if (!$scope.email || $scope.email.search(/^.+@.+\..+/) === -1) {
                     errors.push("Email was not in correct format");
                     console.log("Email was not in correct format");
                 }
                 
-                if ($scope.firstname.length <= 1) {
+                if (!$scope.firstname || $scope.firstname.length <= 1) {
                     errors.push("First name must be more than one character long");
                     console.log("First name must be more than one character long");
                 }
                 
-                if ($scope.lastname.length <= 1) {
+                if (!$scope.lastname || $scope.lastname.length <= 1) {
                     errors.push("Last name must be more than one character long");
                     console.log("Last name must be more than one character long");
                 }
 
                 //make sure passwords aren't empty
-                if ($scope.password === '' || $scope.confirmPassword === '') {
+                if (!$scope.password || $scope.password === '' || $scope.confirmPassword === '') {
                     errors.push('Make sure to enter a password and confirm it');
                     console.log('Make sure to enter a password and confirm it');
                 }
@@ -601,6 +608,40 @@ controllers.controller('registerController', ['$scope', '$http', '$location', '$
                 if ($scope.password !== $scope.confirmPassword) {
                     errors.push("Your passwords don't match");
                     console.log("Your passwords don't match");
+                }
+
+                //Passwords must be 8 characters long and must be alpha numeric only with at least one number
+                if (!$scope.password) { //Password isn't defined
+                    error = 'Password isnt defined';
+                    errors.push(error);
+                    console.log(error);
+                }
+
+                if (!$scope.password || $scope.password.search(/[\W]/) !== -1) {
+                    error = 'Password contains non-alphanumeric character, or space';
+                    errors.push(error);
+                    console.log(error);
+                }
+
+                if (!$scope.password
+                    || $scope.password.search(/\d/) === -1) {
+                    error = 'Password doesnt contain a digit';
+                    errors.push(error);
+                    console.log(error);
+                }
+
+                if (!$scope.password
+                    || $scope.password.search(/[a-zA-Z]/) === -1) {
+                    error = 'Password doesnt contain a letter';
+                    errors.push(error);
+                    console.log(error);
+                }
+
+                if (!$scope.password
+                    || $scope.password.length < 7) {
+                    error = 'Password isnt at least 8 characters long';
+                    errors.push(error);
+                    console.log(error);
                 }
 
                 if (errors.length > 0) {
